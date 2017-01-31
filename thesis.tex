@@ -4,7 +4,6 @@
 \usepackage{longtable,booktabs,setspace} 
 \usepackage[hyphens]{url}
 \usepackage{rotating}
-\usepackage{natbib}
 \usepackage{enumitem}
 \usepackage{tikz, tikz-cd}
 \usepackage{adjustbox}
@@ -20,7 +19,7 @@
 \newtheorem{exercise}{Exercise}
 
 \theoremstyle{remark}
-\newtheorem{remark}{Remark}
+\newtheorem{remark}{Remark}[section]
 \newtheorem{example}{Example}[section]
 
 \newcommand{\beq}{\begin{equation}}
@@ -43,12 +42,13 @@
 \newcommand{\dom}{\operatorname{dom}}
 \newcommand{\Frac}{\operatorname{Frac}}
 \newcommand{\codim}{\operatorname{codim}}
-\renewcommand{\div}{\operatorname{div}}
+\newcommand{\Div}{\operatorname{Div}}
 \newcommand{\Cl}{\operatorname{Cl}}
 \newcommand{\Fr}{\operatorname{Fr}}
 \newcommand{\Spec}{\operatorname{Spec}}
 \newcommand{\Br}{\operatorname{Br}}
 \newcommand{\Pic}{\operatorname{Pic}}
+\renewcommand{\div}{\operatorname{div}}
 
 \title{Arithmetic Computations on K3 Surfaces}
 \author{Christopher Keane}
@@ -78,20 +78,20 @@
 %\markboth{Introduction}{Introduction}	ENDING HERE
 
 \chapter{Geometry of surfaces}
-In this chapter we introduce basic results of surface theory as well as some more general facts from modern algebraic geometry. Our goal is to develop some familiarity with the language of modern algebraic geometry and introduce the invariants most commonly used to study surfaces and their rational points.
+In this chapter we introduce some general facts from modern algebraic geometry, and basic results of surface theory. Our goal is to develop some familiarity with the language of modern algebraic geometry and introduce the invariants most commonly used to study surfaces and their rational points.
 
 \section{Properties of varieties}
-In general, a \emph{variety} can be thought of as the solutions to a set of equations defined over some field. Historically, the study of such objects had roots in algebra. Mathematicians found that in order to obtain useful information about a variety, it is helpful to also consider the variety's corresponding coordinate ring endowed with the Zariski topology. This allowed mathematicians to bring the vast theory of commutative algebra to bear on geometric questions. With the development of category theory, mathematicians like Alexander Grothendieck and Jean-Paul Serre saw fit to reformulate the theory of algebraic geometry using category theory, giving rise to the language of schemes. This shifted the fundamental object of the field from sets of solutions to equations to topological spaces equipped with sheaves. Since the language of schemes is ubiquitous in the modern study of geometry, it is the language we will be using throughout this thesis to talk about varieties.
+In general, a \emph{variety} can be thought of as the set of solutions to a set of equations defined over some field. Historically, the study of such objects had roots in algebra. Mathematicians found that in order to obtain useful information about a variety, it is helpful to also consider the variety's corresponding coordinate ring equipped with the Zariski topology. This allowed mathematicians to bring the vast theory of commutative algebra to bear on geometric questions. With the development of category theory, mathematicians like Alexander Grothendieck and Jean-Paul Serre saw fit to reformulate the theory of algebraic geometry using category theory, giving rise to the language of schemes. This shifted the fundamental object of the field from sets of solutions to equations to topological spaces equipped with sheaves. Since the language of schemes is ubiquitous in the modern study of geometry, it is the language we will be using throughout this thesis to talk about varieties.
 \begin{definition}
 For a fixed scheme $S$, a \emph{scheme over $S$} is a scheme $X$ along with a morphism $X\to S$ called the structure morphism of $X$. In this case, we may refer to $X$ as an $S$-scheme. If we have two $S$-schemes $X$ and $Y$, then an $S$-morphism from $X$ to $Y$ is a morphism $X\to Y$ that is compatible with the structure morphisms of $X$ and $Y$.\label{schemeOverDef}
 \end{definition}
-If we ever speak about an algebraic object as a scheme, we are referring to that object's spectrum of prime ideals, unless explicitly stated otherwise. For example, if $X$ is a scheme, $A$ is a commutative ring, and we refer to a morphism $X\to A$, we mean to speak about a morphism $X\to\Spec A$. Similarly, if we define $X$ to be an $A$-scheme, the structure morphism goes from $X$ to $\Spec A$. Now we come to the definition of variety that will be used throughout this thesis.
+If we speak about an algebraic object as a scheme, we are referring to that object's spectrum of prime ideals. For example, if $X$ is a scheme, $A$ is a commutative ring, and we refer to a morphism $X\to A$, we mean to speak about a morphism $X\to\Spec A$. Similarly, if we define $X$ to be an $A$-scheme, the structure morphism goes from $X$ to $\Spec A$.
 \begin{definition}
 A \emph{variety} is a separated scheme of finite type over a field $k$. \label{varDef}
 \end{definition}
-\noindent The classical definition of a variety usually only deals with quasiprojective varieties, but the one presented here is more general. These varieties locally look quasiprojective, but globally may not have any sort of projective embedding. We will sometimes refer to a variety $X$ as an ordered pair $(X,\calO_X)$, where $X$ denotes the underlying topological space of the scheme, and $\calO_X$ denotes the structure sheaf of $X$. 
+\noindent The classical definition of a variety usually only deals with quasiprojective varieties, but the one presented here is more general. These varieties locally look quasiprojective, but globally may not have any sort of natural projective embedding. We will sometimes refer to a variety $X$ as an ordered pair $(X,\calO_X)$, where $X$ denotes the underlying topological space of the scheme, and $\calO_X$ denotes the structure sheaf of $X$. 
 \begin{definition}
-A \emph{surface} is a variety of dimension 1. A \emph{surface} is a variety of dimension 2. In both cases here, dimension refers to the dimension of the scheme's underlying topological space.
+A \emph{curve} is a variety of dimension 1. A \emph{surface} is a variety of dimension 2. In both cases here, dimension refers to the dimension of the scheme's underlying topological space.
 \end{definition}
 In order to move towards discussing rational points, we will need to introduce the concept of base extension. Before this though, we present the definition of the fiber product using a universal mapping property.
 \begin{definition}
@@ -119,7 +119,7 @@ Let $f:X\to Y$ be a morphism of schemes, $y\in Y$ a point, and let $k(y)$ denote
 \end{definition}
 \noindent The most common usage of this notion of fiber occurs when we have a scheme $X$ defined over some commutative ring $A$, and want to consider the fiber over some prime ideal $\mathfrak{p}\in\Spec A$. In this case, the fiber $X_\mathfrak{p}$ is called the \emph{reduction of $X$ mod $\mathfrak{p}$}. 
 
-Perhaps the most relevant application of the fiber product for this thesis is base extension. We will be looking at equations defined over $\QQ$, but will also want to find all possible solutions to those equations by looking to extensions of $\QQ$.
+Perhaps the most relevant application of the fiber product for this thesis is base extension. We will be looking at equations defined over $\QQ$, but will also want to consider all possible solutions to those equations by looking to extensions of $\QQ$.
 \begin{definition}
 For a variety $X$ defined over a field $k$, and a field extension $L$ of $k$, we define $X_L=X\times_k L$ to be the \emph{base extension} of $X$ by $L$.
 \end{definition}
@@ -134,9 +134,42 @@ If we have some property $P$ and a $k$-variety $X$, then we say that $X$ is \emp
 \end{definition}
 \noindent Letting $X$ be as in the previous example, we have that $X$ is irreducible but not geometrically irreducible.
 
+\section{Divisors}
+In this section we assume throughout that $X$ is an noetherian, integral variety that is regular in codimenison one. By regular in codimension one, we mean that for every $x\in X$ such that $\calO_{X,x}$ has Krull dimension one, $\calO_{X,x}$ is regular.
+
+\begin{definition}
+A \emph{prime divisor} on $X$ is a closed integral subvariety of codimension one. A \emph{Weil divisor} is an element of the free abelian group $\Div X$ generated by the prime divisors. 
+\end{definition}
+A divisor $D$ is written as a formal linear combination $D=\sum n_i Y_i$, where the sum runs over all prime divisors, each $n_i\in\ZZ$, and only finitely many of the $n_i$ are nonzero. If each $n_i\geq 0$, then we say that $D$ is effective.
+
+For $Y$ a prime divisor on $X$, suppose that $\eta$ is the generic point of $X$. Then the local ring $\calO_{\eta, X}$ is a discrete valuation ring, and its field of fractions is equal to the function field of the variety $X$. From these local rings, we obtain valuations $v_Y$ for each prime divisor $Y$. For a nonzero  rational function $f$ on $X$, we have $v_Y(f)\in\ZZ$ for all prime divisors $Y$. If $v_Y(f)>0$, we say that $f$ has a \emph{zero} along $Y$, and if $v_Y(f)<0$, we say that $f$ has a \emph{pole} along $Y$.
+
+\begin{definition}
+Let $f$ be a nonzero rational function on $X$. The \emph{divisor} of $f$, $\div(f)$ is given by $\div(f)=\sum v_Y(f)\cdot Y$, with the sum ranging over all prime divisors $Y$. A divisor $D\in\Div X$ is \emph{principal} if there is some rational function $f$ on $X$ such that $D=\div(f)$. The set of principal divisors forms a subgroup of $\Div X$.
+\end{definition}
+
+\noindent The assignment $f\mapsto\div(f)$ is a group homomorphism from the group of nonzero rational functions $K^*$ to $\Div X$. 
+
+\begin{definition}
+For two divisors $D,D'$ on $X$, we say that $D$ and $D'$ are \emph{linearly equivalent}, denoted $D\sim D'$ if $D-D'$ is principal. Taking $\Div X$ modulo the subgroup of principal divisors yields the \emph{divisor class group of $X$}, which is denoted by $\Cl X$.
+\end{definition}
+
+The divisor class group is an important geometric invariant that behaves similarly to the ideal class group of number theory. In fact, for $A$ a Dedekind domain, then $\Cl(\Spec A)$ is exactly the ideal class group of $A$. 
+
+Now we describe another invariant, closely related to the divisor class group. To do this, we need the definition of an invertible sheaf. Invertible sheaves are sometimes referred to as line bundles, but we will not use this terminology.
+\begin{definition}
+For a ringed space $X$, an \emph{invertible sheaf} is a locally free $\calO_X$-module of rank one.
+\end{definition}
+\begin{proposition}
+For a ringed space $X$, the set of isomorphism classes of invertible sheaves forms a group, called the \emph{Picard group} under the tensor product. The Picard group of $X$ is denoted $\Pic X$.
+\end{proposition}
+\begin{remark}
+The Picard group of $X$ is naturally isomorphic to $H^1(X,\calO_X^*)$, the first sheaf cohomology group of $X$ with coefficients in $\calO_X^*$.
+\end{remark}
+\noindent If $X$ is a noetherian integral variety all of whose local rings are unique factorization domains, then $\Cl X\cong \Pic X$. We will not prove this here, but it importantly points out that the Picard group generalizes the divisor class group.
 \chapter{Rational points on varieties}
 Suppose that $X$ is a subvariety of $n$-dimensional affine space $\Affine^n_k$ over some algebraically closed field $k$ and $n\geq1$. Further suppose that $X$ is defined by a set of polynomial equations $f_i(x_1,\ldots,x_n)=0$ for $i=1,\ldots,m, m\geq1.$  A \emph{$k$-rational point} on $X$ is an $n$-tuple $a=(a_1,\ldots,a_n)\in k^n$ such that \[f_1(a_1,\ldots,a_n)=f_2(a_1,\ldots,a_n)=\cdots=f_m(a_1,\ldots,a_n)=0.\] 
-In terms of local data, the above means that the residue field $k(a)$ at the point $a$ is isomorphic to the base field $k$. This is notable, because if $k$ is algebraically closed, then the set of all closed points is exactly the set of $k$-rational points. If $k$ is not algebraically closed, then for a $k$-variety $X$, a closed point $x$ of $X$ could have residue field either isomorphic to $k$ or isomorphic to a finite extension of $k$. 
+In terms of local data, the above means that the residue field $k(a)$ at the point $a$ is isomorphic to the base field $k$. This is notable, because if $k$ is algebraically closed, then the set of all closed points is exactly the set of $k$-rational points. If $k$ is not algebraically closed, then for a $k$-variety $X$, a closed point $x$ of $X$ could have residue field either isomorphic to $k$ or isomorphic to an extension of $k$. 
 Notably, we can describe the set of these points in terms of morphisms in the following way.
 \begin{proposition}
 Given a variety $X$, the set of $k$-rational points of $X$ is in bijection with the set of morphisms of $k$-schemes $\Spec k\to X$.
@@ -155,7 +188,7 @@ Given a variety $X$ over a field $k$, the set of $k$-rational points, or $k$-poi
 \backmatter 
 \nocite{*}
 
-\bibliographystyle{alpha}  % or
+\bibliographystyle{alpha}
 \bibliography{thesis}
 
 \end{document}
