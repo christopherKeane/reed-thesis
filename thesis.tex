@@ -1,0 +1,161 @@
+\documentclass[12pt,twoside]{reedthesis}
+\usepackage{graphicx,latexsym, caption, subcaption} 
+\usepackage{amssymb,amsthm,amsmath}
+\usepackage{longtable,booktabs,setspace} 
+\usepackage[hyphens]{url}
+\usepackage{rotating}
+\usepackage{natbib}
+\usepackage{enumitem}
+\usepackage{tikz, tikz-cd}
+\usepackage{adjustbox}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem*{definition*}{Definition}
+\newtheorem{exercise}{Exercise}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}[section]
+
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\Bl}{\operatorname{Bl}}
+\newcommand{\Affine}{\mathbb{A}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\sheafF}{\mathcal{F}}
+\newcommand{\sheafG}{\mathcal{G}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\Proj}{\mathbb{P}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calO}{\mathcal{O}}
+\newcommand{\kbar}{\overline{k}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\dom}{\operatorname{dom}}
+\newcommand{\Frac}{\operatorname{Frac}}
+\newcommand{\codim}{\operatorname{codim}}
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\Cl}{\operatorname{Cl}}
+\newcommand{\Fr}{\operatorname{Fr}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Br}{\operatorname{Br}}
+\newcommand{\Pic}{\operatorname{Pic}}
+
+\title{Arithmetic Computations on K3 Surfaces}
+\author{Christopher Keane}
+
+\date{May 2017}
+\division{Mathematics and Natural Sciences}
+\advisor{Mckenzie West}
+
+\department{Mathematics}
+
+\setlength{\parskip}{0pt}
+
+\begin{document}
+
+%\maketitle EVENTUALLY, UNCOMMENT STARTING HERE
+%\frontmatter 
+%\pagestyle{empty} 
+
+%\chapter*{Abstract}
+	
+%\mainmatter 
+%\pagestyle{fancyplain} 
+
+%\chapter*{Introduction}
+%\addcontentsline{toc}{chapter}{Introduction}
+%\chaptermark{Introduction}
+%\markboth{Introduction}{Introduction}	ENDING HERE
+
+\chapter{Geometry of surfaces}
+In this chapter we introduce basic results of surface theory as well as some more general facts from modern algebraic geometry. Our goal is to develop some familiarity with the language of modern algebraic geometry and introduce the invariants most commonly used to study surfaces and their rational points.
+
+\section{Properties of varieties}
+In general, a \emph{variety} can be thought of as the solutions to a set of equations defined over some field. Historically, the study of such objects had roots in algebra. Mathematicians found that in order to obtain useful information about a variety, it is helpful to also consider the variety's corresponding coordinate ring endowed with the Zariski topology. This allowed mathematicians to bring the vast theory of commutative algebra to bear on geometric questions. With the development of category theory, mathematicians like Alexander Grothendieck and Jean-Paul Serre saw fit to reformulate the theory of algebraic geometry using category theory, giving rise to the language of schemes. This shifted the fundamental object of the field from sets of solutions to equations to topological spaces equipped with sheaves. Since the language of schemes is ubiquitous in the modern study of geometry, it is the language we will be using throughout this thesis to talk about varieties.
+\begin{definition}
+For a fixed scheme $S$, a \emph{scheme over $S$} is a scheme $X$ along with a morphism $X\to S$ called the structure morphism of $X$. In this case, we may refer to $X$ as an $S$-scheme. If we have two $S$-schemes $X$ and $Y$, then an $S$-morphism from $X$ to $Y$ is a morphism $X\to Y$ that is compatible with the structure morphisms of $X$ and $Y$.\label{schemeOverDef}
+\end{definition}
+If we ever speak about an algebraic object as a scheme, we are referring to that object's spectrum of prime ideals, unless explicitly stated otherwise. For example, if $X$ is a scheme, $A$ is a commutative ring, and we refer to a morphism $X\to A$, we mean to speak about a morphism $X\to\Spec A$. Similarly, if we define $X$ to be an $A$-scheme, the structure morphism goes from $X$ to $\Spec A$. Now we come to the definition of variety that will be used throughout this thesis.
+\begin{definition}
+A \emph{variety} is a separated scheme of finite type over a field $k$. \label{varDef}
+\end{definition}
+\noindent The classical definition of a variety usually only deals with quasiprojective varieties, but the one presented here is more general. These varieties locally look quasiprojective, but globally may not have any sort of projective embedding. We will sometimes refer to a variety $X$ as an ordered pair $(X,\calO_X)$, where $X$ denotes the underlying topological space of the scheme, and $\calO_X$ denotes the structure sheaf of $X$. 
+\begin{definition}
+A \emph{surface} is a variety of dimension 1. A \emph{surface} is a variety of dimension 2. In both cases here, dimension refers to the dimension of the scheme's underlying topological space.
+\end{definition}
+In order to move towards discussing rational points, we will need to introduce the concept of base extension. Before this though, we present the definition of the fiber product using a universal mapping property.
+\begin{definition}
+Let $S$ be a scheme, and suppose that $X$ and $Y$ are $S$-schemes. The \emph{fiber product} $X\times_S Y$ of $X$ and $Y$ over $S$ is a scheme along with morphisms $p_1:X\times_S Y\to X, p_2:X\times_S Y\to Y$ such that the diagram in Fig.~\ref{fibDiag} commutes. Furthermore, if there is a scheme $Z$ and morphisms $\varphi:Z\to X, \eta:Z\to Y$ making the diagram commute, then there is a unique $\theta:Z\to X\times_S Y$ such that $\varphi=p_1\circ\theta$ and $\eta=p_2\circ\theta$. Lastly, if we have schemes $X$ and $Y$ without referencing a base scheme $S$, then we define the fiber product $X\times Y$ to be $X\times_{\Spec\ZZ} Y$, since any scheme admits a morphism to $\Spec\ZZ$.
+\begin{figure}
+\centering
+\begin{tikzcd}
+Z\arrow[bend left]{drr}{\varphi} \arrow[bend right]{ddr}{\eta} \arrow[dotted]{dr}{\exists!\theta} & &\\
+& X\times_S Y \arrow{d}{p_2} \arrow{r}{p_1} & X \arrow{d}{f_X} \\
+& Y \arrow{r}{f_Y} & S
+\end{tikzcd}
+\caption{A commutative diagram describing the fiber product. Here, $f_Y$ and $f_X$ denote the structure morphisms as in Def.~\ref{schemeOverDef}.}
+\label{fibDiag}
+\end{figure}
+\end{definition}
+\begin{theorem}
+For schemes $X,Y$ defined over a scheme $S$, the fiber product $X\times_S Y$ exists and is unique up to unique isomorphism
+\end{theorem}
+\begin{proof}
+See \cite{hartshorne}, Theorem 3.3.
+\end{proof}
+With this definition and existence in hand, we present some uses of the fiber product.
+\begin{definition}
+Let $f:X\to Y$ be a morphism of schemes, $y\in Y$ a point, and let $k(y)$ denote the residue field of $y$. Then we define the \emph{fiber of $f$ over $y$} to be $X_y=X\times_Y\Spec(k(y))$. This definition makes sense, since we have a natural map $\Spec(k(y))\hookrightarrow Y$. The fiber $X_y$ is a $k(y)$-scheme, and its topological space is homeomorphic to $f^{-1}(y)\subseteq X$.
+\end{definition}
+\noindent The most common usage of this notion of fiber occurs when we have a scheme $X$ defined over some commutative ring $A$, and want to consider the fiber over some prime ideal $\mathfrak{p}\in\Spec A$. In this case, the fiber $X_\mathfrak{p}$ is called the \emph{reduction of $X$ mod $\mathfrak{p}$}. 
+
+Perhaps the most relevant application of the fiber product for this thesis is base extension. We will be looking at equations defined over $\QQ$, but will also want to find all possible solutions to those equations by looking to extensions of $\QQ$.
+\begin{definition}
+For a variety $X$ defined over a field $k$, and a field extension $L$ of $k$, we define $X_L=X\times_k L$ to be the \emph{base extension} of $X$ by $L$.
+\end{definition}
+\noindent In practice, we perform base extension simply by considering the defining equations of $X$ to be defined over $L$ rather than over $k$. Importantly, we note that base extension may change some properties of $X$ as a scheme.
+
+\begin{example}
+Let $X$ be the variety defined by the equation $x^2-2y^2=0$ over $\QQ$. This $X$ is both irreducible and integral, since $x^2-2y^2$ is irreducible over $\QQ[x,y]$. But, the extension $X_{\overline{\QQ}}$ of $X$ by $\overline{\QQ}$ is not irreducible, since $X_{\overline{\QQ}}$ is the union of the lines $x-\sqrt{2}y=0, x+\sqrt{2}y=0$.
+\end{example}
+
+\begin{definition}
+If we have some property $P$ and a $k$-variety $X$, then we say that $X$ is \emph{geometrically} $P$ if $P$ holds for the extension $X_{\overline{k}}$ of $X$ by some algebraic closure $\overline{k}$ of $k$.
+\end{definition}
+\noindent Letting $X$ be as in the previous example, we have that $X$ is irreducible but not geometrically irreducible.
+
+\chapter{Rational points on varieties}
+Suppose that $X$ is a subvariety of $n$-dimensional affine space $\Affine^n_k$ over some algebraically closed field $k$ and $n\geq1$. Further suppose that $X$ is defined by a set of polynomial equations $f_i(x_1,\ldots,x_n)=0$ for $i=1,\ldots,m, m\geq1.$  A \emph{$k$-rational point} on $X$ is an $n$-tuple $a=(a_1,\ldots,a_n)\in k^n$ such that \[f_1(a_1,\ldots,a_n)=f_2(a_1,\ldots,a_n)=\cdots=f_m(a_1,\ldots,a_n)=0.\] 
+In terms of local data, the above means that the residue field $k(a)$ at the point $a$ is isomorphic to the base field $k$. This is notable, because if $k$ is algebraically closed, then the set of all closed points is exactly the set of $k$-rational points. If $k$ is not algebraically closed, then for a $k$-variety $X$, a closed point $x$ of $X$ could have residue field either isomorphic to $k$ or isomorphic to a finite extension of $k$. 
+Notably, we can describe the set of these points in terms of morphisms in the following way.
+\begin{proposition}
+Given a variety $X$, the set of $k$-rational points of $X$ is in bijection with the set of morphisms of $k$-schemes $\Spec k\to X$.
+\end{proposition}
+\begin{proof}
+Supposing that $x\in X$ is $k$-rational, we have that $k(x)=\calO_{X,x}/\mathfrak{m}_{X,x}$. The natural surjection $\calO_{X,x}\to k(x)$ induces a map $\Spec k(x)\to\Spec\calO_{X,x}$. This composes with the map $\Spec\calO_{X,x}\to X$ obtained in the following way. Given any affine open neighborhood $U$ of $x$, we have a ring homomorphism $\calO_X(U)\to\calO_{X,x}$ obtained by localization. This induces a map $\Spec\calO_{X,x}\to U$ which composes with the open immersion $U\to X$, yielding $\Spec\calO_{X,x}\to X$ (This does not depend on the choice of $U$). Thus we have a morphism $\Spec k(x)\to X$, and since $k(x)\cong k$, we also get a map $\Spec k\to X$. In terms of sets, this is the unique map sending the point of $\Spec k$ to the point $x$.
+
+Conversely, suppose we have a morphism $\varphi:\Spec k\to X$, and let the image of the point of $\Spec k$ be $x$. Then the local homomorphism $\varphi^\#: k(x)\to k$ is in fact a field homomorphism, and since $k(x)$ is a $k$-algebra, we get $k(x)\cong k$.
+\end{proof}
+
+With this, we define the set of $k$-rational points of a variety $X$.
+
+\begin{definition}
+Given a variety $X$ over a field $k$, the set of $k$-rational points, or $k$-points, is the set of $k$-scheme morphisms from $\Spec k\to X$, and is denoted $X(k)$.
+\end{definition}
+\backmatter 
+\nocite{*}
+
+\bibliographystyle{alpha}  % or
+\bibliography{thesis}
+
+\end{document}
