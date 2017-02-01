@@ -90,9 +90,9 @@ If we speak about an algebraic object as a scheme, we are referring to that obje
 A \emph{variety} is a separated scheme of finite type over a field $k$. \label{varDef}
 \end{definition}
 \noindent The classical definition of a variety usually only deals with quasiprojective varieties, but the one presented here is more general. These varieties locally look quasiprojective, but globally may not have any sort of natural projective embedding. We will sometimes refer to a variety $X$ as an ordered pair $(X,\calO_X)$, where $X$ denotes the underlying topological space of the scheme, and $\calO_X$ denotes the structure sheaf of $X$. 
-\begin{definition}
-A \emph{curve} is a variety of dimension 1. A \emph{surface} is a variety of dimension 2. In both cases here, dimension refers to the dimension of the scheme's underlying topological space.
-\end{definition}
+%\begin{definition}
+%A \emph{curve} is a variety of dimension 1. A \emph{surface} is a variety of dimension 2. In both cases here, dimension refers to the dimension of the scheme's underlying topological space.
+%\end{definition}
 In order to move towards discussing rational points, we will need to introduce the concept of base extension. Before this though, we present the definition of the fiber product using a universal mapping property.
 \begin{definition}
 Let $S$ be a scheme, and suppose that $X$ and $Y$ are $S$-schemes. The \emph{fiber product} $X\times_S Y$ of $X$ and $Y$ over $S$ is a scheme along with morphisms $p_1:X\times_S Y\to X, p_2:X\times_S Y\to Y$ such that the diagram in Fig.~\ref{fibDiag} commutes. Furthermore, if there is a scheme $Z$ and morphisms $\varphi:Z\to X, \eta:Z\to Y$ making the diagram commute, then there is a unique $\theta:Z\to X\times_S Y$ such that $\varphi=p_1\circ\theta$ and $\eta=p_2\circ\theta$. Lastly, if we have schemes $X$ and $Y$ without referencing a base scheme $S$, then we define the fiber product $X\times Y$ to be $X\times_{\Spec\ZZ} Y$, since any scheme admits a morphism to $\Spec\ZZ$.
@@ -167,6 +167,22 @@ For a ringed space $X$, the set of isomorphism classes of invertible sheaves for
 The Picard group of $X$ is naturally isomorphic to $H^1(X,\calO_X^*)$, the first sheaf cohomology group of $X$ with coefficients in $\calO_X^*$.
 \end{remark}
 \noindent If $X$ is a noetherian integral variety all of whose local rings are unique factorization domains, then $\Cl X\cong \Pic X$. We will not prove this here, but it importantly points out that the Picard group generalizes the divisor class group.
+\section{Surfaces}
+In this section we present results specific to surfaces, rather than the abstract varieties of previous sections.
+\begin{definition}
+A \emph{surface} is a smooth projective variety of dimension 2. A \emph{curve} on a surface will be any effective divisor on the surface. A \emph{point} is a closed point.
+\end{definition}
+
+From here we discuss how curves intersect on a surface. If $C$ and $D$ are divisors corresponding to curves on a surface $X$, then $C$ and $D$ intersect \emph{transversally} at some common point $P$ if $C$ and $D$ have local equations $f,g$ at $P$ such that $f,g$ generate the maximal ideal $\mathfrak{m}_p$ of $\calO_{X,p}$. We would like to have a function that counts the points at which two curves meet transversally.
+\begin{theorem}
+There is a unique map $\Div X\times \Div X\to\ZZ$, denoted by $C.D$ for divisors $C,D$ with the properties:
+\begin{enumerate}
+\item If $C$ and $D$ are curves meeting transversally, then $C.D=\#(C\cap D)$,
+\item $C.D=D.C$,
+\item $(C_1+C_2).D=C_1.D+C_2.D$,
+\item if $C_1\sim C_2$ then $C_1.D=C_2.D$.
+\end{enumerate}
+\end{theorem}
 \chapter{Rational points on varieties}
 Suppose that $X$ is a subvariety of $n$-dimensional affine space $\Affine^n_k$ over some algebraically closed field $k$ and $n\geq1$. Further suppose that $X$ is defined by a set of polynomial equations $f_i(x_1,\ldots,x_n)=0$ for $i=1,\ldots,m, m\geq1.$  A \emph{$k$-rational point} on $X$ is an $n$-tuple $a=(a_1,\ldots,a_n)\in k^n$ such that \[f_1(a_1,\ldots,a_n)=f_2(a_1,\ldots,a_n)=\cdots=f_m(a_1,\ldots,a_n)=0.\] 
 In terms of local data, the above means that the residue field $k(a)$ at the point $a$ is isomorphic to the base field $k$. This is notable, because if $k$ is algebraically closed, then the set of all closed points is exactly the set of $k$-rational points. If $k$ is not algebraically closed, then for a $k$-variety $X$, a closed point $x$ of $X$ could have residue field either isomorphic to $k$ or isomorphic to an extension of $k$. 
