@@ -1,6 +1,6 @@
 \documentclass[12pt,twoside]{reedthesis}
 \usepackage{graphicx,latexsym, caption, subcaption} 
-\usepackage{amssymb,amsthm,amsmath}
+\usepackage{amssymb,amsthm,amsmath,mathrsfs}
 \usepackage{longtable,booktabs,setspace} 
 \usepackage[hyphens]{url}
 \usepackage{rotating}
@@ -32,6 +32,7 @@
 \newcommand{\sheafF}{\mathcal{F}}
 \newcommand{\sheafG}{\mathcal{G}}
 \newcommand{\RR}{\mathbb{R}}
+\newcommand{\FF}{\mathbb{F}}
 \newcommand{\CC}{\mathbb{C}}
 \newcommand{\Proj}{\mathbb{P}}
 \newcommand{\calC}{\mathcal{C}}
@@ -49,6 +50,8 @@
 \newcommand{\Br}{\operatorname{Br}}
 \newcommand{\Pic}{\operatorname{Pic}}
 \renewcommand{\div}{\operatorname{div}}
+\newcommand*{\sheafhom}{\mathscr{H}\kern -.5pt om}
+\newcommand{\Az}{\operatorname{Az}}
 
 \title{Arithmetic Computations on K3 Surfaces}
 \author{Christopher Keane}
@@ -81,22 +84,20 @@
 In this chapter we introduce some general facts from modern algebraic geometry, and basic results of surface theory. Our goal is to develop some familiarity with the language of modern algebraic geometry and introduce the invariants most commonly used to study surfaces and their rational points.
 
 \section{Properties of varieties}
-In general, a \emph{variety} can be thought of as the set of solutions to a set of equations defined over some field. Historically, the study of such objects had roots in algebra. Mathematicians found that in order to obtain useful information about a variety, it is helpful to also consider the variety's corresponding coordinate ring equipped with the Zariski topology. This allowed mathematicians to bring the vast theory of commutative algebra to bear on geometric questions. With the development of category theory, mathematicians like Alexander Grothendieck and Jean-Paul Serre saw fit to reformulate the theory of algebraic geometry using category theory, giving rise to the language of schemes. This shifted the fundamental object of the field from sets of solutions to equations to topological spaces equipped with sheaves. Since the language of schemes is ubiquitous in the modern study of geometry, it is the language we will be using throughout this thesis to talk about varieties.
+In general, a \emph{variety} can be thought of as the set of solutions to some number of polynomial equations defined over some field. Historically, the study of such objects had roots in algebra and geometry. In order to obtain useful information about a variety, it is helpful to also consider the variety's corresponding coordinate ring equipped with the Zariski topology. This allows one to bring the vast theory of commutative algebra to bear on geometric questions. With the development of category theory, mathematicians like Alexander Grothendieck and Jean-Pierre Serre saw fit to reformulate the theory of algebraic geometry using category theory, giving rise to the language of schemes. This shifted the fundamental object of the field from sets of solutions to equations to topological spaces equipped with sheaves. The techniques developed by Grothendieck and Serre lead to the solutions of several long unsolved geometric problems, and so many mathematicians decided to follow their lead and learn this new, highly abstract theory. The language of schemes is ubiquitous in the modern study of geometry, it is the language we will be using throughout this thesis to talk about varieties.
 \begin{definition}
 For a fixed scheme $S$, a \emph{scheme over $S$} is a scheme $X$ along with a morphism $X\to S$ called the structure morphism of $X$. In this case, we may refer to $X$ as an $S$-scheme. If we have two $S$-schemes $X$ and $Y$, then an $S$-morphism from $X$ to $Y$ is a morphism $X\to Y$ that is compatible with the structure morphisms of $X$ and $Y$.\label{schemeOverDef}
 \end{definition}
-If we speak about an algebraic object as a scheme, we are referring to that object's spectrum of prime ideals. For example, if $X$ is a scheme, $A$ is a commutative ring, and we refer to a morphism $X\to A$, we mean to speak about a morphism $X\to\Spec A$. Similarly, if we define $X$ to be an $A$-scheme, the structure morphism goes from $X$ to $\Spec A$.
+\noindent If we speak about an algebraic object as a scheme, we are referring to that object's spectrum of prime ideals. For example, if $X$ is a scheme, $A$ is a commutative ring, and we refer to a morphism $X\to A$, we mean to speak about a morphism $X\to\Spec A$. Similarly, if we define $X$ to be an $A$-scheme, the structure morphism goes from $X$ to $\Spec A$. Many of the definitions in this thesis will be stated for general schemes as above, although the objects of interest are not general schemes but varieties.
 \begin{definition}
 A \emph{variety} is a separated scheme of finite type over a field $k$. \label{varDef}
 \end{definition}
-\noindent The classical definition of a variety usually only deals with quasiprojective varieties, but the one presented here is more general. These varieties locally look quasiprojective, but globally may not have any sort of natural projective embedding. We will sometimes refer to a variety $X$ as an ordered pair $(X,\calO_X)$, where $X$ denotes the underlying topological space of the scheme, and $\calO_X$ denotes the structure sheaf of $X$. 
-%\begin{definition}
-%A \emph{curve} is a variety of dimension 1. A \emph{surface} is a variety of dimension 2. In both cases here, dimension refers to the dimension of the scheme's underlying topological space.
-%\end{definition}
-In order to move towards discussing rational points, we will need to introduce the concept of base extension. Before this though, we present the definition of the fiber product using a universal mapping property.
+This definition of variety is more general than the classical notion, which involves quasiprojective varieties. The class of quasiprojective varieties is large, but the language of schemes allows for slightly more generality. The varieties defined here locally look quasiprojective, but globally may not have any sort of natural projective embedding. We will sometimes refer to a variety $X$ as an ordered pair $(X,\calO_X)$, where $X$ denotes the underlying topological space of the scheme, and $\calO_X$ denotes the structure sheaf of $X$. 
+
+Our goal with this chapter is to move towards discussing rational points on varieties. In doing so, we need to introduce the concept of base extension.
 \begin{definition}
-Let $S$ be a scheme, and suppose that $X$ and $Y$ are $S$-schemes. The \emph{fiber product} $X\times_S Y$ of $X$ and $Y$ over $S$ is a scheme along with morphisms $p_1:X\times_S Y\to X, p_2:X\times_S Y\to Y$ such that the diagram in Fig.~\ref{fibDiag} commutes. Furthermore, if there is a scheme $Z$ and morphisms $\varphi:Z\to X, \eta:Z\to Y$ making the diagram commute, then there is a unique $\theta:Z\to X\times_S Y$ such that $\varphi=p_1\circ\theta$ and $\eta=p_2\circ\theta$. Lastly, if we have schemes $X$ and $Y$ without referencing a base scheme $S$, then we define the fiber product $X\times Y$ to be $X\times_{\Spec\ZZ} Y$, since any scheme admits a morphism to $\Spec\ZZ$.
-\begin{figure}
+Let $S$ be a scheme, and suppose that $X$ and $Y$ are $S$-schemes. The \emph{fiber product} $X\times_S Y$ of $X$ and $Y$ over $S$ is a scheme along with morphisms $p_1:X\times_S Y\to X, p_2:X\times_S Y\to Y$ such that the diagram in Fig.~\ref{fibDiag} commutes. Furthermore, if there is a scheme $Z$ and morphisms $\varphi:Z\to X, \eta:Z\to Y$ making the diagram commute, then there is a unique $\theta:Z\to X\times_S Y$ such that $\varphi=p_1\circ\theta$ and $\eta=p_2\circ\theta$. Lastly, if we have schemes $X$ and $Y$ without referencing a base scheme $S$, then we define the product $X\times Y$ to be $X\times_{\Spec\ZZ} Y$, since any scheme admits a morphism to $\Spec\ZZ$.
+\begin{figure}[h]
 \centering
 \begin{tikzcd}
 Z\arrow[bend left]{drr}{\varphi} \arrow[bend right]{ddr}{\eta} \arrow[dotted]{dr}{\exists!\theta} & &\\
@@ -111,7 +112,7 @@ Z\arrow[bend left]{drr}{\varphi} \arrow[bend right]{ddr}{\eta} \arrow[dotted]{dr
 For schemes $X,Y$ defined over a scheme $S$, the fiber product $X\times_S Y$ exists and is unique up to unique isomorphism
 \end{theorem}
 \begin{proof}
-See \cite{hartshorne}, Theorem 3.3.
+See \cite{hartshorne}, Ch. II, Theorem 3.3.
 \end{proof}
 With this definition and existence in hand, we present some uses of the fiber product.
 \begin{definition}
@@ -140,39 +141,48 @@ In this section we assume throughout that $X$ is an noetherian, integral variety
 \begin{definition}
 A \emph{prime divisor} on $X$ is a closed integral subvariety of codimension one. A \emph{Weil divisor} is an element of the free abelian group $\Div X$ generated by the prime divisors. 
 \end{definition}
-A divisor $D$ is written as a formal linear combination $D=\sum n_i Y_i$, where the sum runs over all prime divisors, each $n_i\in\ZZ$, and only finitely many of the $n_i$ are nonzero. If each $n_i\geq 0$, then we say that $D$ is effective.
+A divisor $D$ is written as a formal linear combination $D=\sum n_i Y_i$, where the sum runs over all prime divisors, each $n_i\in\ZZ$, and only finitely many of the $n_i$ are nonzero. If each $n_i\geq 0$, then we say that $D$ is effective. This way of expressing divisors allows for a natural partial order to be put on $\Div X$. Indeed, if we have $D_1=\sum n_i Y_i, D_2=\sum m_i Y_i$, then we say $D_1\leq D_2$ if and only if we have $n_i\leq m_i$ for all $i$.
 
-For $Y$ a prime divisor on $X$, suppose that $\eta$ is the generic point of $X$. Then the local ring $\calO_{\eta, X}$ is a discrete valuation ring, and its field of fractions is equal to the function field of the variety $X$. From these local rings, we obtain valuations $v_Y$ for each prime divisor $Y$. For a nonzero  rational function $f$ on $X$, we have $v_Y(f)\in\ZZ$ for all prime divisors $Y$. If $v_Y(f)>0$, we say that $f$ has a \emph{zero} along $Y$, and if $v_Y(f)<0$, we say that $f$ has a \emph{pole} along $Y$.
+For $Y$ a prime divisor on $X$, suppose that $\eta$ is the generic point of $Y$. Then the local ring $\calO_{\eta, X}$ is a discrete valuation ring, and its field of fractions is equal to the function field of the variety $X$. From these local rings, we obtain valuations $v_Y$ for each prime divisor $Y$. For a nonzero  rational function $f$ on $X$, we have $v_Y(f)\in\ZZ$ for all prime divisors $Y$. If $v_Y(f)>0$, we say that $f$ has a \emph{zero} along $Y$, and if $v_Y(f)<0$, we say that $f$ has a \emph{pole} along $Y$.
 
 \begin{definition}
 Let $f$ be a nonzero rational function on $X$. The \emph{divisor} of $f$, $\div(f)$ is given by $\div(f)=\sum v_Y(f)\cdot Y$, with the sum ranging over all prime divisors $Y$. A divisor $D\in\Div X$ is \emph{principal} if there is some rational function $f$ on $X$ such that $D=\div(f)$. The set of principal divisors forms a subgroup of $\Div X$.
 \end{definition}
 
-\noindent The assignment $f\mapsto\div(f)$ is a group homomorphism from the group of nonzero rational functions $K^*$ to $\Div X$. 
+\noindent The assignment $f\mapsto\div(f)$ is a group homomorphism from the group of nonzero rational functions $K^*$ on $X$ to $\Div X$. 
+
+\begin{remark}
+Suppose that $X$ is a $k$-variety. It is often useful to be able to think about the set of all divisors that share some common properties with a fixed divisor $D$ on $X$. To do this, we define \[\mathcal{L}(D)=\{f\in K^\times: \div(f)\geq -D\}\cup\{0\},\] where $K$ denotes the function field of $X$. This is called the \emph{Riemann-Roch space} of $D$, and it is a vector space over $k$. From each of these vector spaces, we note that we can obtain a corresponding sheaf $\mathcal{L}_D$ as follows. Since $D$ is defined on $X$, we can restrict $D$ to any open set $U\subseteq X$ and obtain a divisor $D|_U$ on $U$. For each regular function $g\in\calO_X(U)$ and $f\in\mathcal{L}(D)$, we note that $fg\in\mathcal{L}(D)$, since the regularity of $g$ implies $g\geq0$. This multiplication gives $\mathcal{L}(D)$ a module structure, and in fact gives rise to an isomorphism between $\mathcal{L}(D)$ and $\calO_X(U)$. This isomorphism and module structure is enough for us to conclude that the vector space $\mathcal{L}(D)$ can also be viewed as a sheaf.
+\end{remark}
 
 \begin{definition}
 For two divisors $D,D'$ on $X$, we say that $D$ and $D'$ are \emph{linearly equivalent}, denoted $D\sim D'$ if $D-D'$ is principal. Taking $\Div X$ modulo the subgroup of principal divisors yields the \emph{divisor class group of $X$}, which is denoted by $\Cl X$.
 \end{definition}
 
-The divisor class group is an important geometric invariant that behaves similarly to the ideal class group of number theory. In fact, for $A$ a Dedekind domain, then $\Cl(\Spec A)$ is exactly the ideal class group of $A$. 
-
-Now we describe another invariant, closely related to the divisor class group. To do this, we need the definition of an invertible sheaf. Invertible sheaves are sometimes referred to as line bundles, but we will not use this terminology.
+The divisor class group is an important geometric invariant that behaves similarly to the ideal class group of number theory. In fact, if $A$ is a Dedekind domain, then $\Cl(\Spec A)$ is exactly the ideal class group of $A$. Now we describe another invariant, closely related to the divisor class group. To do this, we need the definition of an invertible sheaf. Invertible sheaves are sometimes referred to as line bundles, but we will not use this terminology.
 \begin{definition}
 For a ringed space $X$, an \emph{invertible sheaf} is a locally free $\calO_X$-module of rank one.
 \end{definition}
+\begin{remark}
+The local isomorphism between the ring of regular functions and the Riemann-Roch space in the previous remark tells us that each divisor defines an invertible sheaf.
+\end{remark}
 \begin{proposition}
 For a ringed space $X$, the set of isomorphism classes of invertible sheaves forms a group, called the \emph{Picard group} under the tensor product. The Picard group of $X$ is denoted $\Pic X$.
 \end{proposition}
 \begin{remark}
-The Picard group of $X$ is naturally isomorphic to $H^1(X,\calO_X^*)$, the first sheaf cohomology group of $X$ with coefficients in $\calO_X^*$.
+The Picard group of $X$ is naturally isomorphic to $H^1(X,\calO_X^*)$, the first sheaf cohomology group of $X$ with coefficients in $\calO_X^*$. We will not get into the details of sheaf cohomology, but this identification is widely used in classifying surfaces.
 \end{remark}
 \noindent If $X$ is a noetherian integral variety all of whose local rings are unique factorization domains, then $\Cl X\cong \Pic X$. We will not prove this here, but it importantly points out that the Picard group generalizes the divisor class group.
+
 \section{Surfaces}
+\subsection{Intersections on surfaces}
 In this section we present results specific to surfaces, rather than the abstract varieties of previous sections.
 \begin{definition}
 A \emph{surface} is a smooth projective variety of dimension 2. A \emph{curve} on a surface will be any effective divisor on the surface. A \emph{point} is a closed point.
 \end{definition}
-
+\begin{definition}
+The \emph{canonical sheaf} of a surface $X$ over $k$ is written $\omega_X$ and defined as $\omega_X=\bigwedge^2\Omega_{X/k}$, where $\Omega_{X/k}$ is the sheaf of differentials on $X$ defined over $k$. The canonical sheaf is invertible, and can be thought of as the space of all 2-forms on the surface. (Similarly, $\Omega_{X/k}$ can be thought of as the space of 1-forms.) Any divisor $K$ whose linear equivalence class in $\Pic X$ corresponds to $\omega_X$ is a \emph{canonical divisor}.
+\end{definition}
 From here we discuss how curves intersect on a surface. If $C$ and $D$ are divisors corresponding to curves on a surface $X$, then $C$ and $D$ intersect \emph{transversally} at some common point $P$ if $C$ and $D$ have local equations $f,g$ at $P$ such that $f,g$ generate the maximal ideal $\mathfrak{m}_p$ of $\calO_{X,p}$. We would like to have a function that counts the points at which two curves meet transversally.
 \begin{theorem}
 There is a unique map $\Div X\times \Div X\to\ZZ$, denoted by $C.D$ for divisors $C,D$ with the properties:
@@ -183,8 +193,87 @@ There is a unique map $\Div X\times \Div X\to\ZZ$, denoted by $C.D$ for divisors
 \item if $C_1\sim C_2$ then $C_1.D=C_2.D$.
 \end{enumerate}
 \end{theorem}
-\chapter{Rational points on varieties}
-Suppose that $X$ is a subvariety of $n$-dimensional affine space $\Affine^n_k$ over some algebraically closed field $k$ and $n\geq1$. Further suppose that $X$ is defined by a set of polynomial equations $f_i(x_1,\ldots,x_n)=0$ for $i=1,\ldots,m, m\geq1.$  A \emph{$k$-rational point} on $X$ is an $n$-tuple $a=(a_1,\ldots,a_n)\in k^n$ such that \[f_1(a_1,\ldots,a_n)=f_2(a_1,\ldots,a_n)=\cdots=f_m(a_1,\ldots,a_n)=0.\] 
+\noindent If $C$ and $D$ are curves on $X$ with no common irreducible component and $P\in C\cap D$, then the \emph{intersection multiplicity} at $P$, $(C.D)_P$ is defined as the length of $\calO_{X,P}/(f,g)$ considered as a module over $\calO_{X,P}$.
+\begin{proposition}
+ If $C$ and $D$ are curves on a surface $X$, then $C.D=\sum_{P\in C\cap D} (C.D)_P$.
+\end{proposition}
+For a curve $C$ on $X$, we can also talk about $C.C$, or $C^2$, the \emph{self-intersection} number of $C$. We define the self-intersection as \[C^2=\deg_C(\mathscr{N}_{C/X}),\] where here deg is defined in terms of Euler characteristic, and $\mathscr{N}_{C/X}$ is the \emph{normal sheaf} of $C$ in $X$. Importantly, this definition allows for curves having \emph{negative} self-intersection. (COMMENT ON THIS)
+
+We include some standard theorems here that are generally useful for performing computations on varieties using divisors.
+\begin{proposition}[Adjunction formula]
+If $C$ is a nonsingular curve of genus $g$ on $X$, and $K$ is the canonical divisor on $X$, then we have
+\[2g-2=C.(C+K).\]
+\end{proposition}
+\noindent This formula describes concretely how curves on a surface interact with the surface's canonical divisor.
+The following theorem is a celebrated result of algebraic geometry, it demonstrates a strong connection between the topological and algebraic properties of a variety. To present the theorem, we need some notational conventions: for a divisor $D$ on $X$, we let $\ell(D)=\dim_k H^0(X,\mathcal{L}(D))$, $s(D)=\dim_k H^1(X,\mathcal{L}(D))$, and $p_a=\chi(\calO_X)-1$.
+\begin{remark}
+This $p_a$ is called the \emph{arithmetic genus} of $X$. There is also $p_g$, the \emph{geometric genus} of $X$, which is defined as $p_g(X)=\dim_k H^2(X,\calO_X)$.
+\end{remark}
+\begin{theorem}[Riemann-Roch]
+For any divisor $D$ on $X$, we have \[\ell(D)-s(D)+\ell(K-D)=\frac{1}{2}D.(D-K)+1+p_a.\]
+\end{theorem}
+
+\subsection{Classification of surfaces}
+In this section we describe different classes of surfaces. In this section $X$ will be a projective surface over a field $k$, with $\text{char}(k)\neq2,3$, and we denote the canonical divisor of $X$ by $K$.
+\begin{definition}
+The \emph{Kodaira dimension} $\kappa(X)$ is defined as the transcendence degree of the so-called \emph{canonical ring}:
+\[R=\bigoplus_{n\geq0}H^0(X,\mathcal{L}(nK))\]
+minus 1. So $\kappa(X)=\text{trdeg}_k(R)-1$. Both the canonical ring and the Kodaira dimension of $X$ are birational invariants. An alternative definition of $\kappa(X)$ is the largest dimension of the image of $X$ in $\Proj^N$ (for suitable $N$) under the map determined by the linear system $|nK|$ for some $n\geq1$, or $\kappa(X)=-1$ if $|nK|=\emptyset$ for all $n\geq1$.
+\end{definition}
+Surfaces are classified by their Kodaira dimensions, and fall into several categories. This classification is usually split into several results, which we present now.
+\begin{theorem}[Surfaces with $\kappa(X)=-1$]
+If $X$ is \emph{rational} or \emph{ruled}, then $\kappa(X)=-1$, which is equivalent to $|12K|=\emptyset$.
+\end{theorem}
+\begin{theorem}[Surfaces with $\kappa(X)=0$]
+We have that \[\kappa(X)=0\iff 12K=0.\] A surface in this class fits into one of four descriptions:
+\begin{enumerate}
+\item a \emph{K3 surface}, which has $K=0$, and $p_a=p_g=1$,
+\item an \emph{Enriques surface}, which has $2K=0$ and $p_a=p_g=0$,
+\item an \emph{abelian variety of dimension 2}, which has $p_a=-1,p_g=1$, or
+\item a \emph{hyperelliptic surface}, which is a surface $X$ with a morphism $X\to\Proj^1$ such that the preimage of $\Proj^1$ is a family of elliptic curves on $X$.
+\end{enumerate}
+\end{theorem}
+\begin{theorem}[Surfaces with $\kappa(X)=1$]
+If $\kappa(X)=1$, then $X$ is an \emph{elliptic surface}, which means that there is a morphism $X\to C$ for some curve $C$ such that almost all fibers of the morphism are nonsingular elliptic curves.
+\end{theorem}
+\begin{theorem}[Surfaces with $\kappa(X)=2$]
+We have $\kappa(X)=2$ if and only if there is some $n>0$ such that the morphism determined by $|nK|$ from $X$ into $\Proj^N$ is birational. Such surfaces are referred to as \emph{surfaces of general type}. 
+\end{theorem}
+
+\chapter{Arithmetic}
+This chapter reviews the motivation and theory behind the search for rational points. Many classical problems in number theory arise from trying to solve equations over $\ZZ$ or $\QQ$. These are referred to as ``Diophantine problems". The most well-known Diophantine problem is Fermat's last theorem.
+\begin{theorem}[Fermat's last theorem]
+For a positive integer $n>2$, the equation \[x^n+y^n=1\] has no nontrivial solutions $x,y\in\QQ$.
+\end{theorem}
+\noindent Fermat first wrote down this assertion in 1637, and but it was not proved until 1995 by Andrew, using techniques from algebraic geometry as well as number theory. We will not be delving into the precise methods used to prove Fermat's last theorem, but the general methods used to attack such a problem are highly relevant to this thesis.
+\section{Hensel's lemma and local solubility}
+Given a function $F(X_1,\ldots,X_n)\in\ZZ[X_1,\ldots,X_n]$, it is in general extremely difficult to determine if there exists nontrivial $(a_1,\ldots,a_n)\in\ZZ^n$ such that $F(a_1,\ldots,a_n)=0$. It is easier to begin looking at \[F(X_1,\ldots,X_n)\equiv0\bmod p,\] where $p$ denotes a prime number. If such a solution exists, one may look at varying $p$, or by looking mod $p^k$ for some $k>1$. Following the latter path leads naturally to wondering if we can describe solutions $F(X_1,\ldots,X_n)\equiv0\bmod p^k$ for all $k\in\ZZ^+$, and where such solutions would live. Hensel's lemma is the result at the start of this investigation.
+\begin{theorem}[Hensel's lemma]
+Let $f\in\ZZ[X]$ be a polynomial, and suppose that we have $k,n\in\ZZ$ with $0\leq2k<n$ and $x\in\ZZ$ such that
+\begin{align*}
+f(x)&=0\bmod p^n,\\
+f'(x)&=0\bmod p^k,\\
+f'(x)&\neq0\bmod p^{k+1}.
+\end{align*}
+Then there exists $y\in\ZZ$ such that 
+\begin{align*}
+y&=x\bmod p^{n-k},\\ f(y)&=0\bmod p^{n+1},\\ 
+f'(y)&=0\bmod p^k,\\ f'(y)&\neq0\bmod p^{k+1}.
+\end{align*}
+\end{theorem}
+This theorem lets us take a solution mod $p^k$ and obtain a new solution mod $p^{k+1}$. Iterating gives a sequence of solutions mod $p^n$ for arbitrarily large $n$. Ultimately, we obtain a solution $x_\infty$ that solves the equation mod $p^k$ for all $k$. This solution is not a normal integer, but a so-called \emph{$p$-adic integer}.
+\begin{definition}
+Given a prime number $p$, the \emph{$p$-adic integers}, denoted $\ZZ_p$ are defined as the projective limit:\[\ZZ_p=\varprojlim_n\ZZ/p^n\ZZ.\] The \emph{$p$-adic field}, denoted $\QQ_p$ is defined as the field of fractions of $\ZZ_p$, \[\QQ_p=\Frac\ZZ_p.\]
+\end{definition} 
+An alternative and possibly helpful definition/characterization of the $p$-adic integers is as the set of formal power series in $p$ with integer coefficients, $\ZZ[[X]]/(X-p)$. This definition is equivalent to the one given above. 
+When determining if an equation has solutions in $\ZZ$ or $\QQ$, beginning the search in $\ZZ_p$ or $\QQ_p$ is common. Any such solutions found are referred to as \emph{local solutions}, while solutions found in $\ZZ$ or $\QQ$ are referred to as \emph{global solutions}. One would hope that being able to find local solutions in $\ZZ_p$ or $\QQ_p$ for all $p$ would imply the existence of a global solution, but sadly this is not true in general. An equation for which this implication does not hold is said to be \emph{locally soluble} but not \emph{globally soluble}. We demonstrate an example of a locally but not globally soluble equation.
+
+\begin{example}
+Define $f(X)\in\ZZ[X]$ by \[f(X)=(X^2-13)(X^2-17)(X^2-221).\] It is clear that this equation has no solutions in the integers, since there are no integers that square to 13, 17, or 221. There are, however, $p$-adic solutions for any $p$. Noting that $221=13\cdot 17$ and supposing that $p$ is an \emph{odd} prime different from $13,17$, we have that \[\left(\frac{13}{p}\right)\left(\frac{17}{p}\right)=\left(\frac{221}{p}\right),\] since the Legendre symbol is multiplicative in its top argument. Each term in this expression is either 1 or $-1$. Supposing that neither 13 nor 17 is a square mod $p$, the multiplicativity gives that 221 must be a square mod $p$. So, if $p$ is not 13 or 17, then the equation has solutions mod $p$. If $p=13$, then $17=2^2\bmod13$, so the equation is solvable mod 13, and if $p=17$, then $13=8^2\bmod17$, and so the equation is solvable mod 17. From here we have enough to satisfy the hypotheses of Hensel's lemma, which gives the local solutions at all odd $p$. For $p=2$, we start by noticing that $17=1=5^2\bmod 8$, so that the equation has a solution mod $2^3$. This also works mod 2 and mod 4, which allows us to obtain the conditions necessary to apply Hensel's lemma and obtain a 2-adic solution. So, $f$ has solutions in $\ZZ_p$ for any prime $p$, but no solutions in $\ZZ$.
+\end{example}
+
+\section{Rational points on varieties}
+Suppose that $X$ is a subvariety of $n$-dimensional affine space $\Affine^n_k$ over some algebraically closed field $k$ and $n\geq1$. Further suppose that $X$ is defined by a set of polynomial equations $f_i(X_1,\ldots,X_n)=0$ for $i=1,\ldots,m,$ with $m\geq1.$  A \emph{$k$-rational point} on $X$ is an $n$-tuple $a=(a_1,\ldots,a_n)\in k^n$ such that \[f_1(a_1,\ldots,a_n)=f_2(a_1,\ldots,a_n)=\cdots=f_m(a_1,\ldots,a_n)=0.\] 
 In terms of local data, the above means that the residue field $k(a)$ at the point $a$ is isomorphic to the base field $k$. This is notable, because if $k$ is algebraically closed, then the set of all closed points is exactly the set of $k$-rational points. If $k$ is not algebraically closed, then for a $k$-variety $X$, a closed point $x$ of $X$ could have residue field either isomorphic to $k$ or isomorphic to an extension of $k$. 
 Notably, we can describe the set of these points in terms of morphisms in the following way.
 \begin{proposition}
@@ -200,6 +289,41 @@ With this, we define the set of $k$-rational points of a variety $X$.
 
 \begin{definition}
 Given a variety $X$ over a field $k$, the set of $k$-rational points, or $k$-points, is the set of $k$-scheme morphisms from $\Spec k\to X$, and is denoted $X(k)$.
+\end{definition}
+\noindent To connect the idea of rational points on a surface to the idea of local or global solubility, we add must change what we assume about the field of definition $k$. We want our fields of definition to allow the existence of local solutions, and while $\QQ$ is the prototype for this sort of existence, there is a larger class of fields that allows the completions that yielded the $p$-adic fields $\QQ_p$. Indeed, we will now be working with \emph{global fields}, which are finite extensions of $\QQ$ or $\FF_p(t)$. With $\QQ$, one obtains the $p$-adic fields from the valuations obtained from rational primes $p$. With global fields, the valuations that we complete with are referred to as \emph{places}.
+\begin{definition}
+Let $X$ be a variety defined over a global field $k$. If $X(k_v)\neq\emptyset$ for all places $v$ of $k$ implies that $X(k)\neq\emptyset$, then we say that $X$ satisfies the \emph{Hasse principle}.
+\end{definition}
+The varieties that we are interested in are those that do not satisfy the Hasse principle. If $X$ is such a variety, then we would like to find some way to explain the failure of $X$ to satisfy the Hasse principle.
+\section{The Brauer group}
+An historically fruitful way of investigating failures of the Hasse principle is due to Manin, who determined that the \emph{Brauer group} of a variety can contain such information. The Brauer group can be defined in terms of equivalence classes of algebras over the given field, or in terms of Galois cohomology. We will look at both of these interpretations.
+\subsection{Brauer groups of fields}
+\begin{definition}
+Given a field $k$, an \emph{Azumaya algebra} over $k$ is an associative $k$-algebra such that $A\otimes_k k_s\cong M_n(k_s)$ as $k$-algebras for some $n\geq1$, where $k_s$ denotes a fixed separable closure of $k$ and $M_n(k_s)$ is the algebra of $n\times n$ matrices with coefficients in $k$. 
+\end{definition}
+\noindent This definition highlights that these algebras can be thought of as ``twists" of matrix algebras.
+We would like to put some sort of group structure on these algebras, and to do so we need the following proposition, which requires some additional notation. For a field $k$, let $\Az_k$ be the category of Azumaya algebras over $k$. Here, the morphisms are $k$-algebra homomorphisms. Additionally, given $A$, denote the \emph{opposite algebra} of $A$ by $A^{\text{opp}}$. This $A^{op}$ is identical to $A$ as a $k$-vector space, but the vector multiplication $\cdot$ is defined as $a\cdot b=ba$, where on the right side the multiplication is that of $A$.
+\begin{proposition} For a field $k$, the following hold.
+\begin{enumerate} 
+\item If $A\in\Az_k$, then $A^{\text{opp}}\in\Az_k$.
+\item If $A,B\in\Az_k$, then $A\otimes_k B\in\Az_k$.
+\item For $A\in\Az_k$ and $L$ a field extension of $k$, then $A\otimes_k L\in\Az_L$.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+Is $(A\otimes_k k^s)^\text{op}\cong A^\text{op}\otimes_k k^s$?
+\end{proof}
+\begin{definition}
+For a field $k$, let $A$ and $B$ be Azumaya algebras over $k$. We say that $A$ and $B$ are \emph{similar}, denoted $A\sim B$, if there are integers $m,n\geq1$ such that $M_n(A)\cong M_n(B)$.
+\end{definition}
+\noindent From this, we can define the \emph{Brauer group} $\Br(k)$ of $k$ as $\Az_k/\sim$. The proposition gives us a way to define multiplication and inverses on these equivalence classes: multiplication is performed by taking the tensor product of representatives in the classes, and inversion is performed by sending a representative to its opposite algebra. The identity is the class corresponding to $k$.
+
+TO DO: EXAMPLES OF BRAUER GROUPS OF FIELDS, CYCLIC ALGEBRAS/GENERAL QUATERNIONS, COHOMOLOGICAL DEFINITION
+
+\subsection{Brauer groups of varieties}
+Given a variety $X$ defined over a field $k$, defining an object like the Brauer group takes additional work. We have to alter our definitions in order for the Azumaya algebras to be defined over general schemes, rather than just fields.
+\begin{definition}
+Given a scheme $X$, an \emph{Azumaya algebra} on $X$ is a sheaf $\calA$ of $\calO_X$ algebras that is a coherent, locally free $\calO_X$-module, has $\calA_x\neq0$ for all points $x\in X$, and such that $\calA\otimes_{\calO_X} k(x)$ is an Azumaya algebra over $k(x)$, the residue field at $x$.
 \end{definition}
 \backmatter 
 \nocite{*}
