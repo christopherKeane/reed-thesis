@@ -7,19 +7,33 @@ getCo := function(poly,m)
 	end if;
 end function;
 
-CR<a,b,c,d,f,t,u> := PolynomialRing(Rationals(),7); /* give the indeterminate coeffs a home */
+CR<r,s,t,u,a,b,c> := PolynomialRing(Rationals(),7); /* give the indeterminate coeffs a home */
 FCR := FieldOfFractions(CR);
 P1113<x1,y1,z1,w1> := ProjectiveSpace(FCR,[1,1,1,3]);
 P1123<x2,y2,z2,w2> := ProjectiveSpace(FCR,[1,1,2,3]);
 
 squareZ := map<P1113->P1123 | [x1,y1,z1^2,w1]>;
 
+toRing := function(polyList)
+	f2R := hom< FCR -> CR |r,s,t,u,a,b,c>;
+	newList := f2R(polyList);
+	return(newList);
+end function;
+
 getEqns := function(poly) /* this poly should be of the form w1^2-Norm */
 	schemeProj := squareZ(Scheme(P1113,poly)); /* project to the deg 1 del Pezzo */
 	polyProj := Polynomial(schemeProj); /* extract the polynomial defining schemeProj */	
 	Q := a*x2^2+b*x2*y2+c*y2^2; 
-	C := d*x2^3+f*x2^2*y2+t*x2*y2^2+u*y2^3; /* defining general quadratic and cubic. something comment below. */
+	C := r*x2^3+s*x2^2*y2+t*x2*y2^2+u*y2^3; /* defining general quadratic and cubic. something comment below. */
 	compPoly := Evaluate(polyProj,[x2,y2,Q,C]); /* substitute Q,C into the defining eqn */
 	eqnList := [getCo(compPoly,Monomials(compPoly)[i]): i in [1..#Monomials(compPoly)]]; /* get eqns for coeffs */
-	return(eqnList);
+	newList := toRing(eqnList);
+	return(newList);
 end function;
+
+
+/*
+normform := function(poly)
+	L := SplittingField(poly);
+	
+*/

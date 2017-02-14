@@ -1,6 +1,6 @@
 \documentclass[12pt,twoside]{reedthesis}
 \usepackage{graphicx,latexsym, caption, subcaption} 
-\usepackage{amssymb,amsthm,amsmath,mathrsfs}
+\usepackage{amssymb,amsthm,amsmath,mathrsfs,mathtools}
 \usepackage{longtable,booktabs,setspace} 
 \usepackage[hyphens]{url}
 \usepackage{rotating}
@@ -52,6 +52,9 @@
 \renewcommand{\div}{\operatorname{div}}
 \newcommand*{\sheafhom}{\mathscr{H}\kern -.5pt om}
 \newcommand{\Az}{\operatorname{Az}}
+\newcommand{\adele}{\reflectbox{$\Affine$}}
+\newcommand{\ev}{\operatorname{ev}}
+\newcommand{\inv}{\operatorname{inv}}
 
 \title{Arithmetic Computations on K3 Surfaces}
 \author{Christopher Keane}
@@ -290,7 +293,10 @@ With this, we define the set of $k$-rational points of a variety $X$.
 \begin{definition}
 Given a variety $X$ over a field $k$, the set of $k$-rational points, or $k$-points, is the set of $k$-scheme morphisms from $\Spec k\to X$, and is denoted $X(k)$.
 \end{definition}
-\noindent To connect the idea of rational points on a surface to the idea of local or global solubility, we add must change what we assume about the field of definition $k$. We want our fields of definition to allow the existence of local solutions, and while $\QQ$ is the prototype for this sort of existence, there is a larger class of fields that allows the completions that yielded the $p$-adic fields $\QQ_p$. Indeed, we will now be working with \emph{global fields}, which are finite extensions of $\QQ$ or $\FF_p(t)$. With $\QQ$, one obtains the $p$-adic fields from the valuations obtained from rational primes $p$. With global fields, the valuations that we complete with are referred to as \emph{places}.
+\begin{remark}
+If we have a field $K$ containing $k$, then we have an embedding \[X(k)\hookrightarrow X(K).\] In general, if we have any morphism $k\to k'$, then the structure morphism of $X$ composes with this map to obtain a map $X\to k'$, giving a map of sets \[X(k)\to X(k').\]
+\end{remark}
+To connect the idea of rational points on a surface to the idea of local or global solubility, we add must change what we assume about the field of definition $k$. We want our fields of definition to allow the existence of local solutions, and while $\QQ$ is the prototype for this sort of existence, there is a larger class of fields that allows the completions that yielded the $p$-adic fields $\QQ_p$. Indeed, we will now be working with \emph{global fields}, which are finite extensions of $\QQ$ or $\FF_p(t)$. With $\QQ$, one obtains the $p$-adic fields from the valuations obtained from rational primes $p$. With global fields, the valuations that we complete with are referred to as \emph{places}.
 \begin{definition}
 Let $X$ be a variety defined over a global field $k$. If $X(k_v)\neq\emptyset$ for all places $v$ of $k$ implies that $X(k)\neq\emptyset$, then we say that $X$ satisfies the \emph{Hasse principle}.
 \end{definition}
@@ -298,11 +304,18 @@ The varieties that we are interested in are those that do not satisfy the Hasse 
 \section{The Brauer group}
 An historically fruitful way of investigating failures of the Hasse principle is due to Manin, who determined that the \emph{Brauer group} of a variety can contain such information. The Brauer group can be defined in terms of equivalence classes of algebras over the given field, or in terms of Galois cohomology. We will look at both of these interpretations.
 \subsection{Brauer groups of fields}
+First, we note that for an algebra $A$ over a field $k$, we will denote the \emph{opposite algebra} of $A$ by $A^{\text{opp}}$. This $A^{op}$ is identical to $A$ as a $k$-vector space, but the vector multiplication $\cdot$ is defined as $a\cdot b=ba$, where on the right side the multiplication is that of $A$.
 \begin{definition}
-Given a field $k$, an \emph{Azumaya algebra} over $k$ is an associative $k$-algebra such that $A\otimes_k k_s\cong M_n(k_s)$ as $k$-algebras for some $n\geq1$, where $k_s$ denotes a fixed separable closure of $k$ and $M_n(k_s)$ is the algebra of $n\times n$ matrices with coefficients in $k$. 
+Given a field $k$, an \emph{Azumaya algebra} over $k$ is an associative $k$-algebra $A$ satisfying one of the following equivalent conditions:
+\begin{enumerate}
+\item There is a positive integer $n$ such that $A\otimes_k k_s\cong M_n(k_s)$ as $k$-algebras, where $k_s$ denotes a fixed separable closure of $k$ and $M_n(k_s)$ is the algebra of $n\times n$ matrices with coefficients in $k$.
+\item There is a positive integer $r$ such that $A\otimes_k A^{\text{op}}\cong M_r(k)$. Note that this is a matrix algebra over $k$ rather than $k^s$.
+\item The algebra $A$ is a finite-dimensional central simple algebra over $k$, which means that it is finite-dimensional as a vector space over $k$, has center equal to $k$, and has no nonzero proper two-sided ideals.
+\end{enumerate}
 \end{definition}
 \noindent This definition highlights that these algebras can be thought of as ``twists" of matrix algebras.
-We would like to put some sort of group structure on these algebras, and to do so we need the following proposition, which requires some additional notation. For a field $k$, let $\Az_k$ be the category of Azumaya algebras over $k$. Here, the morphisms are $k$-algebra homomorphisms. Additionally, given $A$, denote the \emph{opposite algebra} of $A$ by $A^{\text{opp}}$. This $A^{op}$ is identical to $A$ as a $k$-vector space, but the vector multiplication $\cdot$ is defined as $a\cdot b=ba$, where on the right side the multiplication is that of $A$.
+We would like to put some sort of group structure on these algebras, and to do so we need the following proposition, which requires some additional notation. For a field $k$, let $\Az_k$ be the category of Azumaya algebras over $k$. Here, the morphisms are $k$-algebra homomorphisms.
+
 \begin{proposition} For a field $k$, the following hold.
 \begin{enumerate} 
 \item If $A\in\Az_k$, then $A^{\text{opp}}\in\Az_k$.
@@ -311,20 +324,92 @@ We would like to put some sort of group structure on these algebras, and to do s
 \end{enumerate}
 \end{proposition}
 \begin{proof}
-Is $(A\otimes_k k^s)^\text{op}\cong A^\text{op}\otimes_k k^s$?
+Let $A\in\Az_k$, and let $n$ be the integer such that $A\otimes_k k_s\cong M_n(k_s)$. For the first part, we have the following:
+\[
+A^\text{op}\otimes_k k_s\cong(A\otimes_k k_s)^\text{op}\cong(M_n(k_s))^\text{op}\cong M_n(k_s).
+\]
+For the second, we refer to \cite{jacobson}, in which this is the contents of Theorem 1 on pg. 114. For the third, we note that certainly $L$ will be simple, as it is a field. So, $A\otimes_k L$ will again be simple, and furthermore will certainly contain $L$ in its center. If the center is larger than $L$, then the center of 
+\[
+A\otimes_k A^{\text{op}}\otimes_k L\cong M_r(k)\otimes_k L\cong M_r(L),
+\]
+will also be larger than $L$, but this is not the case.
 \end{proof}
 \begin{definition}
 For a field $k$, let $A$ and $B$ be Azumaya algebras over $k$. We say that $A$ and $B$ are \emph{similar}, denoted $A\sim B$, if there are integers $m,n\geq1$ such that $M_n(A)\cong M_n(B)$.
 \end{definition}
 \noindent From this, we can define the \emph{Brauer group} $\Br(k)$ of $k$ as $\Az_k/\sim$. The proposition gives us a way to define multiplication and inverses on these equivalence classes: multiplication is performed by taking the tensor product of representatives in the classes, and inversion is performed by sending a representative to its opposite algebra. The identity is the class corresponding to $k$.
-
+\begin{remark}
+For a field extension $L/k$, and $A\in\Az_k$, the assignment $A\mapsto A\otimes_k L$ in fact defines a group homomorphism $Br(k)\to Br(L)$.
+\end{remark}
 TO DO: EXAMPLES OF BRAUER GROUPS OF FIELDS, CYCLIC ALGEBRAS/GENERAL QUATERNIONS, COHOMOLOGICAL DEFINITION
 
 \subsection{Brauer groups of varieties}
 Given a variety $X$ defined over a field $k$, defining an object like the Brauer group takes additional work. We have to alter our definitions in order for the Azumaya algebras to be defined over general schemes, rather than just fields.
 \begin{definition}
-Given a scheme $X$, an \emph{Azumaya algebra} on $X$ is a sheaf $\calA$ of $\calO_X$ algebras that is a coherent, locally free $\calO_X$-module, has $\calA_x\neq0$ for all points $x\in X$, and such that $\calA\otimes_{\calO_X} k(x)$ is an Azumaya algebra over $k(x)$, the residue field at $x$.
+Given a scheme $X$, an \emph{Azumaya algebra} on $X$ is a sheaf $\calA$ of $\calO_X$ algebras that is a coherent, locally free $\calO_X$-module, has $\calA_x\neq0$ for all points $x\in X$, and such that $\calA\otimes_{\calO_X} k(x)$ is an Azumaya algebra over $k(x)$, the residue field at $x$. Given two Azumaya algebras $\mathcal{A},\mathcal{B}$ on $X$, we say that $\mathcal{A}$ and $\mathcal{B}$ are \emph{similar} if there exist locally free, coherent $\calO_X$-modules $\mathcal{E},\mathcal{F}$ such that 
+\[
+\mathcal{A}\otimes_{\calO_X}\text{End}_{\calO_X}(\mathcal{E})\cong B\otimes_{\calO_X}\text{End}_{\calO_X}(\mathcal{F}).
+\]
 \end{definition}
+From this we can form the \emph{Azumaya-Brauer group} $\Br_\text{Az}(X)$ of $X$, as the similarity classes of Azumaya algebras over $X$ with operation given by the tensor product of sheaves. Most often, the \emph{Brauer group} of a $k$-scheme $X$ is defined as \[\Br(X)=H^2_\text{\'et}(X,\mathbb{G}_m).\] This is the second \'etale cohomology group of $X$ with coefficients in $\mathbb{G}_m$, the group of nonzero elements of $k_s$. In the case that $X$ is a regular, quasi-projective variety, we have \[\Br_\text{Az}(X)\cong \Br(X).\] We will be working with such varieties, hence will be concerned mostly with the Azumaya-Brauer model rather than the cohomological one.
+
+\section{The Brauer-Manin obstruction to the Hasse principle}
+We saw at the beginning of this chapter an example of a variety that does not satisfy the Hasse principle. The Hasse principle relates the sets $X(k)$ and the set of local points of $X$. Our goal in this section is to define a set of points that sits between these two, and we hope that it can be used to identify objects that prevent the Hasse principle from holding.
+Throughout this section, we let $k$ be a global field, $\Omega_k$ be the set of places of $k$, and denote the ring of integers of $k$ by $\calO_k$. When talking about places of $k$, we will let $v$ denote an arbitrary place, and will use $p$ to refer to the finite places. We define the \emph{adeles} of $k$ as the ring
+\[
+\adele_k=\{(x_v)_v:x_v\in k_v,\text{ and } x_p\in\calO_{k,p}\text{ for all but finitely many $p$.}\}
+\]
+The adeles of $k$ are also sometimes defined as the ``restricted product"
+\[
+\adele_k=\sideset{}{^\prime}\prod_v k_v,
+\]
+where the prime symbol denotes as in the first definition that all but finitely many entries in any of the elements are $v$-adic integers.
+
+With the definition of adeles and the Brauer group, we present the workhorse of this section, the so-called \emph{fundamental sequence of global class field theory}.
+\begin{theorem} For a global field $k$, the sequence of groups
+\[
+0\longrightarrow \Br(k)\longrightarrow \bigoplus_{v\in\Omega}\Br(k_v)\longrightarrow \QQ/\ZZ\longrightarrow0
+\]
+is exact.
+\end{theorem}
+\noindent In the above exact sequence, the second arrow is the diagonal embedding obtained from sending $\calA\in\Br(k)$ to the sequence $(\calA\otimes_k k_v)_v\in\bigoplus_{v\in\Omega}\Br(k_v)$, and the third arrow is obtained from the sum of the local invariant maps, denoted $\sum_{v\in\Omega} \inv_v$. Each of these maps $\inv_v:\Br(k_v)\hookrightarrow\QQ/\ZZ$ comes from class field theory, and is sometimes called the local Artin map, or local invariant map. We will not include the details of this map here, but refer the reader to \cite{milneCFT}.
+
+To see how varieties interact with this sequence, suppose that $X$ is a smooth, projective, geometrically integral variety over $k$. For any field extension $K/k$ and each $\calA\in\Br(X)$, we define the \emph{specialization} or \emph{evaluation} map
+\begin{align*}
+\ev_\calA:X(K)&\longrightarrow\Br(K)\\
+x&\longmapsto\calA_x\otimes_{\calO_{X,x}}K.
+\end{align*}
+We can consider all of these maps at once, as $\calA$ ranges over $\Br(X)$, and obtain a pairing
+\begin{align*}
+\phi:\Br(X)\times X(\adele_k)&\longrightarrow\QQ/\ZZ\\
+(\calA,(x_v)_v)&\longmapsto\sum_{v\in\Omega}\inv_v(\ev_\calA(x_v)).
+\end{align*}
+Along with the embedding $k\hookrightarrow\adele_k$, the above maps and the fundamental sequence give us a commutative diagram for each $\calA\in\Br(X)$:
+\begin{figure}[h]
+\centering
+\begin{tikzcd}
+{}&X(k)\ar{r}\ar{d}{\ev_\calA}&X(\adele_k)\ar{d}{\ev_\calA}\ar{dr}{\phi(\calA,-)}\\
+0\ar{r}&\Br(k)\ar{r}&\bigoplus_{v\in\Omega}\Br(k_v)\ar{r}&\QQ/\ZZ\ar{r}&0.
+\end{tikzcd}
+\end{figure}
+\begin{definition}
+Let $X$ be a smooth, projective, geometrically integral variety over a global field $k$. Then for $\calA\in\Br(X)$, define 
+\[
+X(\adele_k)^\calA=\{(x_v)_v\in X(\adele_k):\phi(\calA,(x_v)_v)=0\}.
+\]
+From this, we define the \emph{Brauer-Manin set} as
+\[
+X(\adele_k)^{\Br}=\bigcap_{\calA\in\Br(X)}X(\adele_k)^\calA.
+\]
+We say that $X$ \emph{has a Brauer-Manin obstruction to the Hasse principle} if $X(\adele_k)\neq\emptyset$ but $X(\adele_k)^{\Br}=\emptyset$.
+\end{definition}
+\noindent The commutativity of the previous diagram provides the justification of the inclusions
+\[
+X(k)\subseteq X(\adele_k)^{\Br}\subseteq X(\adele_k)
+\]
+as mentioned at the beginning of this section.
+
+Now that we've identified this intermediate set, we'd like to be able to compute it in some way. 
 \backmatter 
 \nocite{*}
 
