@@ -7,8 +7,12 @@ getCo := function(poly,m)
 	end if;
 end function;
 
-CR<r,s,t,u,a,b,c> := PolynomialRing(Rationals(),7); /* give the indeterminate coeffs a home */
+A<r,s,t,u,a,b,c> := AffineSpace(Rationals(),7);
+
+CR := CoordinateRing(A);
+
 FCR := FieldOfFractions(CR);
+
 P1113<x1,y1,z1,w1> := ProjectiveSpace(FCR,[1,1,1,3]);
 P1123<x2,y2,z2,w2> := ProjectiveSpace(FCR,[1,1,2,3]);
 
@@ -24,16 +28,19 @@ getEqns := function(poly) /* this poly should be of the form w1^2-Norm */
 	schemeProj := squareZ(Scheme(P1113,poly)); /* project to the deg 1 del Pezzo */
 	polyProj := Polynomial(schemeProj); /* extract the polynomial defining schemeProj */	
 	Q := a*x2^2+b*x2*y2+c*y2^2; 
-	C := r*x2^3+s*x2^2*y2+t*x2*y2^2+u*y2^3; /* defining general quadratic and cubic. something comment below. */
+	C := r*x2^3+s*x2^2*y2+t*x2*y2^2+u*y2^3; /*these are the equations defining the divisors as in Thm 1.5.9 of A-V’s thesis*/
 	compPoly := Evaluate(polyProj,[x2,y2,Q,C]); /* substitute Q,C into the defining eqn */
 	eqnList := [getCo(compPoly,Monomials(compPoly)[i]): i in [1..#Monomials(compPoly)]]; /* get eqns for coeffs */
 	newList := toRing(eqnList);
-	return(newList);
+	return schemeProj, newList;
 end function;
 
-
-/*
-normform := function(poly)
-	L := SplittingField(poly);
-	
-*/
+getTuples := function(polyList) /*run this using the list from getEqns.*/
+	I :=ideal<CR | polyList>;
+	gb := GroebnerBasis(I);
+	facto := Factorization(gb[#gb]);
+	appendGb := [GroebnerBasis(Ideal(I,facto[i,1])): i in [1..#facto]];
+	sys := [Scheme(A,appendGb[i]): i in [1..#appendGb]];
+	points := [PointsOverSplittingField(sys[i]): i in [1..#sys]];
+	return points;
+end function;
