@@ -38,6 +38,8 @@
 \newcommand{\calC}{\mathcal{C}}
 \newcommand{\calA}{\mathcal{A}}
 \newcommand{\calO}{\mathcal{O}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\calM}{\mathcal{M}}
 \newcommand{\kbar}{\overline{k}}
 \newcommand{\Hom}{\operatorname{Hom}}
 \newcommand{\dom}{\operatorname{dom}}
@@ -55,6 +57,13 @@
 \newcommand{\adele}{\reflectbox{$\Affine$}}
 \newcommand{\ev}{\operatorname{ev}}
 \newcommand{\inv}{\operatorname{inv}}
+\newcommand{\op}{^{\text{op}}}
+\newcommand{\Gal}{\operatorname{Gal}}
+\newcommand{\NS}{\operatorname{NS}}
+\newcommand{\Num}{\operatorname{Num}}
+\newcommand{\disc}{\operatorname{disc}}
+\newcommand{\GG}{\mathfrak{G}}
+
 
 \title{Arithmetic Computations on K3 Surfaces}
 \author{Christopher Keane}
@@ -154,7 +163,7 @@ Let $f$ be a nonzero rational function on $X$. The \emph{divisor} of $f$, $\div(
 
 \noindent The assignment $f\mapsto\div(f)$ is a group homomorphism from the group of nonzero rational functions $K^*$ on $X$ to $\Div X$. 
 
-\begin{remark}
+\begin{remark}\label{divSpace}
 Suppose that $X$ is a $k$-variety. It is often useful to be able to think about the set of all divisors that share some common properties with a fixed divisor $D$ on $X$. To do this, we define \[\mathcal{L}(D)=\{f\in K^\times: \div(f)\geq -D\}\cup\{0\},\] where $K$ denotes the function field of $X$. This is called the \emph{Riemann-Roch space} of $D$, and it is a vector space over $k$. From each of these vector spaces, we note that we can obtain a corresponding sheaf $\mathcal{L}_D$ as follows. Since $D$ is defined on $X$, we can restrict $D$ to any open set $U\subseteq X$ and obtain a divisor $D|_U$ on $U$. For each regular function $g\in\calO_X(U)$ and $f\in\mathcal{L}(D)$, we note that $fg\in\mathcal{L}(D)$, since the regularity of $g$ implies $g\geq0$. This multiplication gives $\mathcal{L}(D)$ a module structure, and in fact gives rise to an isomorphism between $\mathcal{L}(D)$ and $\calO_X(U)$. This isomorphism and module structure is enough for us to conclude that the vector space $\mathcal{L}(D)$ can also be viewed as a sheaf.
 \end{remark}
 
@@ -166,17 +175,48 @@ The divisor class group is an important geometric invariant that behaves similar
 \begin{definition}
 For a ringed space $X$, an \emph{invertible sheaf} is a locally free $\calO_X$-module of rank one.
 \end{definition}
+\begin{definition}\label{ampleDef}
+For an invertible sheaf $\mathcal{L}$ on a $k$-variety $X$, we say that $\mathcal{L}$ is \emph{ample} if we can find some $n>0$ such that there is an $N>0$ that allows a projective embedding $j:X\to\Proj^N$ and $\mathcal{L}^{\otimes n}=j^*(\calO_X(1))$.
+\end{definition}
+\noindent This definition says that being ample is equivalent to some tensor power of the sheaf looking like the hyperplane sections of a projective space.
 \begin{remark}
 The local isomorphism between the ring of regular functions and the Riemann-Roch space in the previous remark tells us that each divisor defines an invertible sheaf.
 \end{remark}
-\begin{proposition}
-For a ringed space $X$, the set of isomorphism classes of invertible sheaves forms a group, called the \emph{Picard group} under the tensor product. The Picard group of $X$ is denoted $\Pic X$.
+\begin{proposition}\label{picDef}
+For a ringed space $X$, the set of isomorphism classes of invertible sheaves forms a group, called the \emph{Picard group} under the tensor product (of sheaves). The Picard group of $X$ is denoted $\Pic X$.
+\begin{proof}
+We check that any two invertible sheaves $\calL,\calM$ on $X$ form another invertible sheaf, i.e. $\calL\otimes_{\calO_X}\calM$ is locally free and rank 1. Being locally free is certainly a local property, so take an affine open set $U$ of $X$. Then from the properties of the tensor product of sheaves, we get
+\[
+(\calL\otimes_{\calO_X}\calM)|_U=\calL(U)\otimes_{\calO_X(U)}\calM(U).
+\]
+Then since both $\calL$ and $\calM$ are locally free of rank 1, 
+\[
+\calL(U)\otimes_{\calO_X(U)}\calM(U)\cong\calO_X(U)\otimes_{\calO_X(U)}\calO_X(U)\cong\calO_X.
+\]
+This tells us that the set of invertible sheaves on $X$ is closed under the tensor product of sheaves. Second, it is clear that $\calO_X$ acts as an identity element. Lastly, the inverses in $\Pic(X)$ are the duals of invertible sheaves. For any $\calL$ an invertible sheaf, its dual $\check\calL$ is defined to be $\sheafhom_{\calO_X}(\calL,\calO_X)$. Then we apply \cite{hartshorne} Ex. II.5.1b, and obtain
+\[
+\check\calL\otimes_{\calO_X}\calL\cong\sheafhom_{\calO_X}(\calL,\calL).
+\]
+The discussion in Remark~\ref{divSpace} demonstrates a correspondence between invertible sheaves and divisors. During that discussion, we saw that multiplying sections of an invertible sheaf by global sections gives an element of the same invertible sheaf, hence
+\[
+\sheafhom_{\calO_X}(\calL,\calL)\cong\calO_X.
+\] 
+\end{proof}
 \end{proposition}
 \begin{remark}
 The Picard group of $X$ is naturally isomorphic to $H^1(X,\calO_X^*)$, the first sheaf cohomology group of $X$ with coefficients in $\calO_X^*$. We will not get into the details of sheaf cohomology, but this identification is widely used in classifying surfaces.
 \end{remark}
-\noindent If $X$ is a noetherian integral variety all of whose local rings are unique factorization domains, then $\Cl X\cong \Pic X$. We will not prove this here, but it importantly points out that the Picard group generalizes the divisor class group.
-
+\noindent If $X$ is a variety that is noetherian, integral, and locally factorial, then $\Cl X\cong \Pic X$. We will not prove this here, but it importantly points out that the Picard group generalizes the divisor class group.
+\subsection{Galois action on divisors}
+In this section we will explain how the divisors on a smooth, projective, geometrically integral $k$-variety $X$ interact with the absolute Galois group of $k$. We will assume that $k$ is a number field, but this is not the most general setting in which these descriptions hold. Denote the absolute Galois group of $k$ by
+\[
+\GG_k=\Gal(k_s/k),
+\]
+where $k_s$ denotes the separable closure of $k$, and fix an embedding
+\[
+X\hookrightarrow \overline{X},
+\]
+where $\overline{X}$ is the base extension of $X$ to some fixed algebraic closure $\overline{k}$ of $k$. All of the prime divisors of $\overline{X}$ have defining equations, and so for $g\in\GG_k$, we can apply $g$ to all of the coefficients of those defining equations and obtain an action of $\GG_k$ on $\Div\overline{X}$. Certainly, this action will send principal divisors to principal divisors, so we also get an action on $\Pic \overline{X}$.
 \section{Surfaces}
 \subsection{Intersections on surfaces}
 In this section we present results specific to surfaces, rather than the abstract varieties of previous sections.
@@ -196,26 +236,50 @@ There is a unique map $\Div X\times \Div X\to\ZZ$, denoted by $C.D$ for divisors
 \item if $C_1\sim C_2$ then $C_1.D=C_2.D$.
 \end{enumerate}
 \end{theorem}
-\noindent If $C$ and $D$ are curves on $X$ with no common irreducible component and $P\in C\cap D$, then the \emph{intersection multiplicity} at $P$, $(C.D)_P$ is defined as the length of $\calO_{X,P}/(f,g)$ considered as a module over $\calO_{X,P}$.
+\noindent If $C$ and $D$ are curves on $X$ with no common irreducible component and $P\in C\cap D$, then the \emph{intersection multiplicity} at $P$, $(C.D)_P$ is defined as the length of $\calO_{X,P}/(f,g)$ considered as a module over $\calO_{X,P}$, where $f,g$ are local representations of $C,D$.
 \begin{proposition}
  If $C$ and $D$ are curves on a surface $X$, then $C.D=\sum_{P\in C\cap D} (C.D)_P$.
 \end{proposition}
-For a curve $C$ on $X$, we can also talk about $C.C$, or $C^2$, the \emph{self-intersection} number of $C$. We define the self-intersection as \[C^2=\deg_C(\mathscr{N}_{C/X}),\] where here deg is defined in terms of Euler characteristic, and $\mathscr{N}_{C/X}$ is the \emph{normal sheaf} of $C$ in $X$. Importantly, this definition allows for curves having \emph{negative} self-intersection. (COMMENT ON THIS)
+For a curve $C$ on $X$, we can also talk about $C.C$, or $C^2$, the \emph{self-intersection} number of $C$. We define the self-intersection as \[C^2=\deg_C(\mathscr{N}_{C/X}),\] where $\mathscr{N}_{C/X}$ is the \emph{normal sheaf} of $C$ in $X$. The degree $\deg$ of an invertible sheaf can be defined either in terms of Euler characteristic, or more intuitively in the following way: for an invertible sheaf $\calL$ on $X$, take any nonzero rational section $s\in\calL$ and add up the orders of its zeros and poles. Importantly, this definition allows for curves having \emph{negative} self-intersection. To demonstrate this, we present a standard example.
 
-We include some standard theorems here that are generally useful for performing computations on varieties using divisors.
-\begin{proposition}[Adjunction formula]
+\begin{example}[Blowing up a plane at a point]
+Let $k$ be a field, and consider the projective plane $\Proj^2$ over $k$ along with a point $P\in\Proj^2$. Let $\widetilde{X}$ denote the blow up of $\Proj^2$ at $P$, and 
+\[\pi:\widetilde{X}\to\Proj^2\] 
+be the projection. Let $E=\pi^{-1}(P)$ be the exceptional curve. We show two ways of investigating the intersection number $E^2$. The first way is not exactly revealing. Since any single point is nonsingular, we may apply \cite{hartshorne} Theorem II.8.24c, which says that the 
+\[\mathscr{N}_{E/\widetilde{X}} \cong\calO_{E}(-1).\] The sheaf $\calO_E(-1)$ consists of homogeneous polynomials regular on $E$ with total degree $-1$. By the definition of the self-intersection number above, this tells us that $E^2=1$ as desired.
+
+For a more hands-on interpretation of this intersection, we rely on the fact that $\pi$ is an isomorphism between $\widetilde{X}\setminus E$ and $X\setminus \{P\}$. So, if $\ell_1$ and $\ell_2$ are distinct lines in $\Proj^2\setminus\{P\}$, then $\ell_1.\ell_2=1$, since any two distinct lines in the projective plane intersect in one point. The preimages $\pi^{-1}\ell_1,\pi^{-1}\ell_2$ are the strict transforms of $\ell_1$ and $\ell_2$, which we will denote by $\widetilde{\ell_1},\widetilde{\ell_2}$. Since neither line intersects $P$, their strict transforms are isomorphic to the original lines, so the strict transforms intersect in a single point as well. Now, the blow up construction is designed to preserve intersections of \emph{classes} of lines, so we in fact have that any two representative lines from $\Proj^2$ should intersect in a single point in the blow up $\widetilde{X}$. So now let $\ell_1^\prime,\ell_2^\prime$ be two distinct lines in $\Proj^2$ going through $P$. Since $P$ has been blown up, the inverse images of $\ell_1^\prime, \ell_2^\prime$ look like $\widetilde{\ell_1^\prime}+E,\widetilde{\ell_2^\prime}+E$, respectively, and importantly the strict transforms $\widetilde{\ell_1^\prime},\widetilde{\ell_2^\prime}$ are disjoint in $\widetilde{X}$. The condition that the intersection pairing still must return 1 on these lines leaves the following:
+\begin{align*}
+1=(\widetilde{\ell_1^\prime}+E).(\widetilde{\ell_2^\prime}+E)&=\widetilde{\ell_1^\prime}.\widetilde{\ell_2^\prime}+\widetilde{\ell_1^\prime}.E+\widetilde{\ell_2^\prime}.E+E^2\\
+&=0+1+1+E^2=2+E^2
+\end{align*}
+Thus, $E^2=-1$. This example importantly demonstrates that divisors of negative self-intersection arise frequently and naturally in algebraic geometry.
+\end{example}
+
+We include statements of several standard theorems that are generally useful for performing computations on varieties.
+\begin{theorem}[A special case of Serre duality]
+For a nonsingular projective variety $X$ of dimension $n$ over a field $k$, then for $p\in\{0,1,\ldots,n\}$ we define $\Omega_{X}^p=\bigwedge^p\Omega_{X/k}$. Then for $p,q\in\{0,1\ldots,n\}$, we have isomorphisms:
+\[
+H^q(X,\Omega_X^p)\cong H^{n-q}(X,\Omega^{n-p})^*.
+\]
+\end{theorem}
+\noindent The general statement of Serre duality holds for any projective scheme and coherent sheaf on that scheme, but we do not need this version of the theorem.
+\begin{proposition}[Adjunction formula for surfaces]
 If $C$ is a nonsingular curve of genus $g$ on $X$, and $K$ is the canonical divisor on $X$, then we have
 \[2g-2=C.(C+K).\]
 \end{proposition}
 \noindent This formula describes concretely how curves on a surface interact with the surface's canonical divisor.
-The following theorem is a celebrated result of algebraic geometry, it demonstrates a strong connection between the topological and algebraic properties of a variety. To present the theorem, we need some notational conventions: for a divisor $D$ on $X$, we let $\ell(D)=\dim_k H^0(X,\mathcal{L}(D))$, $s(D)=\dim_k H^1(X,\mathcal{L}(D))$, and $p_a=\chi(\calO_X)-1$.
+The following theorem is a celebrated result of algebraic geometry, it demonstrates a strong connection between the topological and algebraic properties of a variety. To present the theorem, we need some notational conventions: for a divisor $D$ on $X$, we let $\ell(D)=\dim H^0(X,\mathcal{L}(D))$, $s(D)=\dim H^1(X,\mathcal{L}(D))$, and $p_a=\chi(\calO_X)-1$.
 \begin{remark}
 This $p_a$ is called the \emph{arithmetic genus} of $X$. There is also $p_g$, the \emph{geometric genus} of $X$, which is defined as $p_g(X)=\dim_k H^2(X,\calO_X)$.
 \end{remark}
-\begin{theorem}[Riemann-Roch]
+\begin{theorem}[Riemann-Roch for surfaces]
 For any divisor $D$ on $X$, we have \[\ell(D)-s(D)+\ell(K-D)=\frac{1}{2}D.(D-K)+1+p_a.\]
 \end{theorem}
-
+\noindent The left hand side of the above is actually the Euler characteristic of $D$, which is often written
+\[
+\chi(D)=\sum_{i=0}^2 (-1)^i\dim H^i(X,\calL(D)).
+\]
 \subsection{Classification of surfaces}
 In this section we describe different classes of surfaces. In this section $X$ will be a projective surface over a field $k$, with $\text{char}(k)\neq2,3$, and we denote the canonical divisor of $X$ by $K$.
 \begin{definition}
@@ -227,7 +291,7 @@ Surfaces are classified by their Kodaira dimensions, and fall into several categ
 \begin{theorem}[Surfaces with $\kappa(X)=-1$]
 If $X$ is \emph{rational} or \emph{ruled}, then $\kappa(X)=-1$, which is equivalent to $|12K|=\emptyset$.
 \end{theorem}
-\begin{theorem}[Surfaces with $\kappa(X)=0$]
+\begin{theorem}[Surfaces with $\kappa(X)=0$]\label{classification}
 We have that \[\kappa(X)=0\iff 12K=0.\] A surface in this class fits into one of four descriptions:
 \begin{enumerate}
 \item a \emph{K3 surface}, which has $K=0$, and $p_a=p_g=1$,
@@ -242,13 +306,53 @@ If $\kappa(X)=1$, then $X$ is an \emph{elliptic surface}, which means that there
 \begin{theorem}[Surfaces with $\kappa(X)=2$]
 We have $\kappa(X)=2$ if and only if there is some $n>0$ such that the morphism determined by $|nK|$ from $X$ into $\Proj^N$ is birational. Such surfaces are referred to as \emph{surfaces of general type}. 
 \end{theorem}
+\subsection{Weighted projective spaces}
+Weighted projective spaces are slight generalizations of regular projective space. These spaces give us a way to apply the machinery of projective varieties to varieties that would not normally be projective, i.e. varieties that are defined by non-homogeneous equations.
 
+The first definition of these spaces looks similar to the usual construction of projective space.
+\begin{definition}
+Let $a=(a_0,\ldots,a_n)\in(\ZZ^+)^{n+1}$. We call this $a$ a \emph{weight vector}, or just a \emph{weight}. Given a field $k^\times$, we can define an action on $\Affine^{n+1}_k\setminus\{0\}$ by
+\[
+\lambda\cdot(x_0,\ldots,x_n)=(\lambda^{a_0}x_0,\ldots,\lambda^{a_n}x_n),
+\]
+for $\lambda\in k^\times, (x_0,\ldots,x_n)\in\Affine^{n+1}_k\setminus\{0\}$. We refer to this action on $\Affine^{n+1}\setminus\{0\}$ by $k^\times_a$.
+\end{definition}
+\begin{definition}
+Given a weight vector $a$, the \emph{$a$-weighted projective space} is defined as
+\[
+\Proj(a)=\Proj(a_0,\ldots,a_n)=(\Affine^{n+1}_k\setminus\{0\})/k^\times_a.
+\]
+A point $x\in\Proj(a)$ is written
+\[
+x=[x_0:\cdots:x_n]_a.
+\]
+\end{definition}
+\begin{example}
+Setting $a=(1,1,\ldots,1)$ recovers the usual projective space, $\Proj(1,1,\ldots,1)=\Proj^n$.
+\end{example}
+Given a weight $a$, we the coordinate ring of the corresponding weighted projective space is the $n+1$-variable polynomial ring $k_a[x_0,\ldots,x_n]$, where each $x_i$ has degree $a_i$. This makes the main difference between projective space and weighted projective space clear: we're changing gradings on a polynomial ring. The degree of a monomial in $k_a[x_0,\ldots,x_n]$ is thus given by
+\[
+\deg\left(\prod_{i=0}^n x_i^{c_i}\right)=\sum_{i=0}^n a_ic_i,
+\]
+for $c_i\in\ZZ_{\geq0}$. A polynomial $f\in k_a[x_0,\ldots,x_n]$ is called $a$-weighted homogeneous of degree $d$, or just weighted homogeneous of degree $d$, if each monomial in $f$ has degree $d$. 
+
+For $\lambda\in k^\times$, $f\in k_a[x_0,\ldots,x_n]$ a weighted homogeneous polynomial of degree $d$, we have
+\[
+f(\lambda^{a_0}x_0,\ldots,\lambda^{a_n}x_n)=\lambda^d f(x_0,\ldots,x_n).
+\]
+Importantly, this tells us that for $p\in\Proj(a)$, 
+\[
+f(\lambda^{a_0}p_0,\ldots,\lambda^{a_n}p_n)=\lambda^d f(p_0,\ldots,p_n)
+\]
+if and only if $f(p_0,\ldots,p_n)=0$. This tells us that evaluating these functions at points in weighted projective space is strange, but considering the zero sets of these functions still works well. Since we are defining these spaces in order to consider varieties, i.e. vanishing loci of polynomials, this is all that matters.
+
+More scheme-theoretically, given the polynomial algebra $k_a[x_0,\ldots,x_n]$, we can define the $a$-weighted projective space to be $\text{Proj}(k_a[x_0,\ldots,x_n])$.
 \chapter{Arithmetic}
 This chapter reviews the motivation and theory behind the search for rational points. Many classical problems in number theory arise from trying to solve equations over $\ZZ$ or $\QQ$. These are referred to as ``Diophantine problems". The most well-known Diophantine problem is Fermat's last theorem.
 \begin{theorem}[Fermat's last theorem]
 For a positive integer $n>2$, the equation \[x^n+y^n=1\] has no nontrivial solutions $x,y\in\QQ$.
 \end{theorem}
-\noindent Fermat first wrote down this assertion in 1637, and but it was not proved until 1995 by Andrew, using techniques from algebraic geometry as well as number theory. We will not be delving into the precise methods used to prove Fermat's last theorem, but the general methods used to attack such a problem are highly relevant to this thesis.
+\noindent Fermat first wrote down this assertion in 1637, and but it was not proved until 1995 by Andrew Wiles, using techniques from algebraic geometry as well as number theory. We will not be delving into the precise methods used to prove Fermat's last theorem, but the general methods used to attack such a problem are highly relevant to this thesis.
 \section{Hensel's lemma and local solubility}
 Given a function $F(X_1,\ldots,X_n)\in\ZZ[X_1,\ldots,X_n]$, it is in general extremely difficult to determine if there exists nontrivial $(a_1,\ldots,a_n)\in\ZZ^n$ such that $F(a_1,\ldots,a_n)=0$. It is easier to begin looking at \[F(X_1,\ldots,X_n)\equiv0\bmod p,\] where $p$ denotes a prime number. If such a solution exists, one may look at varying $p$, or by looking mod $p^k$ for some $k>1$. Following the latter path leads naturally to wondering if we can describe solutions $F(X_1,\ldots,X_n)\equiv0\bmod p^k$ for all $k\in\ZZ^+$, and where such solutions would live. Hensel's lemma is the result at the start of this investigation.
 \begin{theorem}[Hensel's lemma]
@@ -304,12 +408,12 @@ The varieties that we are interested in are those that do not satisfy the Hasse 
 \section{The Brauer group}
 An historically fruitful way of investigating failures of the Hasse principle is due to Manin, who determined that the \emph{Brauer group} of a variety can contain such information. The Brauer group can be defined in terms of equivalence classes of algebras over the given field, or in terms of Galois cohomology. We will look at both of these interpretations.
 \subsection{Brauer groups of fields}
-First, we note that for an algebra $A$ over a field $k$, we will denote the \emph{opposite algebra} of $A$ by $A^{\text{opp}}$. This $A^{op}$ is identical to $A$ as a $k$-vector space, but the vector multiplication $\cdot$ is defined as $a\cdot b=ba$, where on the right side the multiplication is that of $A$.
+First, we note that for an algebra $A$ over a field $k$, we will denote the \emph{opposite algebra} of $A$ by $A\op$. This $A\op$ is identical to $A$ as a $k$-vector space, but the vector multiplication $\cdot$ is defined as $a\cdot b=ba$, where on the right side the multiplication is that of $A$.
 \begin{definition}
 Given a field $k$, an \emph{Azumaya algebra} over $k$ is an associative $k$-algebra $A$ satisfying one of the following equivalent conditions:
 \begin{enumerate}
 \item There is a positive integer $n$ such that $A\otimes_k k_s\cong M_n(k_s)$ as $k$-algebras, where $k_s$ denotes a fixed separable closure of $k$ and $M_n(k_s)$ is the algebra of $n\times n$ matrices with coefficients in $k$.
-\item There is a positive integer $r$ such that $A\otimes_k A^{\text{op}}\cong M_r(k)$. Note that this is a matrix algebra over $k$ rather than $k^s$.
+\item There is a positive integer $r$ such that $A\otimes_k A\op\cong M_r(k)$. Note that this is a matrix algebra over $k$ rather than $k_s$.
 \item The algebra $A$ is a finite-dimensional central simple algebra over $k$, which means that it is finite-dimensional as a vector space over $k$, has center equal to $k$, and has no nonzero proper two-sided ideals.
 \end{enumerate}
 \end{definition}
@@ -318,7 +422,7 @@ We would like to put some sort of group structure on these algebras, and to do s
 
 \begin{proposition} For a field $k$, the following hold.
 \begin{enumerate} 
-\item If $A\in\Az_k$, then $A^{\text{opp}}\in\Az_k$.
+\item If $A\in\Az_k$, then $A\op\in\Az_k$.
 \item If $A,B\in\Az_k$, then $A\otimes_k B\in\Az_k$.
 \item For $A\in\Az_k$ and $L$ a field extension of $k$, then $A\otimes_k L\in\Az_L$.
 \end{enumerate}
@@ -326,22 +430,72 @@ We would like to put some sort of group structure on these algebras, and to do s
 \begin{proof}
 Let $A\in\Az_k$, and let $n$ be the integer such that $A\otimes_k k_s\cong M_n(k_s)$. For the first part, we have the following:
 \[
-A^\text{op}\otimes_k k_s\cong(A\otimes_k k_s)^\text{op}\cong(M_n(k_s))^\text{op}\cong M_n(k_s).
+A\op\otimes_k k_s\cong(A\otimes_k k_s)\op\cong(M_n(k_s))\op\cong M_n(k_s).
 \]
 For the second, we refer to \cite{jacobson}, in which this is the contents of Theorem 1 on pg. 114. For the third, we note that certainly $L$ will be simple, as it is a field. So, $A\otimes_k L$ will again be simple, and furthermore will certainly contain $L$ in its center. If the center is larger than $L$, then the center of 
 \[
-A\otimes_k A^{\text{op}}\otimes_k L\cong M_r(k)\otimes_k L\cong M_r(L),
+A\otimes_k A\op\otimes_k L\cong M_r(k)\otimes_k L\cong M_r(L),
 \]
 will also be larger than $L$, but this is not the case.
 \end{proof}
 \begin{definition}
 For a field $k$, let $A$ and $B$ be Azumaya algebras over $k$. We say that $A$ and $B$ are \emph{similar}, denoted $A\sim B$, if there are integers $m,n\geq1$ such that $M_n(A)\cong M_n(B)$.
 \end{definition}
-\noindent From this, we can define the \emph{Brauer group} $\Br(k)$ of $k$ as $\Az_k/\sim$. The proposition gives us a way to define multiplication and inverses on these equivalence classes: multiplication is performed by taking the tensor product of representatives in the classes, and inversion is performed by sending a representative to its opposite algebra. The identity is the class corresponding to $k$.
-\begin{remark}
-For a field extension $L/k$, and $A\in\Az_k$, the assignment $A\mapsto A\otimes_k L$ in fact defines a group homomorphism $Br(k)\to Br(L)$.
+\noindent From this, we can define the \emph{Brauer group} $\Br(k)$ of $k$ as $\Az_k/\sim$. The proposition essentially gives us that this forms a group under the tensor product. Multiplication is performed by taking the tensor product of representatives in the classes, and inversion is performed by sending a representative to its opposite algebra. The identity is the class corresponding to $k$.
+\begin{remark}\label{covariantBr}
+For a field extension $L/k$, and $A\in\Az_k$, the assignment $A\mapsto A\otimes_k L$ in fact defines a group homomorphism $\Br(k)\to \Br(L)$. This says that $\Br$ is a covariant functor from fields to abelian groups.
 \end{remark}
-TO DO: EXAMPLES OF BRAUER GROUPS OF FIELDS, CYCLIC ALGEBRAS/GENERAL QUATERNIONS, COHOMOLOGICAL DEFINITION
+The Brauer group of a field has an often useful interpretation as a Galois cohomology group.
+\begin{theorem}
+Given a field $k$, there is an isomorphism 
+\[
+\Br(k)\cong H^2(\Gal(k_s/k),k_s^\times).
+\]
+\end{theorem}
+\begin{proof}
+The details of this are beyond the scope of this thesis, but they can be found in \cite{serreLF}, X.5.
+\end{proof}
+\begin{remark} 
+The group $H^2(\Gal(k_s/k),k_s^\times)$ is often written as $H^2(k,\mathbb{G}_m)$.
+\end{remark}
+\begin{example}
+Consider $k=\RR$. Then $\RR_s=\CC$, and $\Gal(\CC/\RR)=\ZZ/2\ZZ$. Using the cohomological interpretation of $\Br(\RR)$, we get
+\[
+\Br(\RR)\cong H^2(\Gal(\CC/\RR),\CC^\times).
+\]
+Now, in \cite{serreLF} VIII.4, they describe an isomorphism from Tate cohomology $H^2(G,A)\cong A^G/NA$ for any other group $G$ and $G$-module $A$, where $A^G$ denotes the $G$-invariant part of $A$, and $N=\sum_{t\in G}t.$ The interpretation of this $N$ in our setting is as the standard \emph{norm} on $\CC$. We thus have
+\[
+H^2(\Gal(\CC/\RR),\CC^\times)\cong (\CC^\times)^{\Gal(\CC/\RR)}/N\CC.
+\]
+The nonidentity element of $\Gal(\CC/\RR)$ is complex conjugation, and so $(\CC^\times)^{\Gal(\CC/\RR)}=\RR$. Furthermore, we have $N\CC=\RR_{\geq0}$. Thus,
+\[
+(\CC^\times)^{\Gal(\CC/\RR)}/N\CC\cong\RR/\RR_{\geq0}\cong\ZZ/2\ZZ.
+\]
+So $\Br(\RR)=\ZZ/2\ZZ$. Furthermore, the nontrivial element of $\Br(\RR)$ is the algebra of Hamiltonian quaternions, denoted $\mathbb{H}$. This is the $\RR$ algebra with generators $i,j$ subject to the relations $i^2=j^2=-1, ij=-ji$. This algebra is 4-dimensional over $\RR$, and we have an explicit isomorphism to $2\times2$ matrices over $\CC$ given by
+\begin{align*}
+\mathbb{H}\otimes_\RR\CC&\longrightarrow\text{M}_2(\CC)\\
+1\otimes 1&\longmapsto\begin{pmatrix}1&0\\0&1\end{pmatrix}\\
+i\otimes 1&\longmapsto\begin{pmatrix}i&0\\0&-i\end{pmatrix}\\
+j\otimes 1&\longmapsto\begin{pmatrix}0&-1\\1&0\end{pmatrix}\\
+ij\otimes 1&\longmapsto\begin{pmatrix}0&-i\\-i&0\end{pmatrix}.
+\end{align*}
+This is the only nontrivial class in $\Br(\RR)$, which is exactly the statement of a result attributed to Frobenius. For this result, we readers to section 2.7 of the introduction of \cite{bahturin}.
+\end{example}
+\noindent This example motivates the definition of a \emph{quaternion algebra}.
+\begin{definition}
+Let $k$ be a field of characteristic different from 2 and $a,b\in k^\times$. The \emph{quaternion algebra} associated to $a$ and $b$ is denoted $(a,b)_k$, and is the 4-dimensional $k$-algebra generated by $\{1,i,j,ij\}$ subject to the relations $i^2=a, j^2=b, ij=-ji$.
+\end{definition}
+\noindent These generalized quaternion algebras are special cases of \emph{cyclic algebras}, whose construction we now present.
+
+Suppose that $k$ is a field and $L$ is a degree $n$ cyclic field extension of $k$. Then for $a\in k^\times$ and $\sigma\in\Gal(L/k)$ a generator, we can obtain a $k$-algebra in the following way. First, define the ``twisted" polynomial ring $L[x]_\sigma$ to be identical as an additive group to $L[x]$, but with multiplication given by
+\[
+\ell x=\sigma(\ell)x,\quad\forall\ell\in L.
+\]
+Then, take 
+\[
+A:=L[x]_\sigma/\langle x^n-a\rangle.
+\]
+This $A$ is called a \emph{cyclic algebra} over $k$, and is often denoted $(L/k,a)$. These cyclic algebras provide a way to determine explicit elements of the Brauer group, as we will see in the next subsection.
 
 \subsection{Brauer groups of varieties}
 Given a variety $X$ defined over a field $k$, defining an object like the Brauer group takes additional work. We have to alter our definitions in order for the Azumaya algebras to be defined over general schemes, rather than just fields.
@@ -351,28 +505,45 @@ Given a scheme $X$, an \emph{Azumaya algebra} on $X$ is a sheaf $\calA$ of $\cal
 \mathcal{A}\otimes_{\calO_X}\text{End}_{\calO_X}(\mathcal{E})\cong B\otimes_{\calO_X}\text{End}_{\calO_X}(\mathcal{F}).
 \]
 \end{definition}
-From this we can form the \emph{Azumaya-Brauer group} $\Br_\text{Az}(X)$ of $X$, as the similarity classes of Azumaya algebras over $X$ with operation given by the tensor product of sheaves. Most often, the \emph{Brauer group} of a $k$-scheme $X$ is defined as \[\Br(X)=H^2_\text{\'et}(X,\mathbb{G}_m).\] This is the second \'etale cohomology group of $X$ with coefficients in $\mathbb{G}_m$, the group of nonzero elements of $k_s$. In the case that $X$ is a regular, quasi-projective variety, we have \[\Br_\text{Az}(X)\cong \Br(X).\] We will be working with such varieties, hence will be concerned mostly with the Azumaya-Brauer model rather than the cohomological one.
-
+\noindent From this we can form the \emph{Azumaya-Brauer group} $\Br_\text{Az}(X)$ of $X$, as the similarity classes of Azumaya algebras over $X$ with operation given by the tensor product of sheaves. Most often, the \emph{Brauer group} of a $k$-scheme $X$ is defined as \[\Br(X)=H^2_\text{\'et}(X,\mathbb{G}_m).\] This is the second \'etale cohomology group of $X$ with coefficients in $\mathbb{G}_m$, the group of nonzero elements of $k_s$. In the case that $X$ is a regular, quasi-projective variety, we have \[\Br_\text{Az}(X)\cong \Br(X).\] We will be working with such varieties, hence will be concerned mostly with the Azumaya-Brauer model rather than the cohomological one.
+\begin{remark}
+Comparing with Remark~\ref{covariantBr}, forming Brauer groups of varieties is a \emph{contravariant} functor from the category of $k$-schemes to abelian groups.
+\end{remark}
+As mentioned in the previous subsection, one way to identify elements in the Brauer group is through cyclic algebras.
+\begin{proposition}
+Consider a field $k$, a cyclic extension $L$ of $k$, and take $X$ to be a smooth, projective, geometrically integral $k$-variety. Given an element $f\in k(X)^\times$, the class of the cyclic algebra $(L/k,f)\in\Br(k(X))$ sits in the image of $\Br(X)\hookrightarrow\Br(k(X))$ if and only if
+\[
+\div(f)=N_{L/K}(D):=\sum_{\sigma\in\Gal(L/k)}\sigma(D),\quad\text{ for some $D\in\Div(X_L)$.}
+\] 
+Furthermore, if $\Pic(X_L)=(\Pic(\overline{X}))^{\Gal(L/k)}$, then $(L/k,f)$ comes from $\Br(k)$ if and only if the $D$ in the above display is principal.
+\end{proposition}
+\begin{proof}
+The proof of this relies heavily on cohomological machinery that is beyond the scope of this thesis, and so we refer readers to \cite{corn}, Proposition 2.2.3. 
+\end{proof}
 \section{The Brauer-Manin obstruction to the Hasse principle}
 We saw at the beginning of this chapter an example of a variety that does not satisfy the Hasse principle. The Hasse principle relates the sets $X(k)$ and the set of local points of $X$. Our goal in this section is to define a set of points that sits between these two, and we hope that it can be used to identify objects that prevent the Hasse principle from holding.
 Throughout this section, we let $k$ be a global field, $\Omega_k$ be the set of places of $k$, and denote the ring of integers of $k$ by $\calO_k$. When talking about places of $k$, we will let $v$ denote an arbitrary place, and will use $p$ to refer to the finite places. We define the \emph{adeles} of $k$ as the ring
 \[
-\adele_k=\{(x_v)_v:x_v\in k_v,\text{ and } x_p\in\calO_{k,p}\text{ for all but finitely many $p$.}\}
+\adele_k=\{(x_v):x_v\in k_v,\text{ and } x_p\in\calO_{k,p}\text{ for all but finitely many $p$.}\}
 \]
 The adeles of $k$ are also sometimes defined as the ``restricted product"
 \[
 \adele_k=\sideset{}{^\prime}\prod_v k_v,
 \]
-where the prime symbol denotes as in the first definition that all but finitely many entries in any of the elements are $v$-adic integers.
+where the prime symbol denotes as in the first definition that all but finitely many entries in any of the elements are $v$-adic integers. This construction is a slight generalization of 
+\[
+\hat{\ZZ}=\prod_{p\text{ a prime}}\ZZ_p,
+\] 
+since we allow some coordinates of elements of $\adele_k$ to sit outside of the integer rings. We refer to points of $X(\adele_k)$ as \emph{ad\'elic} points.
 
 With the definition of adeles and the Brauer group, we present the workhorse of this section, the so-called \emph{fundamental sequence of global class field theory}.
 \begin{theorem} For a global field $k$, the sequence of groups
 \[
 0\longrightarrow \Br(k)\longrightarrow \bigoplus_{v\in\Omega}\Br(k_v)\longrightarrow \QQ/\ZZ\longrightarrow0
 \]
-is exact.
+is exact.\label{sequence}
 \end{theorem}
-\noindent In the above exact sequence, the second arrow is the diagonal embedding obtained from sending $\calA\in\Br(k)$ to the sequence $(\calA\otimes_k k_v)_v\in\bigoplus_{v\in\Omega}\Br(k_v)$, and the third arrow is obtained from the sum of the local invariant maps, denoted $\sum_{v\in\Omega} \inv_v$. Each of these maps $\inv_v:\Br(k_v)\hookrightarrow\QQ/\ZZ$ comes from class field theory, and is sometimes called the local Artin map, or local invariant map. We will not include the details of this map here, but refer the reader to \cite{milneCFT}.
+\noindent In the above exact sequence, the second arrow is the diagonal embedding obtained from sending $\calA\in\Br(k)$ to the sequence $(\calA\otimes_k k_v)\in\bigoplus_{v\in\Omega}\Br(k_v)$, and the third arrow is obtained from the sum of the local invariant maps, denoted $\sum_{v\in\Omega} \inv_v$. Each of these maps $\inv_v:\Br(k_v)\hookrightarrow\QQ/\ZZ$ comes from class field theory, and is sometimes called the local Artin map, or local invariant map. We will not include the details of this map here, but refer the reader to \cite{milneCFT}.
 
 To see how varieties interact with this sequence, suppose that $X$ is a smooth, projective, geometrically integral variety over $k$. For any field extension $K/k$ and each $\calA\in\Br(X)$, we define the \emph{specialization} or \emph{evaluation} map
 \begin{align*}
@@ -382,7 +553,7 @@ x&\longmapsto\calA_x\otimes_{\calO_{X,x}}K.
 We can consider all of these maps at once, as $\calA$ ranges over $\Br(X)$, and obtain a pairing
 \begin{align*}
 \phi:\Br(X)\times X(\adele_k)&\longrightarrow\QQ/\ZZ\\
-(\calA,(x_v)_v)&\longmapsto\sum_{v\in\Omega}\inv_v(\ev_\calA(x_v)).
+(\calA,(x_v))&\longmapsto\sum_{v\in\Omega}\inv_v(\ev_\calA(x_v)).
 \end{align*}
 Along with the embedding $k\hookrightarrow\adele_k$, the above maps and the fundamental sequence give us a commutative diagram for each $\calA\in\Br(X)$:
 \begin{figure}[h]
@@ -395,7 +566,7 @@ Along with the embedding $k\hookrightarrow\adele_k$, the above maps and the fund
 \begin{definition}
 Let $X$ be a smooth, projective, geometrically integral variety over a global field $k$. Then for $\calA\in\Br(X)$, define 
 \[
-X(\adele_k)^\calA=\{(x_v)_v\in X(\adele_k):\phi(\calA,(x_v)_v)=0\}.
+X(\adele_k)^\calA=\{(x_v)\in X(\adele_k):\phi(\calA,(x_v))=0\}.
 \]
 From this, we define the \emph{Brauer-Manin set} as
 \[
@@ -409,7 +580,199 @@ X(k)\subseteq X(\adele_k)^{\Br}\subseteq X(\adele_k)
 \]
 as mentioned at the beginning of this section.
 
-Now that we've identified this intermediate set, we'd like to be able to compute it in some way. 
+Now that we've identified this intermediate set, we'd like to be able to compute it in some way. Supposing that $X$ is a smooth, projective, geometrically integral variety over a global field $k$ with $X(\adele_k)\neq\emptyset,$ what we want to determine is whether or not there are any ad\'elic points $(x_v)$ such that for any $\calA\in\Br(X)$, $\phi(\calA,(x_v))=0$. The difficulty of this question lies not in the structure of $X(\adele_k)$, but rather in finding elements $\calA\in\Br(X)$ that specialize to 0 at a given ad\'elic point. To narrow down which parts of the Brauer group to search for such algebras, we note the following.
+\begin{proposition}
+Let $X$ be a smooth, projective, geometrically integral variety over a global field $k$. Then the natural map $\Br(k)\to\Br(X)$ is injective.
+\end{proposition}
+\begin{proof}
+By Theorem~\ref{sequence}, we know that we have an injection $\Br(k)\hookrightarrow\bigoplus_{v\in\Omega}\Br(k_v)$. Furthermore, functoriality of $\Br$ gives a map $\Br(k)\to\Br(X)$, and the aforementioned injection factors as
+\[ 
+\begin{tikzcd}
+\Br(k)\ar{r}&\Br(X)\ar{r}{\phi(\calA,-)}&\bigoplus_{v\in\Omega}\Br(k_v).
+\end{tikzcd}
+\]
+Now, since we know that the composition of these two is injective, we obtain that the first map is an injection.
+\end{proof}
+\noindent Keeping $X$ as in the proposition, the image of $\Br(k)$ in $\Br(X)$ is referred to as the set of \emph{constant} algebras, and is denoted by $\Br_0(X)$. For any such algebra, Theorem~\ref{sequence} tells us that the sum of the local invariants vanishes, which says that any algebra coming from $\Br(k)$ will not obstruct the Hasse principle. These constant algebras are a subset of another piece of the Brauer group comes from elements $\calA\in\Br(X)$ that split over $\overline{X}$, that is, those algebras that upon base extension to $\overline{k}$ become isomorphic to a matrix algebra over $\overline{k}$. This piece of the group is sometimes called the \emph{algebraic} Brauer group, denoted $\Br_1(X)$, and with respect to the specialization map of interest, it is more mysterious than $\Br_0(X)$. Thus, the quotient \[\frac{\Br_1(X)}{\Br_0(X)}\] provides a reasonable place to look for possible obstructing algebras. Luckily, it is known (CITATION NEEDED) that for locally soluble $X$, we have an isomorphism to the Galois cohomology group:
+\[
+\frac{\Br_1(X)}{\Br_0(X)}\cong H^1(\Gal(k_s/k),\Pic(\overline{X})).
+\]
+This is incredibly useful, since it is relatively easier to compute the object on the right side in the above display. In order to compute this cohomology group, it is necessary to compute $\Pic(\overline{X})$, which requires a significant amount of work. We will be computing $\Pic(\overline{X})$ by trying to find as many linearly independent divisor classes as we can.
+
+\chapter{K3 Surfaces}
+We now turn our attention to our main objects of interest, K3 surfaces. In Theorem~\ref{classification}, we saw K3 surfaces as surfaces of Kodaira dimension 0 and trivial canonical sheaf. Our main concerns will be with \emph{algebraic} K3 surfaces.
+\begin{definition}
+Given a field $k$, a \emph{K3 surface} $X$ is a 2-dimensional, complete, nonsingular variety over $k$ with \[\omega_X\cong\calO_X,\quad H^1(X,\calO_X)=0.\]
+\end{definition}
+\noindent There are some comments to be made here. First, the condition $H^1(X,\calO_X)=0$ is the same as saying that the difference between the arithmetic genus and geometric genus is 0. The difference between arithmetic and geometric genera of a variety is sometimes referred to as the \emph{irregularity}. Second, the specification of completeness reflects the properties of K3s as objects with inherent analytic structure. For every K3 defined as above, there is a corresponding compact complex surface with much of the same structure. Specifically, there is an analytic definition of a K3 surface that imposes the same conditions on the canonical sheaf and first cohomology group, but the sheaf is of holomorphic differential forms, rather than of K\"ahler differentials, and the cohomology is de Rham cohomology, rather than sheaf cohomology. It is certainly surprising how few changes need to be made in switching between the algebraic and analytic settings, and there are deep results explaining this correspondence. We will not be studying K3 surfaces from the analytic perspective, but we will be using results from this perspective. We refer the reader to \cite{huybrechts} or \cite{vanDeVen} for a thorough treatment of the analytic aspects of K3s.
+\section{Lattices in general}
+\begin{definition}
+A \emph{lattice} $\Lambda$ is a free $\ZZ$-module of finite rank with a symmetric, nondegenerate, bilinear form
+\[
+(-.-):\Lambda\times\Lambda\to\ZZ.
+\]
+A lattice is \emph{even} if for all $x\in\Lambda$, $(x)^2=(x.x)\in2\ZZ$. Otherwise, we say that $\Lambda$ is \emph{odd}. 
+\end{definition}
+\noindent Since any lattice $\Lambda$ is a free module of finite rank, we have a basis, say $\{x_1,\ldots,x_m\}$, and can form the intersection matrix $(x_i.x_j)_{i,j=1}^n$. This matrix is most commonly called the \emph{Gram} matrix. The determinant of this intersection matrix is called the \emph{discriminant} of $\Lambda$, denoted $\disc(\Lambda)$. Furthermore, from any $\Lambda$ we can extend the intersection form $(-.-)$ to $\RR$ and obtain the real vector space
+\[
+\Lambda_\RR=\Lambda\otimes_\ZZ\RR.
+\]
+This extended form can be diagonalized with only $\pm1$ along the diagonal. The existence of such a diagonalization follows from some of the basic properties of quadratic forms over the reals. Because the Gram matrix is symmetric, it is a quadratic form. These forms are amenable to scaling by squares of real numbers. Thus, any scaling transform will preserve sign, so we scale the diagonal elements to have size 1 for convenience. The \emph{signature} of a lattice $\Lambda$ is $(n_+,n_-)$, where $n_+$ is the number of $1$s on the diagonal of the diagonalized Gram matrix of $\Lambda_\RR$, and $n_-$ is the number of $-1$s on the diagonal of the diagonalized Gram matrix of $\Lambda_\RR$. The \emph{index} $\tau(\Lambda)$ of $\Lambda$ is defined as \[\tau(\Lambda)=n_+-n_-.\] We say that $\Lambda$ is \emph{definite} if $n_+=0$ or $n_-=0$, or if $\tau(\Lambda)=\text{rank}(\Lambda)$. Otherwise, $\Lambda$ is \emph{indefinite}.
+
+For any $\Lambda$, we can define an injection into the dual lattice $\Lambda^*=\Hom_\ZZ(\Lambda,\ZZ)$
+\begin{align*}
+\iota_\Lambda:\Lambda&\to\Lambda^*\\
+x&\mapsto(x.-).
+\end{align*}
+We can consider $\Lambda^*$ as a subset of the elements $x\in\Lambda\otimes_\ZZ\QQ$ such that $(\Lambda.x)\subset\ZZ$, in which case $\iota_\Lambda$ becomes the inclusion \[\Lambda\hookrightarrow\Lambda^*\hookrightarrow\Lambda_\QQ.\] The cokernel of $\iota_\Lambda$ is $\Lambda^*/\Lambda$, and this quotient is called the \emph{discriminant group} of $\Lambda$, often denoted by $A_\Lambda$. This group is finite of order given by the size of the discriminant of $\Lambda$. A lattice $\Lambda$ is \emph{unimodular} if $\iota_\Lambda$ defines an isomorphism, or equivalently if $A_\Lambda$ is trivial, or if the discriminant of $\Lambda$ is $\pm1$.
+\begin{example}
+The lattice with Gram matrix given by
+\[
+U=\begin{pmatrix}
+0 & 1\\
+1 & 0
+\end{pmatrix}
+\] is often called the \emph{hyperbolic plane}. This is lattice has rank two, and so the Gram matrix tells us
+\[
+U\cong\ZZ^2\cong\ZZ\cdot x_1\oplus\ZZ\cdot x_2,
+\]
+where $x_1, x_2$ are generators with $(x_1)^2=(x_2)^2=0, (x_1.x_2)=1$.
+\end{example}
+\begin{example}
+An important lattice is the \emph{root lattice}, $E_8$. This is the unique lattice of rank 8 that is positive definite ($n_-=0$), even, and unimodular. This is most commonly given by the intersection matrix:
+\[
+E_8=
+\begin{pmatrix}
+2 & -1 & 0 & 0 & 0 & 0 & 0 & 0\\
+-1 & 2 & -1 & 0 & 0 & 0 & 0 & 0\\
+0 & -1 & 2 & -1 & -1 & 0 & 0 & 0\\
+0 & 0 & -1 & 2 & 0 & 0 & 0 & 0\\
+0 & 0 & -1 & 0 & 2 & -1 & 0 & 0\\
+0 & 0 & 0 & 0 & -1 & 2 & -1 & 0\\
+0 & 0 & 0 & 0 & 0 & -1 & 2 & -1\\
+0 & 0 & 0 & 0 & 0 & 0 & -1 & 2
+\end{pmatrix}.
+\]
+\end{example}
+\begin{example}
+For any lattice $\Lambda$ and $m\in\ZZ$, we can ``twist" $\Lambda$ by $m$ to obtain a new lattice, $\Lambda(m)$. We do this by defining the intersection form on $\Lambda(m)$ to be:
+\[
+(-.-)_{\Lambda(m)}=m\cdot(-.-)_\Lambda.
+\]
+As a consequence of this, we get $\disc(\Lambda(m))=\disc(\Lambda)\cdot m^{\text{rk}\Lambda}$.
+\end{example}
+\section{Lattice structure of K3 surfaces}
+In Proposition~\ref{picDef}, we saw one algebraic invariant coming from the divisor structure of a variety. There are others, which we discuss now.
+\begin{definition}
+For a surface $X$ defined over a field $k$, the \emph{N\'eron-Severi group} of $X$ is denoted $\NS(X)$, and defined as \[\NS(X)=\Pic(X)/\Pic^0(X),\] where $\Pic^0(X)$ is the subgroup of $\Pic(X)$ consisting of those divisor classes linearly equivalent to 0.
+\end{definition}
+\noindent Another invariant group involves a new kind of equivalence of divisors called \emph{numerical equivalence}. For a class $D\in\Pic(X)$, $D$ is \emph{numerically trivial} if for all $D'\in\Pic(X)$ we have $(D.D')=0$. The set of numerically trivial divisor classes is denoted $\Pic^\tau(X)$. We note that this group contains $\Pic^0(X)$ as a subgroup.
+\begin{definition}
+For a variety $X$ over a field $k$, we define \[\Num(X)=\Pic(X)/\Pic^\tau(X).\]
+\end{definition}
+\noindent The group $\Num(X)$ admits a nondegenerate, symmetric pairing
+\[
+(-,-):\Num(X)\times\Num(X)\to\ZZ.
+\]
+As with the Picard group, both $\NS(X)$ and $\Num(X)$ are free abelian groups, but more importantly we have the following result.
+\begin{theorem}[N\'eron, Severi] For a surface $X$ defined over a field $k$, the groups $\NS(X),\Num(X)$ are finitely generated as abelian groups.
+\end{theorem}
+\begin{proof}
+For this proof, we refer to Theorem 3.25 of \cite{milneET}.
+\end{proof}
+\noindent This theorem gives us that $\NS(X)$ is in fact a \emph{lattice}, which gives us a whole class of new machinery to work with. The rank of $\NS(X)$ is called the \emph{Picard number} of $X$, and is written $\rho(X)$.
+For a complex $K3$ surface, we in fact have the following neat result.
+\begin{proposition}
+For $X$ a complex $K3$ surface, the cohomology group $H^2(X,\ZZ)$ endowed with intersection form given by the cup product is isomorphic to a combination of $E_8$s and hyperbolic planes
+\[
+H^2(X,\ZZ)\cong E_8(-1)\oplus E_8(-1)\oplus U\oplus U\oplus U.
+\]
+\end{proposition}
+\begin{proof}
+See \cite{huybrechts}, Proposition 1.3.5.
+\end{proof}
+\noindent This isomorphism is useful in the it gives us an idea of what $H^2$ looks like, but is not useful in that there is no general way to identify a 2-cocycle with an element of the lattice.
+\begin{proposition}
+For $X$ a K3 surface over a field $k$, we have isomorphisms:
+\[
+\Pic(X)\cong\NS(X)\cong\Num(X).
+\]
+Furthermore, the natural intersection form on any of these is nondegenerate, even, and of signature $(1,\rho(X)-1)$.
+\end{proposition}
+\begin{proof}
+See \cite{huybrechts}, Proposition 1.2.4.
+\end{proof}
+
+\section{Some invariants of K3 surfaces}
+In this section, $X$ denotes an algebraic K3 surface over $\CC$. We will be computing the so-called ``Hodge diamond" of $X$. Hodge diamonds are common invariants used to classify varieties in complex geometry, and so we present one such diamond here. It is notable that these are in general analytic objects, and so one would not expect to be able to apply the algebraic cohomology theories. That we are able to do this is the focus of Serre's so-called GAGA paper, \cite{gaga}. In this paper, he shows that for algebraic varieties over algebraically closed fields, there are corresponding analytic objects that preserve some of the cohomological structure. This is remarkable because in the analytic setting, the cohomology theory is de Rham cohomology, which is a much finer cohomology than the Zariski topology. In our case, we can associate to $X$ the analytic space $X^{\text{an}}$, and have the following isomorphisms for all $i$:
+\[
+H^i(X^{\text{an}},\calO_{X^{\text{an}}})\cong H^i(X,\calO_X).
+\] We adopt the following standard notation that is useful in relating the cohomological invariants of $X$. For nonnegative integers $p,q$, set
+\begin{align*}
+h^{p,q}(X)&=\dim_k H^q(X,\Omega_X^p).
+\end{align*}
+\noindent The dimension above is vector space dimension, and for $p=0$ we take $\Omega_X^0=\calO_X$. For K3 surfaces, we have $h^{0,0}(X)=1, h^{0,1}(X)=0.$ Further, we have from Serre duality the following isomorphism:
+\[
+H^2(X,\calO_X)\cong H^0(X,\Omega_X^2)^*,
+\]
+and since $\Omega_X^2=\omega_X\cong\calO_X$ this re-writes to
+\[
+H^2(X,\calO_X)\cong H^0(X,\calO_X)^*.
+\]
+We know that $\dim_kH^0(X,\calO_X)=1$, and then since duals of finite-dimensional vector spaces have the same dimension as the original space, we get $\dim_k( H^0(X,\calO_X)^*)=1$. Thus, $h^{2,0}(X)=1$. Serre duality also gives $h^{0,2}(X)=1, h^{1,0}(X)=h^{1,2}(X)=h^{2,1}(X)=0, h^{2,2}=1$. Computing $h^{1,1}(X)$ is less straightforward, and requires the Hirzebruch-Riemann-Roch theorem as well as Noether's formula. These two powerful results give that $h^{1,1}(X)=20$. In sum, we have the \emph{Hodge diamond} for K3 surfaces
+\[
+\begin{matrix}
+& & h^{0,0} & & \\
+& h^{1,0} & & h^{0,1}&\\
+h^{2,0} & &h^{1,1} & & h^{0,2}\\
+& h^{1,2} & & h^{2,1} &\\
+& & h^{2,2} & &
+\end{matrix}
+\hspace{1in}
+\begin{matrix}
+& & 1 & & \\
+& 0 & & 0 &\\
+1 & & 20 & & 1\\
+& 0 & & 0 &\\
+& & 1 & &
+\end{matrix}
+\]
+\section{Finding elements of the geometric Picard lattice}
+Finding explicit divisors on any variety depends on the equations defining the variety, so the methods used vary greatly from variety to variety. Because of this, we start by discussing a way to obtain  additional divisors given that we already have some to work with.
+
+Let $X$ be a K3 surface defined over a number field $k$. Fix an embedding of $k$ into $\CC$, and define $\overline{X}=X_\CC$. This $\overline{X}$ is a K3 surface over $\CC$. Because of this, we can apply the following theorem.
+\begin{theorem} Let $Y$ be a complex K3 surface. Then the following statements hold.
+\begin{enumerate}
+\item The cohomology group $H^2(Y,\ZZ)$ endowed with the cup product is isomorphic to the K3 lattice $\Lambda_{\text{K3}}$:
+\[
+H^2(Y,\ZZ)\cong\Lambda_{\text{K3}}\cong E_8(-1)^{\oplus2}\oplus U^{\oplus3}.
+\]
+\item There is a primitive embedding of lattices $\Pic Y\hookrightarrow H^2(Y,\ZZ)$, and the image of this embedding is $H^2(Y,\ZZ)\cap H^{1,1}(Y)$.
+\item $\rho(Y)\leq20$.
+\item Given another complex K3 surface $Y'$ and a dominant rational map $Y'\dashrightarrow Y$, we have $\rho(Y')=\rho(Y')$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+See \cite{festiThesis}, Theorem 1.2.36.
+\end{proof}
+\noindent In the above theorem, \emph{primitive embedding} means that the cokernel of the injection is torsion-free. In order to see how this theorem is useful, we need some heavy machinery coming from Hodge theory, the details of which are beyond the scope of this thesis. 
+\begin{definition}
+Given two complex K3 surfaces $Y,Z$, a lattice homomorphism $\phi:H^2(Z,\ZZ)\to H^2(Y,\ZZ)$ is called a \emph{Hodge isometry} if it preserves the lattice pairing on $H^2(Z,\ZZ)$, and its $\CC$-linear extension $\phi_\CC$ preserves the Hodge structures, which is to say $\phi_\CC(H^{p,q}(Z))=H^{p,q}(Y)$. A Hodge isometry is \emph{effective} if it sends ample classes to ample classes.
+\end{definition}
+\begin{proposition}
+Suppose we have an isomorphism $f: Y\to Z$ of complex K3 surfaces. Then the lattice homomorphism $f^*:H^2(Z,\ZZ)\to H^2(Y,\ZZ)$ obtained from the pullback is an effective Hodge isometry.
+\end{proposition}
+\begin{proof}
+See \cite{festiThesis} Proposition 1.2.41.
+\end{proof}
+ The converse of this result is a major result for the theory of K3 surfaces, known as the Torelli theorem.
+\begin{theorem}
+Given complex K3 surfaces $Y,Z$ and an effective Hodge isometry $\phi:H^2(Z,\ZZ)\to H^2(Y,\ZZ)$, there is a unique isomorphism $f:Y\to Z$ such that $\phi=f^*$.
+\end{theorem}
+\begin{proof}
+See \cite{vanDeVen}, Theorem VIII.11.1 and Corollary VIII.11.4.
+\end{proof}
+\noindent This theorem establishes a 1 to 1 correspondence between the effective Hodge isometries of $H^2(\overline{X},\ZZ)$ and the automorphisms of $\overline{X}$. Indeed, for $f$ an automorphism of $\overline{X}$, we get an isometry $\phi=f^*$ of $\Pic\overline{X}$. Thus, given a divisor class in $\Pic\overline{X}$, we will be able to obtain different classes via automorphisms of $\overline{X}$. 
 \backmatter 
 \nocite{*}
 
