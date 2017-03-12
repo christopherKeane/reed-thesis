@@ -62,7 +62,7 @@ dpDivisors := function(field, scheme, tupleList) /*input field and list from get
 	nf := #tupleList;
 	newSpace := spaceAdj(field);
 	bcS := BaseChange(scheme, newSpace);
-	divs := < <Scheme(newSpace,[tupleList[i,j,5]*newSpace.1^2+tupleList[i,j,6]*newSpace.1*newSpace.2+tupleList[i,j,7]*newSpace.2^2, tupleList[i,j,1]*newSpace.1^3+tupleList[i,j,2]*newSpace.1^2*newSpace.2+tupleList[i,j,3]*newSpace.1*newSpace.2^2+tupleList[i,j,4]*newSpace.2^3]): j in [1..#tupleList[i]]> :  i in [1..nf]>;
+	divs := < <Scheme(newSpace,newSpace.3-[tupleList[i,j,5]*newSpace.1^2+tupleList[i,j,6]*newSpace.1*newSpace.2+tupleList[i,j,7]*newSpace.2^2, newSpace.4-tupleList[i,j,1]*newSpace.1^3+tupleList[i,j,2]*newSpace.1^2*newSpace.2+tupleList[i,j,3]*newSpace.1*newSpace.2^2+tupleList[i,j,4]*newSpace.2^3]): j in [1..#tupleList[i]]> :  i in [1..nf]>;
 	return bcS, divs;
 end function;
 	 
