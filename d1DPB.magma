@@ -82,3 +82,5 @@ end function;
 S, list := getEqns(w1^2-x1^6-y1^6-z1^6);
 L, tups := getTuples(list);
 SxL, dplist := dpDivisors(L,S,tups);
+
+skews := [dplist[1,1], dplist[1,4], dplist[3,1], dplist[4,2], dplist[2,2], dplist[5,1], dplist[6,3], dplist[7,1], dplist[2,3]]; /*the last one intersects 5,6 at one point.*/
