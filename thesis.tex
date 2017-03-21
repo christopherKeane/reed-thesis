@@ -7,6 +7,7 @@
 \usepackage{enumitem}
 \usepackage{tikz, tikz-cd}
 \usepackage{adjustbox}
+\usepackage{appendix}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -88,18 +89,20 @@
 \pagestyle{fancyplain} 
 
 \chapter{Geometry of surfaces}
-In this chapter we introduce some general facts from modern algebraic geometry, and basic results of surface theory. Our goal is to develop some familiarity with the language of modern algebraic geometry and introduce the invariants most commonly used to study surfaces and their rational points.
+In this chapter we introduce some general facts from modern algebraic geometry, and basic results of surface theory. Our goal is to develop some familiarity with the language of modern algebraic geometry and introduce the invariants most commonly used to study surfaces and their rational points. Most of the material in the first three sections of this chapter comes from \cite{hartshorne}, specifically Chapter II and Chapter V. 
 
 \section{Properties of varieties}
-In general, a \emph{variety} can be thought of as the set of solutions to some number of polynomial equations defined over some field. Historically, the study of such objects had roots in algebra and geometry. In order to obtain useful information about a variety, it is helpful to also consider the variety's corresponding coordinate ring equipped with the Zariski topology. This allows one to bring the vast theory of commutative algebra to bear on geometric questions. With the development of category theory, mathematicians like Alexander Grothendieck and Jean-Pierre Serre saw fit to reformulate the theory of algebraic geometry using category theory, giving rise to the language of schemes. This shifted the fundamental object of the field from sets of solutions to equations to topological spaces equipped with sheaves. The techniques developed by Grothendieck and Serre lead to the solutions of several long unsolved geometric problems, and so many mathematicians decided to follow their lead and learn this new, highly abstract theory. The language of schemes is ubiquitous in the modern study of geometry, it is the language we will be using throughout this thesis to talk about varieties.
+In general, a \emph{variety} can be thought of as the set of solutions to some number of polynomial equations defined over a field. Historically, the study of such objects has roots in algebra and geometry. In order to obtain useful information about a variety, it is helpful to also consider the variety's corresponding coordinate ring equipped with the Zariski topology. This allows one to bring the vast theory of commutative algebra to bear on geometric questions. 
+
+With the development of category theory, mathematicians like Alexander Grothen-dieck and Jean-Pierre Serre saw fit to reformulate the theory of algebraic geometry using more abstract foundations, giving rise to the language of schemes. This shifted the fundamental object of the field from sets of solutions to equations to topological spaces equipped with sheaves. In addition to allowing people to re-prove old results more directly, the techniques developed by Grothendieck and Serre lead to the solutions of several long unsolved geometric problems. Specifically, the introduction of schemes and cohomology to the field was essential to the proofs of the Weil conjectures. Because of these successes, many mathematicians decided to follow this lead and learn the new perspective. The language of schemes is now ubiquitous in the modern study of geometry, it is the language we will be using throughout this thesis to talk about varieties. As schemes, varieties over fields are not basic objects, and so we will not be reviewing the basics of scheme theory.
 \begin{definition}
-For a fixed scheme $S$, a \emph{scheme over $S$} is a scheme $X$ along with a morphism $X\to S$ called the structure morphism of $X$. In this case, we may refer to $X$ as an $S$-scheme. If we have two $S$-schemes $X$ and $Y$, then an $S$-morphism from $X$ to $Y$ is a morphism $X\to Y$ that is compatible with the structure morphisms of $X$ and $Y$.\label{schemeOverDef}
+For a fixed scheme $S$, a \emph{scheme over $S$} is a scheme $X$ along with a morphism $X\to S$ called the \emph{structure morphism} of $X$. In this case, we may refer to $X$ as an $S$-scheme. If we have two $S$-schemes $X$ and $Y$, then an $S$-morphism from $X$ to $Y$ is a morphism $X\to Y$ that is compatible with the structure morphisms of $X$ and $Y$.\label{schemeOverDef}
 \end{definition}
-\noindent If we speak about an algebraic object as a scheme, we are referring to that object's spectrum of prime ideals. For example, if $X$ is a scheme, $A$ is a commutative ring, and we refer to a morphism $X\to A$, we mean to speak about a morphism $X\to\Spec A$. Similarly, if we define $X$ to be an $A$-scheme, the structure morphism goes from $X$ to $\Spec A$. Many of the definitions in this thesis will be stated for general schemes as above, although the objects of interest are not general schemes but varieties.
+\noindent If we speak about an algebraic object as a scheme, then the object will be a commutative ring, and we are referring to that object's spectrum of prime ideals. For example, if $X$ is a scheme, $A$ is a commutative ring, and we refer to a morphism $X\to A$, we mean to speak about a morphism $X\to\Spec A$. Similarly, if we define $X$ to be an $A$-scheme, the structure morphism goes from $X$ to $\Spec A$. Many of the definitions in this thesis will be stated for general schemes as above, although the objects of interest are not general schemes but varieties.
 \begin{definition}
 A \emph{variety} is a separated scheme of finite type over a field $k$. \label{varDef}
 \end{definition}
-This definition of variety is more general than the classical notion, which involves quasiprojective varieties. The class of quasiprojective varieties is large, but the language of schemes allows for slightly more generality. The varieties defined here locally look quasiprojective, but globally may not have any sort of natural projective embedding. We will sometimes refer to a variety $X$ as an ordered pair $(X,\calO_X)$, where $X$ denotes the underlying topological space of the scheme, and $\calO_X$ denotes the structure sheaf of $X$. 
+This definition of variety is more general than the classical notion. Classically, the definition of a variety allows for quasiprojective varieties, and no more. The class of quasiprojective varieties is large, but the language of schemes allows for more generality. The varieties defined here locally look quasiprojective, but globally may not have any sort of natural projective embedding. We will sometimes refer to a variety $X$ as an ordered pair $(X,\calO_X)$, where $X$ denotes the underlying topological space of the scheme, and $\calO_X$ denotes the structure sheaf of $X$. 
 
 Our goal with this chapter is to move towards discussing rational points on varieties. In doing so, we need to introduce the concept of base extension.
 \begin{definition}
@@ -134,7 +137,7 @@ For a variety $X$ defined over a field $k$, and a field extension $L$ of $k$, we
 \noindent In practice, we perform base extension simply by considering the defining equations of $X$ to be defined over $L$ rather than over $k$. Importantly, we note that base extension may change some properties of $X$ as a scheme.
 
 \begin{example}
-Let $X$ be the variety defined by the equation $x^2-2y^2=0$ over $\QQ$. This $X$ is both irreducible and integral, since $x^2-2y^2$ is irreducible over $\QQ[x,y]$. But, the extension $X_{\overline{\QQ}}$ of $X$ by $\overline{\QQ}$ is not irreducible, since $X_{\overline{\QQ}}$ is the union of the lines $x-\sqrt{2}y=0, x+\sqrt{2}y=0$.
+Let $X$ be the variety defined by the equation $x^2-2y^2=0$ over $\QQ$. This $X$ is integral, since $x^2-2y^2$ is irreducible over $\QQ[x,y]$. But, the extension $X_{\overline{\QQ}}$ of $X$ by $\overline{\QQ}$ is not irreducible, since $X_{\overline{\QQ}}$ is the union of the lines $x-\sqrt{2}y=0, x+\sqrt{2}y=0$.
 \end{example}
 
 \begin{definition}
@@ -143,14 +146,14 @@ If we have some property $P$ and a $k$-variety $X$, then we say that $X$ is \emp
 \noindent Letting $X$ be as in the previous example, we have that $X$ is irreducible but not geometrically irreducible.
 
 \section{Divisors}
-In this section we assume throughout that $X$ is an noetherian, integral variety that is regular in codimenison one. By regular in codimension one, we mean that for every $x\in X$ such that $\calO_{X,x}$ has Krull dimension one, $\calO_{X,x}$ is regular.
+In this section we review the basics of divisors on varieties. In addition to \cite{hartshorne}, this section is based on Chapter III of \cite{shafarevichVol1} and Chapter VI of \cite{shafarevichVol2}. We assume throughout that $X$ is a noetherian, integral variety that is regular in codimenison one. By regular in codimension one, we mean that for every $x\in X$ such that $\calO_{X,x}$ has Krull dimension one, $\calO_{X,x}$ is regular.
 
 \begin{definition}
 A \emph{prime divisor} on $X$ is a closed integral subvariety of codimension one. A \emph{Weil divisor} is an element of the free abelian group $\Div X$ generated by the prime divisors. 
 \end{definition}
 A divisor $D$ is written as a formal linear combination $D=\sum n_i Y_i$, where the sum runs over all prime divisors, each $n_i\in\ZZ$, and only finitely many of the $n_i$ are nonzero. If each $n_i\geq 0$, then we say that $D$ is effective. This way of expressing divisors allows for a natural partial order to be put on $\Div X$. Indeed, if we have $D_1=\sum n_i Y_i, D_2=\sum m_i Y_i$, then we say $D_1\leq D_2$ if and only if we have $n_i\leq m_i$ for all $i$.
 
-For $Y$ a prime divisor on $X$, suppose that $\eta$ is the generic point of $Y$. Then the local ring $\calO_{\eta, X}$ is a discrete valuation ring, and its field of fractions is equal to the function field of the variety $X$. From these local rings, we obtain valuations $v_Y$ for each prime divisor $Y$. For a nonzero  rational function $f$ on $X$, we have $v_Y(f)\in\ZZ$ for all prime divisors $Y$. If $v_Y(f)>0$, we say that $f$ has a \emph{zero} along $Y$, and if $v_Y(f)<0$, we say that $f$ has a \emph{pole} along $Y$.
+For $Y$ a prime divisor on $X$, suppose that $\eta$ is the generic point of $Y$. Then the local ring $\calO_{X,\eta}$ is a discrete valuation ring, and its field of fractions is equal to the function field of the variety $X$. From the local rings obtained in this way from each prime divisor $Y$, we obtain valuations $v_Y$. For a nonzero rational function $f$ on $X$, we have $v_Y(f)\in\ZZ$ for all prime divisors $Y$. If $v_Y(f)>0$, we say that $f$ has a \emph{zero} along $Y$, and if $v_Y(f)<0$, we say that $f$ has a \emph{pole} along $Y$.
 
 \begin{definition}
 Let $f$ be a nonzero rational function on $X$. The \emph{divisor} of $f$, $\div(f)$ is given by $\div(f)=\sum v_Y(f)\cdot Y$, with the sum ranging over all prime divisors $Y$. A divisor $D\in\Div X$ is \emph{principal} if there is some rational function $f$ on $X$ such that $D=\div(f)$. The set of principal divisors forms a subgroup of $\Div X$.
@@ -159,7 +162,7 @@ Let $f$ be a nonzero rational function on $X$. The \emph{divisor} of $f$, $\div(
 \noindent The assignment $f\mapsto\div(f)$ is a group homomorphism from the group of nonzero rational functions $K^*$ on $X$ to $\Div X$. 
 
 \begin{remark}\label{divSpace}
-Suppose that $X$ is a $k$-variety. It is often useful to be able to think about the set of all divisors that share some common properties with a fixed divisor $D$ on $X$. To do this, we define \[\mathcal{L}(D)=\{f\in K^\times: \div(f)\geq -D\}\cup\{0\},\] where $K$ denotes the function field of $X$. This is called the \emph{Riemann-Roch space} of $D$, and it is a vector space over $k$. From each of these vector spaces, we note that we can obtain a corresponding sheaf $\mathcal{L}_D$ as follows. Since $D$ is defined on $X$, we can restrict $D$ to any open set $U\subseteq X$ and obtain a divisor $D|_U$ on $U$. For each regular function $g\in\calO_X(U)$ and $f\in\mathcal{L}(D)$, we note that $fg\in\mathcal{L}(D)$, since the regularity of $g$ implies $g\geq0$. This multiplication gives $\mathcal{L}(D)$ a module structure, and in fact gives rise to an isomorphism between $\mathcal{L}(D)$ and $\calO_X(U)$. This isomorphism and module structure is enough for us to conclude that the vector space $\mathcal{L}(D)$ can also be viewed as a sheaf.
+Suppose that $X$ is a $k$-variety. It is often useful to be able to think about the set of all divisors that share some common properties with a fixed divisor $D$ on $X$. To do this, we define \[\mathcal{L}(D)=\{f\in K^\times: \div(f)\geq -D\}\cup\{0\},\] where $K$ denotes the function field of $X$. This is called the \emph{Riemann-Roch space} of $D$, and it is a vector space over $k$. From each of these vector spaces, we note that we can obtain a corresponding sheaf $\mathcal{L}_D$ as follows. Since $D$ is defined on $X$, we can restrict $D$ to any open set $U\subseteq X$ and obtain a divisor $D|_U$ on $U$. For each regular function $g\in\calO_X(U)$ and $f\in\mathcal{L}(D)$, we note that $fg\in\mathcal{L}(D)$, since the regularity of $g$ implies $g\geq0$. This multiplication gives $\mathcal{L}(D)$ an  $\calO_X$-module structure, and in fact gives rise to an isomorphism between $\mathcal{L}(D)$ and $\calO_X(U)$. This isomorphism and module structure is enough for us to conclude that the vector space $\mathcal{L}(D)$ can also be viewed as a sheaf.
 \end{remark}
 
 \begin{definition}
@@ -170,13 +173,14 @@ The divisor class group is an important geometric invariant that behaves similar
 \begin{definition}
 For a ringed space $X$, an \emph{invertible sheaf} is a locally free $\calO_X$-module of rank one.
 \end{definition}
-\begin{definition}\label{ampleDef}
-For an invertible sheaf $\mathcal{L}$ on a $k$-variety $X$, we say that $\mathcal{L}$ is \emph{ample} if we can find some $n>0$ such that there is an $N>0$ that allows a projective embedding $j:X\to\Proj^N$ and $\mathcal{L}^{\otimes n}=j^*(\calO_X(1))$.
-\end{definition}
-\noindent This definition says that being ample is equivalent to some tensor power of the sheaf looking like the hyperplane sections of a projective space.
 \begin{remark}
 The local isomorphism between the ring of regular functions and the Riemann-Roch space in the previous remark tells us that each divisor defines an invertible sheaf.
 \end{remark}
+\begin{definition}\label{ampleDef}
+For an invertible sheaf $\mathcal{L}$ on a $k$-variety $X$, we say that $\mathcal{L}$ is \emph{ample} if we can find some $n>0$ such that there is an $N>0$ that allows a projective embedding $j:X\to\Proj^N$ and $\mathcal{L}^{\otimes n}=j^*(\calO_X(1))$.
+\end{definition}
+\noindent This definition says that being ample is equivalent to some tensor power of the sheaf looking like the hyperplane sections of a projective space. For general schemes, we care about ample invertible sheaves because their existence allows for embedding into projective space. That is, ampleness allows us to move between these new abstract objects and more classical geometric objects.
+
 \begin{proposition}\label{picDef}
 For a ringed space $X$, the set of isomorphism classes of invertible sheaves forms a group, called the \emph{Picard group} under the tensor product (of sheaves). The Picard group of $X$ is denoted $\Pic X$.
 \begin{proof}
@@ -184,7 +188,7 @@ We check that any two invertible sheaves $\calL,\calM$ on $X$ form another inver
 \[
 (\calL\otimes_{\calO_X}\calM)|_U=\calL(U)\otimes_{\calO_X(U)}\calM(U).
 \]
-Then since both $\calL$ and $\calM$ are locally free of rank 1, 
+Since both $\calL$ and $\calM$ are locally free of rank 1, we also have
 \[
 \calL(U)\otimes_{\calO_X(U)}\calM(U)\cong\calO_X(U)\otimes_{\calO_X(U)}\calO_X(U)\cong\calO_X.
 \]
@@ -221,7 +225,7 @@ A \emph{surface} is a smooth projective variety of dimension 2. A \emph{curve} o
 \begin{definition}
 The \emph{canonical sheaf} of a surface $X$ over $k$ is written $\omega_X$ and defined as $\omega_X=\bigwedge^2\Omega_{X/k}$, where $\Omega_{X/k}$ is the sheaf of differentials on $X$ defined over $k$. The canonical sheaf is invertible, and can be thought of as the space of all 2-forms on the surface. (Similarly, $\Omega_{X/k}$ can be thought of as the space of 1-forms.) Any divisor $K$ whose linear equivalence class in $\Pic X$ corresponds to $\omega_X$ is a \emph{canonical divisor}.
 \end{definition}
-From here we discuss how curves intersect on a surface. If $C$ and $D$ are divisors corresponding to curves on a surface $X$, then $C$ and $D$ intersect \emph{transversally} at some common point $P$ if $C$ and $D$ have local equations $f,g$ at $P$ such that $f,g$ generate the maximal ideal $\mathfrak{m}_p$ of $\calO_{X,p}$. We would like to have a function that counts the points at which two curves meet transversally.
+From here we discuss how curves intersect on a surface. If $C$ and $D$ are divisors corresponding to curves on a surface $X$, then $C$ and $D$ intersect \emph{transversally} at some common point $P$ if $C$ and $D$ have local equations $f,g$ at $P$ such that $f,g$ generate the maximal ideal $\mathfrak{m}_p$ of $\calO_{X,p}$. Intuitively, if two curves $C,D$ intersect at a point $P$, the intersection will be transversal if the tangent vectors of $C$ and $D$ at $P$ are different. For example, the intersection of the parabola $x=y^2$ with the line $y=0$ contains the point $(0,0)$, but this is not a transversal intersection. In order to define an intersection theory that agrees with this intuition, we would like to have a function that counts the points at which two curves meet transversally.
 \begin{theorem}
 There is a unique map $\Div X\times \Div X\to\ZZ$, denoted by $C.D$ for divisors $C,D$ with the properties:
 \begin{enumerate}
@@ -231,11 +235,11 @@ There is a unique map $\Div X\times \Div X\to\ZZ$, denoted by $C.D$ for divisors
 \item if $C_1\sim C_2$ then $C_1.D=C_2.D$.
 \end{enumerate}
 \end{theorem}
-\noindent If $C$ and $D$ are curves on $X$ with no common irreducible component and $P\in C\cap D$, then the \emph{intersection multiplicity} at $P$, $(C.D)_P$ is defined as the length of $\calO_{X,P}/(f,g)$ considered as a module over $\calO_{X,P}$, where $f,g$ are local representations of $C,D$.
+\noindent If $C$ and $D$ are curves on $X$ with no common irreducible component and $P\in C\cap D$, then the \emph{intersection multiplicity} at $P$, $(C.D)_P$ is defined as the length of $\calO_{X,P}/(f,g)$ considered as a module over $\calO_{X,P}$, where $f,g$ are local representations of $C,D$. This length is the same as vector space dimension over the base field.
 \begin{proposition}
  If $C$ and $D$ are curves on a surface $X$, then $C.D=\sum_{P\in C\cap D} (C.D)_P$.
 \end{proposition}
-For a curve $C$ on $X$, we can also talk about $C.C$, or $C^2$, the \emph{self-intersection} number of $C$. We define the self-intersection as \[C^2=\deg_C(\mathscr{N}_{C/X}),\] where $\mathscr{N}_{C/X}$ is the \emph{normal sheaf} of $C$ in $X$. The degree $\deg$ of an invertible sheaf can be defined either in terms of Euler characteristic, or more intuitively in the following way: for an invertible sheaf $\calL$ on $X$, take any nonzero rational section $s\in\calL$ and add up the orders of its zeros and poles. Importantly, this definition allows for curves having \emph{negative} self-intersection. To demonstrate this, we present a standard example.
+For a curve $C$ on $X$, we can also talk about $C.C$, or $C^2$, the \emph{self-intersection} number of $C$. We define the self-intersection as \[C^2=\deg_C(\mathscr{N}_{C/X}),\] where $\mathscr{N}_{C/X}$ is the \emph{normal sheaf} of $C$ in $X$. The \emph{degree} of an invertible sheaf $\calL$, denoted $\deg\calL$, can be defined either in terms of cohomological Euler characteristic, or more intuitively in the following way: take any nonzero rational section $s\in\calL$, add up the orders of its zeros and subtract the orders of its poles. The resulting integer is the degree. Importantly, this definition allows for curves having \emph{negative} self-intersection. To demonstrate this, we present a standard example.
 
 \begin{example}[Blowing up a plane at a point]
 Let $k$ be a field, and consider the projective plane $\Proj^2$ over $k$ along with a point $P\in\Proj^2$. Let $\widetilde{X}$ denote the blow up of $\Proj^2$ at $P$, and 
@@ -258,7 +262,7 @@ For a nonsingular projective variety $X$ of dimension $n$ over a field $k$, then
 H^q(X,\Omega_X^p)\cong H^{n-q}(X,\Omega^{n-p})^*.
 \]
 \end{theorem}
-\noindent The general statement of Serre duality holds for any projective scheme and coherent sheaf on that scheme, but we do not need this version of the theorem.
+\noindent Serre duality is essential for computing cohomology groups quickly, as we will see when looking at the Hodge diamond for K3 surfaces in Section~\ref{HodgeDK3}. The general statement of Serre duality holds for any projective scheme and coherent sheaf on that scheme, but we do not need this version of the theorem.
 \begin{proposition}[Adjunction formula for surfaces]
 If $C$ is a nonsingular curve of genus $g$ on $X$, and $K$ is the canonical divisor on $X$, then we have
 \[2g-2=C.(C+K).\]
@@ -276,7 +280,7 @@ For any divisor $D$ on $X$, we have \[\ell(D)-s(D)+\ell(K-D)=\frac{1}{2}D.(D-K)+
 \chi(D)=\sum_{i=0}^2 (-1)^i\dim H^i(X,\calL(D)).
 \]
 \subsection{Classification of surfaces}
-In this section we describe different classes of surfaces. In this section $X$ will be a projective surface over a field $k$, with $\text{char}(k)\neq2,3$, and we denote the canonical divisor of $X$ by $K$.
+In this section we describe different classes of surfaces. In this section $X$ will be a smooth projective surface over a field $k$, with $\text{char}(k)\neq2,3$, and we denote the canonical divisor of $X$ by $K$.
 \begin{definition}
 The \emph{Kodaira dimension} $\kappa(X)$ is defined as the transcendence degree of the so-called \emph{canonical ring}:
 \[R=\bigoplus_{n\geq0}H^0(X,\mathcal{L}(nK))\]
@@ -325,7 +329,7 @@ x=[x_0:\cdots:x_n]_a.
 \begin{example}
 Setting $a=(1,1,\ldots,1)$ recovers the usual projective space, $\Proj(1,1,\ldots,1)=\Proj^n$.
 \end{example}
-Given a weight $a$, we the coordinate ring of the corresponding weighted projective space is the $n+1$-variable polynomial ring $k_a[x_0,\ldots,x_n]$, where each $x_i$ has degree $a_i$. This makes the main difference between projective space and weighted projective space clear: we're changing gradings on a polynomial ring. The degree of a monomial in $k_a[x_0,\ldots,x_n]$ is thus given by
+Given a weight $a$, we the coordinate ring of the corresponding weighted projective space is the $(n+1)$-variable polynomial ring $k_a[x_0,\ldots,x_n]$, where each $x_i$ has degree $a_i$. This makes the main difference between projective space and weighted projective space clear: we're changing gradings on a polynomial ring. The degree of a monomial in $k_a[x_0,\ldots,x_n]$ is thus given by
 \[
 \deg\left(\prod_{i=0}^n x_i^{c_i}\right)=\sum_{i=0}^n a_ic_i,
 \]
@@ -343,7 +347,7 @@ if and only if $f(p_0,\ldots,p_n)=0$. This tells us that evaluating these functi
 
 More scheme-theoretically, given the polynomial algebra $k_a[x_0,\ldots,x_n]$, we can define the $a$-weighted projective space to be $\text{Proj}(k_a[x_0,\ldots,x_n])$.
 \chapter{Arithmetic}
-This chapter reviews the motivation and theory behind the search for rational points. Many classical problems in number theory arise from trying to solve equations over $\ZZ$ or $\QQ$. These are referred to as ``Diophantine problems". The most well-known Diophantine problem is Fermat's last theorem.
+This chapter reviews the motivation and theory behind the search for rational points. The study of rational points comes from number theory, specifically from trying to solve equations over $\ZZ$ or $\QQ$. Such problems are referred to as ``Diophantine problems". The most well-known Diophantine problem is Fermat's last theorem.
 \begin{theorem}[Fermat's last theorem]
 For a positive integer $n>2$, the equation \[x^n+y^n=1\] has no nontrivial solutions $x,y\in\QQ$.
 \end{theorem}
@@ -363,19 +367,19 @@ y&=x\bmod p^{n-k},\\ f(y)&=0\bmod p^{n+1},\\
 f'(y)&=0\bmod p^k,\\ f'(y)&\neq0\bmod p^{k+1}.
 \end{align*}
 \end{theorem}
-This theorem lets us take a solution mod $p^k$ and obtain a new solution mod $p^{k+1}$. Iterating gives a sequence of solutions mod $p^n$ for arbitrarily large $n$. Ultimately, we obtain a solution $x_\infty$ that solves the equation mod $p^k$ for all $k$. This solution is not a normal integer, but a so-called \emph{$p$-adic integer}.
+\noindent This theorem lets us take a solution mod $p^k$ and obtain a new solution mod $p^{k+1}$. Iterating gives a sequence of solutions mod $p^n$ for arbitrarily large $n$. Ultimately, we obtain a solution $x_\infty$ that solves the equation mod $p^k$ for all $k$. This solution is not a normal integer, but a so-called \emph{$p$-adic integer}.
 \begin{definition}
 Given a prime number $p$, the \emph{$p$-adic integers}, denoted $\ZZ_p$ are defined as the projective limit:\[\ZZ_p=\varprojlim_n\ZZ/p^n\ZZ.\] The \emph{$p$-adic field}, denoted $\QQ_p$ is defined as the field of fractions of $\ZZ_p$, \[\QQ_p=\Frac\ZZ_p.\]
 \end{definition} 
 An alternative and possibly helpful definition/characterization of the $p$-adic integers is as the set of formal power series in $p$ with integer coefficients, $\ZZ[[X]]/(X-p)$. This definition is equivalent to the one given above. 
-When determining if an equation has solutions in $\ZZ$ or $\QQ$, beginning the search in $\ZZ_p$ or $\QQ_p$ is common. Any such solutions found are referred to as \emph{local solutions}, while solutions found in $\ZZ$ or $\QQ$ are referred to as \emph{global solutions}. One would hope that being able to find local solutions in $\ZZ_p$ or $\QQ_p$ for all $p$ would imply the existence of a global solution, but sadly this is not true in general. An equation for which this implication does not hold is said to be \emph{locally soluble} but not \emph{globally soluble}. We demonstrate an example of a locally but not globally soluble equation.
+When determining if an equation has solutions in $\ZZ$ or $\QQ$, beginning the search in $\ZZ_p$ or $\QQ_p$ is common. Any such solutions found are referred to as \emph{local solutions}, while solutions found in $\ZZ$ or $\QQ$ are referred to as \emph{global solutions}. One would hope that being able to find local solutions in $\ZZ_p$ or $\QQ_p$ for all $p$ would imply the existence of a global solution, but sadly this is not true in general. An equation for which this implication does not hold is said to be \emph{locally solvable} but not \emph{globally solvable}. We demonstrate an example of a locally but not globally solvable equation.
 
 \begin{example}
-Define $f(X)\in\ZZ[X]$ by \[f(X)=(X^2-13)(X^2-17)(X^2-221).\] It is clear that this equation has no solutions in the integers, since there are no integers that square to 13, 17, or 221. There are, however, $p$-adic solutions for any $p$. Noting that $221=13\cdot 17$ and supposing that $p$ is an \emph{odd} prime different from $13,17$, we have that \[\left(\frac{13}{p}\right)\left(\frac{17}{p}\right)=\left(\frac{221}{p}\right),\] since the Legendre symbol is multiplicative in its top argument. Each term in this expression is either 1 or $-1$. Supposing that neither 13 nor 17 is a square mod $p$, the multiplicativity gives that 221 must be a square mod $p$. So, if $p$ is not 13 or 17, then the equation has solutions mod $p$. If $p=13$, then $17=2^2\bmod13$, so the equation is solvable mod 13, and if $p=17$, then $13=8^2\bmod17$, and so the equation is solvable mod 17. From here we have enough to satisfy the hypotheses of Hensel's lemma, which gives the local solutions at all odd $p$. For $p=2$, we start by noticing that $17=1=5^2\bmod 8$, so that the equation has a solution mod $2^3$. This also works mod 2 and mod 4, which allows us to obtain the conditions necessary to apply Hensel's lemma and obtain a 2-adic solution. So, $f$ has solutions in $\ZZ_p$ for any prime $p$, but no solutions in $\ZZ$.
+This example comes from a Math 361 exam. Define $f(X)\in\ZZ[X]$ by \[f(X)=(X^2-13)(X^2-17)(X^2-221).\] It is clear that this equation has no solutions in the integers, since there are no integers that square to 13, 17, or 221. There are, however, $p$-adic solutions for any $p$, and we show this now. Noting that $221=13\cdot 17$ and supposing that $p$ is an \emph{odd} prime different from $13,17$, we have that \[\left(\frac{13}{p}\right)\left(\frac{17}{p}\right)=\left(\frac{221}{p}\right),\] since the Legendre symbol is multiplicative in its top argument. Each term in this expression is either 1 or $-1$. Supposing that neither 13 nor 17 is a square mod $p$, the multiplicativity gives that 221 must be a square mod $p$. So, if $p$ is not 13 or 17, then the equation has solutions mod $p$. If $p=13$, then $17=2^2\bmod13$, so the equation is solvable mod 13, and if $p=17$, then $13=8^2\bmod17$, and so the equation is solvable mod 17. From here we have enough to satisfy the hypotheses of Hensel's lemma, which gives the local solutions at all odd $p$. For $p=2$, we start by noticing that $17=1=5^2\bmod 8$, so that the equation has a solution mod $2^3$. This also works mod 2 and mod 4, which allows us to obtain the conditions necessary to apply Hensel's lemma and obtain a 2-adic solution. So, $f$ has solutions in $\ZZ_p$ for any prime $p$, but no solutions in $\ZZ$.
 \end{example}
 
 \section{Rational points on varieties}
-Suppose that $X$ is a subvariety of $n$-dimensional affine space $\Affine^n_k$ over some algebraically closed field $k$ and $n\geq1$. Further suppose that $X$ is defined by a set of polynomial equations $f_i(X_1,\ldots,X_n)=0$ for $i=1,\ldots,m,$ with $m\geq1.$  A \emph{$k$-rational point} on $X$ is an $n$-tuple $a=(a_1,\ldots,a_n)\in k^n$ such that \[f_1(a_1,\ldots,a_n)=f_2(a_1,\ldots,a_n)=\cdots=f_m(a_1,\ldots,a_n)=0.\] 
+Our main references for this section are \cite{qPoints} and \cite{qingLiu}. Suppose that $X$ is a subvariety of $n$-dimensional affine space $\Affine^n_k$ over some algebraically closed field $k$ and $n\geq1$. Further suppose that $X$ is defined by a set of polynomial equations $f_i(X_1,\ldots,X_n)=0$ for $i=1,\ldots,m,$ with $m\geq1.$  A \emph{$k$-rational point} on $X$ is an $n$-tuple $a=(a_1,\ldots,a_n)\in k^n$ such that \[f_1(a_1,\ldots,a_n)=f_2(a_1,\ldots,a_n)=\cdots=f_m(a_1,\ldots,a_n)=0.\] 
 In terms of local data, the above means that the residue field $k(a)$ at the point $a$ is isomorphic to the base field $k$. This is notable, because if $k$ is algebraically closed, then the set of all closed points is exactly the set of $k$-rational points. If $k$ is not algebraically closed, then for a $k$-variety $X$, a closed point $x$ of $X$ could have residue field either isomorphic to $k$ or isomorphic to an extension of $k$. 
 Notably, we can describe the set of these points in terms of morphisms in the following way.
 \begin{proposition}
@@ -395,13 +399,13 @@ Given a variety $X$ over a field $k$, the set of $k$-rational points, or $k$-poi
 \begin{remark}
 If we have a field $K$ containing $k$, then we have an embedding \[X(k)\hookrightarrow X(K).\] In general, if we have any morphism $k\to k'$, then the structure morphism of $X$ composes with this map to obtain a map $X\to k'$, giving a map of sets \[X(k)\to X(k').\]
 \end{remark}
-To connect the idea of rational points on a surface to the idea of local or global solubility, we add must change what we assume about the field of definition $k$. We want our fields of definition to allow the existence of local solutions, and while $\QQ$ is the prototype for this sort of existence, there is a larger class of fields that allows the completions that yielded the $p$-adic fields $\QQ_p$. Indeed, we will now be working with \emph{global fields}, which are finite extensions of $\QQ$ or $\FF_p(t)$. With $\QQ$, one obtains the $p$-adic fields from the valuations obtained from rational primes $p$. With global fields, the valuations that we complete with are referred to as \emph{places}.
+To connect the idea of rational points on a surface to the idea of local or global solvability, we add must change what we assume about the field of definition $k$. We want our fields of definition to allow the existence of local solutions, and while $\QQ$ is the prototype for this sort of existence, there is a larger class of fields that allows the completions that yielded the $p$-adic fields $\QQ_p$. Indeed, we will now be working with \emph{global fields}, which are finite extensions of $\QQ$ or $\FF_p(t)$. With $\QQ$, one obtains the $p$-adic fields from the valuations obtained from rational primes $p$. With global fields, the valuations that we complete with are referred to as \emph{places}.
 \begin{definition}
 Let $X$ be a variety defined over a global field $k$. If $X(k_v)\neq\emptyset$ for all places $v$ of $k$ implies that $X(k)\neq\emptyset$, then we say that $X$ satisfies the \emph{Hasse principle}.
 \end{definition}
 The varieties that we are interested in are those that do not satisfy the Hasse principle. If $X$ is such a variety, then we would like to find some way to explain the failure of $X$ to satisfy the Hasse principle.
 \section{The Brauer group}
-An historically fruitful way of investigating failures of the Hasse principle is due to Manin, who determined that the \emph{Brauer group} of a variety can contain such information. The Brauer group can be defined in terms of equivalence classes of algebras over the given field, or in terms of Galois cohomology. We will look at both of these interpretations.
+As with the previous section, we follow \cite{qPoints} here. An historically fruitful way of investigating failures of the Hasse principle is due to Manin, who determined that the \emph{Brauer group} of a variety can contain such information. The Brauer group can be defined in terms of equivalence classes of algebras over the given field, or in terms of Galois cohomology. We will look at both of these interpretations.
 \subsection{Brauer groups of fields}
 First, we note that for an algebra $A$ over a field $k$, we will denote the \emph{opposite algebra} of $A$ by $A\op$. This $A\op$ is identical to $A$ as a $k$-vector space, but the vector multiplication $\cdot$ is defined as $a\cdot b=ba$, where on the right side the multiplication is that of $A$.
 \begin{definition}
@@ -431,12 +435,12 @@ For the second, we refer to \cite{jacobson}, in which this is the contents of Th
 \[
 A\otimes_k A\op\otimes_k L\cong M_r(k)\otimes_k L\cong M_r(L),
 \]
-will also be larger than $L$, but this is not the case.
+will also be larger than $L$, but this is not the case. So, $A\otimes_k L$ is central simple over $L$
 \end{proof}
 \begin{definition}
-For a field $k$, let $A$ and $B$ be Azumaya algebras over $k$. We say that $A$ and $B$ are \emph{similar}, denoted $A\sim B$, if there are integers $m,n\geq1$ such that $M_n(A)\cong M_n(B)$.
+For a field $k$, let $A$ and $B$ be Azumaya algebras over $k$. We say that $A$ and $B$ are \emph{similar}, denoted $A\sim B$, if there are integers $m,n\geq1$ such that $M_m(A)\cong M_n(B)$.
 \end{definition}
-\noindent From this, we can define the \emph{Brauer group} $\Br(k)$ of $k$ as $\Az_k/\sim$. The proposition essentially gives us that this forms a group under the tensor product. Multiplication is performed by taking the tensor product of representatives in the classes, and inversion is performed by sending a representative to its opposite algebra. The identity is the class corresponding to $k$.
+\noindent From this, we can define the \emph{Brauer group} $\Br(k)$ of $k$ as $\Az_k/\sim$. The proposition essentially gives us that this forms a group under the tensor product. Multiplication is performed by taking the tensor product of representatives in the classes, and inversion is performed by sending a representative to its opposite algebra. The identity is the class corresponding to $k$. Furthermore, these groups are abelian, since the tensor product is commutative up to isomorphism, and Brauer groups are built out of isomorphism classes.
 \begin{remark}\label{covariantBr}
 For a field extension $L/k$, and $A\in\Az_k$, the assignment $A\mapsto A\otimes_k L$ in fact defines a group homomorphism $\Br(k)\to \Br(L)$. This says that $\Br$ is a covariant functor from fields to abelian groups.
 \end{remark}
@@ -458,11 +462,11 @@ Consider $k=\RR$. Then $\RR_s=\CC$, and $\Gal(\CC/\RR)=\ZZ/2\ZZ$. Using the coho
 \[
 \Br(\RR)\cong H^2(\Gal(\CC/\RR),\CC^\times).
 \]
-Now, in \cite{serreLF} VIII.4, they describe an isomorphism from Tate cohomology $H^2(G,A)\cong A^G/NA$ for any other group $G$ and $G$-module $A$, where $A^G$ denotes the $G$-invariant part of $A$, and $N=\sum_{t\in G}t.$ The interpretation of this $N$ in our setting is as the standard \emph{norm} on $\CC$. We thus have
+Now, in \cite{serreLF} VIII.4, they describe an isomorphism from Tate cohomology $H^2(G,A)\cong A^G/NA$ for any group $G$ and $G$-module $A$, where $A^G$ denotes the $G$-invariant part of $A$, and $N=\sum_{t\in G}t.$ The interpretation of this $N$ in our setting is as the standard \emph{norm} on $\CC$. We thus have
 \[
 H^2(\Gal(\CC/\RR),\CC^\times)\cong (\CC^\times)^{\Gal(\CC/\RR)}/N\CC.
 \]
-The nonidentity element of $\Gal(\CC/\RR)$ is complex conjugation, and so $(\CC^\times)^{\Gal(\CC/\RR)}=\RR$. Furthermore, we have $N\CC=\RR_{\geq0}$. Thus,
+The nonidentity element of $\Gal(\CC/\RR)$ is complex conjugation, and so $(\CC^\times)^{\Gal(\CC/\RR)}=\RR^\times$. Furthermore, we have $N\CC=\RR_{\geq0}$. Thus,
 \[
 (\CC^\times)^{\Gal(\CC/\RR)}/N\CC\cong\RR/\RR_{\geq0}\cong\ZZ/2\ZZ.
 \]
@@ -529,7 +533,7 @@ where the prime symbol denotes as in the first definition that all but finitely 
 \[
 \hat{\ZZ}=\prod_{p\text{ a prime}}\ZZ_p,
 \] 
-since we allow some coordinates of elements of $\adele_k$ to sit outside of the integer rings. We refer to points of $X(\adele_k)$ as \emph{ad\'elic} points.
+since we allow some coordinates of elements of $\adele_k$ to sit outside of the integer rings. We refer to points of $X(\adele_k)$ as \emph{adelic} points.
 
 With the definition of adeles and the Brauer group, we present the workhorse of this section, the so-called \emph{fundamental sequence of global class field theory}.
 \begin{theorem} For a global field $k$, the sequence of groups
@@ -538,7 +542,7 @@ With the definition of adeles and the Brauer group, we present the workhorse of 
 \]
 is exact.\label{sequence}
 \end{theorem}
-\noindent In the above exact sequence, the second arrow is the diagonal embedding obtained from sending $\calA\in\Br(k)$ to the sequence $(\calA\otimes_k k_v)\in\bigoplus_{v\in\Omega}\Br(k_v)$, and the third arrow is obtained from the sum of the local invariant maps, denoted $\sum_{v\in\Omega} \inv_v$.   Each of these maps $\inv_v:\Br(k_v)\hookrightarrow\QQ/\ZZ$ comes from class field theory, and is sometimes called the local Artin map, or local invariant map. We will not include the details of the construction of this map here, but refer the reader to \cite{milneCFT}. Importantly, each of the sums of invariant maps is finite. The reason for this is essentially because $\Br(\calO_{k_v})=0$, where $\calO_{k_v}$ denotes the integer ring of $k_v$. Since for an ad\'elic point $(x_v)$ we have that all but finitely many coordinates lie in $\calO_{k,v}$, we get the desired finiteness. For more details about this finiteness, see \cite{skoQpoints} Section 5.5.2.
+\noindent In the above exact sequence, the second arrow is the diagonal embedding obtained from sending $\calA\in\Br(k)$ to the sequence $(\calA\otimes_k k_v)\in\bigoplus_{v\in\Omega}\Br(k_v)$, and the third arrow is obtained from the sum of the local invariant maps, denoted $\sum_{v\in\Omega} \inv_v$.   Each of these maps $\inv_v:\Br(k_v)\hookrightarrow\QQ/\ZZ$ comes from class field theory, and is sometimes called the local Artin map, or local invariant map. We will not include the details of the construction of this map here, but refer the reader to \cite{milneCFT}. Importantly, each of the sums of invariant maps is finite. The reason for this is essentially because $\Br(\calO_{k_v})=0$, where $\calO_{k_v}$ denotes the integer ring of $k_v$. Since for an adelic point $(x_v)$ we have that all but finitely many coordinates lie in $\calO_{k,v}$, we get the desired finiteness. For more details about this finiteness, see \cite{skoQpoints} Section 5.5.2.
 
 To see how varieties interact with this sequence, suppose that $X$ is a smooth, projective, geometrically integral variety over $k$. For any field extension $K/k$ and each $\calA\in\Br(X)$, we define the \emph{specialization} or \emph{evaluation} map
 \begin{align*}
@@ -569,14 +573,14 @@ X(\adele_k)^{\Br}=\bigcap_{\calA\in\Br(X)}X(\adele_k)^\calA.
 \]
 We say that $X$ \emph{has a Brauer-Manin obstruction to the Hasse principle} if $X(\adele_k)\neq\emptyset$ but $X(\adele_k)^{\Br}=\emptyset$.
 \end{definition}
-\noindent The commutativity of the previous diagram provides the justification of the inclusions
+\noindent The goal of this obstruction and its corresponding set is to find a well-behaved set that is strictly smaller than the set of adelic points and allows us to have a concrete threshold on the existence of global points. The commutativity of the previous diagram provides the justification of the inclusions
 \[
 X(k)\subseteq X(\adele_k)^{\Br}\subseteq X(\adele_k)
 \]
 as mentioned at the beginning of this section.
 
-Now that we've identified this intermediate set, we'd like to be able to compute it in some way. Supposing that $X$ is a smooth, projective, geometrically integral variety over a global field $k$ with $X(\adele_k)\neq\emptyset,$ what we want to determine is whether or not there are any ad\'elic points $(x_v)$ such that for any $\calA\in\Br(X)$, $\phi(\calA,(x_v))=0$. The difficulty of this question lies not in the structure of $X(\adele_k)$, but rather in finding elements $\calA\in\Br(X)$ that specialize to 0 at a given ad\'elic point. To narrow down which parts of the Brauer group to search for such algebras, we note the following.
-\begin{proposition}
+Now that we've identified this intermediate set, we'd like to be able to compute it in some way. Supposing that $X$ is a smooth, projective, geometrically integral variety over a global field $k$ with $X(\adele_k)\neq\emptyset,$ what we want to determine is whether or not there are any adelic points $(x_v)$ such that for any $\calA\in\Br(X)$, $\phi(\calA,(x_v))=0$. The difficulty of this question lies not in the structure of $X(\adele_k)$, but rather in finding elements $\calA\in\Br(X)$ that specialize to 0 at a given adelic point. To narrow down which parts of the Brauer group to search for such algebras, we note the following.
+\begin{proposition}[Proposition 1.3.4.1, \cite{corn}]
 Let $X$ be a smooth, projective, geometrically integral variety over a global field $k$, and suppose that $X$ has local solutions, i.e. $\prod_v X(k_v)\neq\emptyset$. Then the natural map $\Br(k)\to\Br(X)$ is injective.
 \end{proposition}
 \begin{proof}
@@ -588,7 +592,7 @@ By Theorem~\ref{sequence}, we know that we have an injection $\Br(k)\hookrightar
 \]
 Now, since we know that the composition of these two is injective, we obtain that the first map is an injection.
 \end{proof}
-\noindent Keeping $X$ as in the proposition, the image of $\Br(k)$ in $\Br(X)$ is referred to as the set of \emph{constant} algebras, and is denoted by $\Br_0(X)$. For any such algebra, Theorem~\ref{sequence} tells us that the sum of the local invariants vanishes, which says that any algebra coming from $\Br(k)$ will not obstruct the Hasse principle. These constant algebras are a subset of another piece of the Brauer group comes from elements $\calA\in\Br(X)$ that split over $\overline{X}$, that is, those algebras that upon base extension to $\overline{k}$ become isomorphic to a matrix algebra over $\overline{k}$. This piece of the group is sometimes called the \emph{algebraic} Brauer group, denoted $\Br_1(X)$, and with respect to the specialization map of interest, it is more mysterious than $\Br_0(X)$. Thus, the quotient \[\frac{\Br_1(X)}{\Br_0(X)}\] provides a reasonable place to look for possible obstructing algebras. To compute this, we use the following isomorphism.
+\noindent Keeping $X$ as in the proposition, the image of $\Br(k)$ in $\Br(X)$ is referred to as the set of \emph{constant} algebras, and is denoted by $\Br_0(X)$. For any such algebra, Theorem~\ref{sequence} tells us that the sum of the local invariants vanishes, which says that any algebra coming from $\Br(k)$ will not provide a Brauer-Manin obstruction to the Hasse principle. These constant algebras are a subset of another piece of the Brauer group that comes from elements $\calA\in\Br(X)$ that split over $\overline{X}$, that is, those algebras that upon base extension to $\overline{k}$ become isomorphic to a matrix algebra over $\overline{k}$. This piece of the group is sometimes called the \emph{algebraic} Brauer group, denoted $\Br_1(X)$, and with respect to the specialization map of interest, it is more mysterious than $\Br_0(X)$. Thus, the quotient \[\frac{\Br_1(X)}{\Br_0(X)}\] provides a reasonable place to look for possible obstructing algebras. To compute this, we use the following isomorphism.
 \begin{proposition}
 \[
 \frac{\Br_1(X)}{\Br_0(X)}\cong H^1(\Gal(k_s/k),\Pic(\overline{X})).
@@ -625,7 +629,7 @@ y^2+z^2=(3-x^2)(x^2-2).
 \]
 Furthermore, this $X$ is integral, so we may speak about its function field $k(X)$. Define $A$ to be the quaternion algebra $A=(3-x^2,-1)$ over $k(X)$, and identify $A$ with its class in $\Br(k(X))$. As with all quaternion algebras, this $A$ has order 2 in the Brauer group, i.e. $A+A=0$. Our goal will be to show that the evaluation map is nonzero for this $A$ as an element of $\Br(X)$. But as it is defined, $A$ is an element of $\Br(k(X))$, not $\Br(X)$. We can think of $\Br(X)$ as a subgroup of $\Br(k(X))$, but it takes more work to see $A$ as an element of $\Br(X)$. To this end, we need the following theorem about residue homomorphisms and a proposition about splitting cyclic algebras, both which we present without proof.
 \begin{theorem}
-Given a regular, integral, Noetherian scheme $X$, the sequence
+Given a regular, integral, noetherian scheme $X$, the sequence
 \[
 0\to\Br(X)\to\Br(k(X))\xrightarrow{\text{res}}\bigoplus_{\substack{x\in X\text{ a point of}\\\text{codimension 1}}}H^1(k(x),\QQ/\ZZ)
 \]
@@ -639,7 +643,7 @@ For $L$ a cyclic extension of a field $k$, and $\chi$ a generator of $\Gal(L/k)$
 The class $A\in\Br(k(X))$ lies in the subgroup $\Br(X)$.
 \end{proposition}
 \begin{proof}
-Considering the above theorem, it will be sufficient to show that $A$ is in the kernel of the residue homomorphism, and to do this we must find an open covering $\{U_i\}$ of $X$ such that some elements of each $\Br(U_i)$ to which $A$ extends. In order to do this we will need to find other ways to express $A$. Define 
+Considering the above theorem, it will be sufficient to show that $A$ is in the kernel of the residue homomorphism, and to do this we must find an open covering $\{U_i\}$ of $X$ such that some elements of each $\Br(U_i)$ that locally represent $A$. In order to do this we will need to find other ways to express $A$. Define 
 \[
 B=(x^2-2,-1),\hspace{0.25cm} C=\left(\frac{3}{x^2}-1,-1\right)
 \]
@@ -661,7 +665,7 @@ A+B=0,\hspace{0.25cm} A-C=0,\hspace{0.25cm} A+A=0,\hspace{0.25cm} B+B=0,\hspace{
 \]
 Together, these combine to give $A=B=C$. 
 
-Now let $P_{3-x^2}$ be the closed point of $B$ given by $3-x^2=0$, and let $P_{x^2-2}$ be the closed point of $B$ given by $x^2-2=0$. The algebra $A$ represents an Azumaya algebra on all of $A$ except where $3-x^2$ or $-1$ is a zero or a pole. Considering the following open sets:
+Now let $P_{3-x^2}$ be the closed point of $B$ given by $3-x^2=0$, and let $P_{x^2-2}$ be the closed point of $B$ given by $x^2-2=0$. The algebra $A$ represents an Azumaya algebra on all of $X$ except where $3-x^2$ or $-1$ is a zero or a pole. Considering the following open sets:
 \begin{align*}
 U_A:&=X-(\text{fiber above $\infty$})-(\text{fiber above $P_{3-x^2}$})\\
 U_B:&=X-(\text{fiber above $\infty$})-(\text{fiber above $P_{x^2-2}$})\\
@@ -674,17 +678,17 @@ we can think of $A$ as ``coming from" an element of $\Br(U_A)$, similarly $B$ co
 We have $X(\adele_\QQ)\neq\emptyset$, but $X(\adele_\QQ)^A=\emptyset$, so there is a Brauer-Manin obstruction to the Hasse principle for $X$.
 \end{proposition}
 \begin{proof}
-In order to check $X(\adele_\QQ)\neq\emptyset$, we used Magma to verify the local solubility at the primes of bad reduction for $X$, which are 2,3, and 7. This is enough to conclude that $X$ has an ad\'elic point.
+In order to check $X(\adele_\QQ)\neq\emptyset$, we used Magma to verify the local solubility at the primes of bad reduction for $X$, which are 2,3, and 7. This is enough to conclude that $X$ has an adelic point.
 
 Now consider $P\in X(\QQ_p)$ for $p$ a finite prime or $\infty$, and pick a representation of $A$ such that $P$ is not a zero or pole of the function of $x$. That is, we know that $A=(3-x^2,-1)=(x^2-2,-1)=(\frac{3}{x^2}-1,-1)$, so given $P$ we pick the representation that avoids degeneracy. Then calling $x=x(P)\in\QQ_p\cup\{\infty\}$, we must consider 3 cases: when $p$ is not 2 or $\infty$, when $p=\infty$, and when $p=2$.
 
 First suppose that $p$ is not 2 or $\infty$, and let $v_p$ denote the $p$-adic valuation. If $v_p(x)<0$, then $v_p(3/x^2)>0$, so $3/x^2-1$ is not divisible by $p$, hence $3/x^2-1\in\ZZ_p^\times$. If $v_p(x)\geq0$, then since $(3-x^2)+(x^2-2)=1$, one of $3-x^2,x^2-2$ is in $\ZZ_p^\times$. In either of these cases, we have that $A(P)=(u_1,u_2)$ for $u_1,u_2\in\ZZ_p^\times$. Hence, $\ev_A(P)\in\Br(\ZZ_p)$. We mentioned in the discussion following Theorem~\ref{sequence} that $\Br(\ZZ_p)=0$, and this lets us conclude that $\inv_p(\ev_A(P))=0$.
 
-Now supposing that $p=\infty$, we consider $f(x)=(3-x^2)(x^2-2)$. Every $P\in X(\RR)$ satisfies $2\leq x(P)^2\leq 3$. This means that either $3-x(P)^2$ or $x(P)^2-2$ is positive, so is in $N_{\CC/\RR}(\CC^\times)=\RR_{>0}$, hence the algebra $\ev_A(P)=0$ by Proposition~\ref{splitting}. So in this case we again have $\inv_p(\ev_A(P))=0$.
+Now supposing that $p=\infty$, we consider $f(x)=(3-x^2)(x^2-2)$. Every $P\in X(\RR)$ satisfies $2\leq x(P)^2\leq 3$. This means that either $3-x(P)^2$ or $x(P)^2-2$ is positive, so is in $N_{\CC/\RR}(\CC^\times)=\RR_{>0}$, hence $\ev_A(P)=0$ by Proposition~\ref{splitting}. So in this case we again have $\inv_p(\ev_A(P))=0$.
 
 Lastly, if $p=2$, take $P\in X(\QQ_2)$ and $x=x(P)$. Then if $v_2(x)>0$, we have
 \[
-3-x^2\equiv3\equiv-1\equiv4.
+3-x^2\equiv3\equiv-1\bmod4.
 \]
 If $v_2(x)=0$, then
 \[
@@ -712,8 +716,10 @@ We now turn our attention to our main objects of interest, K3 surfaces. In Theor
 \begin{definition}
 Given a field $k$, a \emph{K3 surface} $X$ is a 2-dimensional, complete, nonsingular variety over $k$ with \[\omega_X\cong\calO_X,\quad H^1(X,\calO_X)=0.\]
 \end{definition}
-\noindent There are some comments to be made here. First, the condition $H^1(X,\calO_X)=0$ is the same as saying that the difference between the arithmetic genus and geometric genus is 0. The difference between arithmetic and geometric genera of a variety is sometimes referred to as the \emph{irregularity}. Second, the specification of completeness reflects the properties of K3s as objects with inherent analytic structure. For every K3 defined as above, there is a corresponding compact complex surface with much of the same structure. Specifically, there is an analytic definition of a K3 surface that imposes the same conditions on the canonical sheaf and first cohomology group, but the sheaf is of holomorphic differential forms, rather than of K\"ahler differentials, and the cohomology is de Rham cohomology, rather than sheaf cohomology. It is certainly surprising how few changes need to be made in switching between the algebraic and analytic settings, and there are deep results explaining this correspondence. We will not be studying K3 surfaces from the analytic perspective, but we will be using results from this perspective. We refer the reader to \cite{huybrechts} or \cite{vanDeVen} for a thorough treatment of the analytic aspects of K3s.
-\section{Lattices in general}
+\noindent There are some comments to be made here. First, the condition $H^1(X,\calO_X)=0$ is the same as saying that the difference between the arithmetic genus and geometric genus is 0. The difference between arithmetic and geometric genera of a variety is sometimes referred to as the \emph{irregularity}. Second, the specification of completeness reflects the properties of K3s as objects with inherent analytic structure. 
+
+For every K3 defined as above, there is a corresponding compact complex surface with much of the same structure. Specifically, there is an analytic definition of a K3 surface that imposes the same conditions on the canonical sheaf and first cohomology group, but the sheaf is of holomorphic differential forms, rather than of K\"ahler differentials, and the cohomology is de Rham cohomology, rather than sheaf cohomology. It is certainly surprising how few changes need to be made in switching between the algebraic and analytic settings, and there are deep results explaining this correspondence. We refer the reader to \cite{huybrechts} or \cite{vanDeVen} for a thorough treatment of the analytic aspects of K3s.
+\section{Lattices in general} Our main reference for this section is Chapter 15 of \cite{huybrechts}.
 \begin{definition}
 A \emph{lattice} $\Lambda$ is a free $\ZZ$-module of finite rank with a symmetric, nondegenerate, bilinear form
 \[
@@ -721,7 +727,7 @@ A \emph{lattice} $\Lambda$ is a free $\ZZ$-module of finite rank with a symmetri
 \]
 A lattice is \emph{even} if for all $x\in\Lambda$, $(x)^2=(x.x)\in2\ZZ$. Otherwise, we say that $\Lambda$ is \emph{odd}. 
 \end{definition}
-\noindent Since any lattice $\Lambda$ is a free module of finite rank, we have a basis, say $\{x_1,\ldots,x_m\}$, and can form the intersection matrix $(x_i.x_j)_{i,j=1}^n$. This matrix is most commonly called the \emph{Gram} matrix. The determinant of this intersection matrix is called the \emph{discriminant} of $\Lambda$, denoted $\disc(\Lambda)$. Furthermore, from any $\Lambda$ we can extend the intersection form $(-.-)$ to $\RR$ and obtain the real vector space
+\noindent Since any lattice $\Lambda$ is a free $\ZZ$-module of finite rank, we have a basis, say $\{x_1,\ldots,x_m\}$, and can form the intersection matrix $(x_i.x_j)_{i,j=1}^n$. This matrix is most commonly called the \emph{Gram} matrix. The determinant of this intersection matrix is called the \emph{discriminant} of $\Lambda$, denoted $\disc(\Lambda)$. Furthermore, from any $\Lambda$ we can extend the intersection form $(-.-)$ to $\RR$ and obtain the real vector space
 \[
 \Lambda_\RR=\Lambda\otimes_\ZZ\RR.
 \]
@@ -811,8 +817,8 @@ Furthermore, the natural intersection form on any of these is nondegenerate, eve
 See \cite{huybrechts}, Proposition 1.2.4.
 \end{proof}
 
-\section{Some invariants of K3 surfaces}
-In this section, $X$ denotes an algebraic K3 surface over $\CC$. We will be computing the so-called ``Hodge diamond" of $X$. Hodge diamonds are common invariants used to classify varieties in complex geometry, and so we present one such diamond here. It is notable that these are in general analytic objects, and so one would not expect to be able to apply the algebraic cohomology theories. That we are able to do this is the focus of Serre's so-called GAGA paper, \cite{gaga}. In this paper, he shows that for algebraic varieties over algebraically closed fields, there are corresponding analytic objects that preserve some of the cohomological structure. This is remarkable because in the analytic setting, the cohomology theory is de Rham cohomology, which is a much finer cohomology than the Zariski topology. In our case, we can associate to $X$ the analytic space $X^{\text{an}}$, and have the following isomorphisms for all $i$:
+\section{Some invariants of K3 surfaces}\label{HodgeDK3}
+In this section, $X$ denotes an algebraic K3 surface over $\CC$. We will be computing the so-called ``Hodge diamond" of $X$. Hodge diamonds are common invariants used to classify varieties in complex geometry, and so we present one such diamond here. It is notable that these are in general analytic objects, and so one would not expect to be able to apply the algebraic cohomology theories. That we are able to do this is the focus of Serre's so-called GAGA paper, \cite{gaga}. In this paper, he shows that for algebraic varieties over algebraically closed fields, there are corresponding analytic objects that preserve some of the cohomological structure. This is remarkable because in the analytic setting, the cohomology theory is de Rham cohomology, which comes from a much finer topology. In our case, we can associate to $X$ the analytic space $X^{\text{an}}$, and have the following isomorphisms for all $i$:
 \[
 H^i(X^{\text{an}},\calO_{X^{\text{an}}})\cong H^i(X,\calO_X).
 \] We adopt the following standard notation that is useful in relating the cohomological invariants of $X$. For nonnegative integers $p,q$, set
@@ -881,7 +887,7 @@ Given complex K3 surfaces $Y,Z$ and an effective Hodge isometry $\phi:H^2(Z,\ZZ)
 See \cite{vanDeVen}, Theorem VIII.11.1 and Corollary VIII.11.4.
 \end{proof}
 \noindent This theorem establishes a 1 to 1 correspondence between the effective Hodge isometries of $H^2(\overline{X},\ZZ)$ and the automorphisms of $\overline{X}$. Indeed, for $f$ an automorphism of $\overline{X}$, we get an isometry $\phi=f^*$ of $\Pic\overline{X}$. Thus, given a divisor class in $\Pic\overline{X}$, we will be able to obtain different classes via automorphisms of $\overline{X}$. 
-\section{A worked example}
+\section{A worked example}\label{computation}
 In this section we will be looking at a K3 surface that is a double cover of the projective plane branched along a smooth sextic. We should verify that any such surface over a field of characteristic different from 2 is in fact a K3. 
 
 Suppose that $k$ is a field not of characteristic 2. Let $X$ be a double cover of $\Proj^2_k$ branched along a smooth sextic curve $C\subseteq\Proj^2_k$, and let $\pi:X\to\Proj^2_k$ be the covering map. Since $\pi$ has degree 2 and $C$ has degree 6, we know that we can find an invertible sheaf $\calL\cong\calO_{\Proj^2_k}(3)$ such that $\calL^2\cong\calO_{\Proj^2_k}(C)=\calO_{\Proj^2_k}(6)$. Then, the Riemann-Hurwitz formula, which can be found in \cite{vanDeVen}, Lemma I.17.1, we compute $\omega_X$:
@@ -892,7 +898,7 @@ Suppose that $k$ is a field not of characteristic 2. Let $X$ be a double cover o
 \[
 \pi_*\omega_X\cong\pi_*\calO_X\cong\calL^0\oplus\calL^{-1}\cong\calO_{\Proj^2_k}\oplus\calO_{\Proj^2_k}(-3).
 \]
-Since $\pi$ is a finite morphism, $\pi_*$ is exact, so we get $H^1(X,\calO_X)\cong H^1(\Proj^2_k,\pi_*\calO_X)$. Now, since $\Proj^2_k$ is a Noetherian topological space, cohomology commutes with direct sums (this is Proposition III.2.9 in \cite{hartshorne}), so 
+Since $\pi$ is a finite morphism, $\pi_*$ is exact, so we get $H^1(X,\calO_X)\cong H^1(\Proj^2_k,\pi_*\calO_X)$. Now, since $\Proj^2_k$ is a noetherian topological space, cohomology commutes with direct sums (this is Proposition III.2.9 in \cite{hartshorne}), so 
 \[
 H^1(\Proj^2_k,\pi_*\calO_X)=H^1(\Proj^2_k,\calO_{\Proj^2_k}\oplus\calO_{\Proj^2_k}(-3))\cong H^1(\Proj^2_k,\calO_{\Proj^2_k})\oplus H^1(\Proj^2_k,\calO_{\Proj^2_k}(-3)).
 \]
@@ -953,6 +959,117 @@ Considering $a,b,c,r,s,t,u$ as indeterminates over $\QQ$, we use Magma to comput
 The roots here are the possible values of $c$ as the coefficient of $y^2$ in $Q(x,y)$. Plugging each possible value of $c$ into the above system of equations and solving yields 240 distinct tuples $(r,s,t,u,a,b,c)$. Each of these tuples defines an exceptional curve on $\widetilde{X}_{\overline{\QQ}}$, and it is known that degree 1 del Pezzo surfaces have 240 exceptional curves, so this is good. 
 
 Furthermore, it is known that the rank of the geometric Picard lattice of a degree 1 del Pezzo surface has rank 9, so if we can find 9 exceptional curves $E_1,\ldots, E_9$, we will be able to generate the geometric Picard lattice of this del Pezzo surface. The pullbacks of these generators $\pi^*E_1,\ldots\pi^*E_9$ will be linearly independent divisors on $X_{\overline{\QQ}}$, and from that point we can let the automorphisms of $\Pic(X_{\overline{\QQ}})$ induced by automorphisms of $X$ act on these 9 divisors to obtain more linearly independent divisors.
+\begin{appendices}
+\chapter{Magma code}
+Here is the Magma code written to perform the computations in Section~\ref{computation}.
+\begin{verbatim}
+
+getCo := function(poly,m)
+	bool := exists(i){i:i in [1..#Monomials(poly)] | Monomials(poly)[i] eq m};
+	if bool then
+		return Coefficients(poly)[i];
+	else
+		return 0;
+	end if;
+end function;
+
+R<p>:=PolynomialRing(Rationals());
+
+A<r,s,t,u,a,b,c> := AffineSpace(Rationals(),7);
+
+CR := CoordinateRing(A);
+
+FCR := FieldOfFractions(CR);
+
+P1113<x1,y1,z1,w1> := ProjectiveSpace(FCR,[1,1,1,3]);
+P1123<x2,y2,z2,w2> := ProjectiveSpace(FCR,[1,1,2,3]);
+
+squareZ := map<P1113->P1123 | [x1,y1,z1^2,w1]>;
+
+toRing := function(polyList)
+	f2R := hom< FCR -> CR |r,s,t,u,a,b,c>;
+	newList := f2R(polyList);
+	return(newList);
+end function;
+
+spaceAdj := function(field) 
+		Anew := ChangeRing(A,field);
+		CRnew := CoordinateRing(Anew);
+		FCRnew := FieldOfFractions(CRnew);
+		out := ProjectiveSpace(FCRnew,[1,1,2,3]);
+		return out;
+end function;
+
+getEqns := function(poly) 
+		/* this poly should be of the form w1^2-sextic */
+		schemeProj := squareZ(Scheme(P1113,poly)); 
+		/* project to the del Pezzo */
+		polyProj := Polynomial(schemeProj); 
+		/* extract the polynomial defining schemeProj */	
+		Q := a*x2^2+b*x2*y2+c*y2^2; 
+		C := r*x2^3+s*x2^2*y2+t*x2*y2^2+u*y2^3; 
+		/*these are the equations as in Thm 1.5.9 of A-V's thesis*/
+		compPoly := Evaluate(polyProj,[x2,y2,Q,C]); 
+		/* substitute Q,C into the defining eqn */
+		eqnList := [getCo(compPoly,Monomials(compPoly)[i]): 
+			i in [1..#Monomials(compPoly)]]; 
+		/* get eqns for coeffs */
+		newList := toRing(eqnList);
+		return schemeProj, newList;
+end function;
+
+getTuples := function(polyList) /*run this using the list from getEqns.*/
+	I :=ideal<CR | polyList>;
+	gb := GroebnerBasis(I);
+	f := gb[#gb];
+	splf := SplittingField(Evaluate(f,[0,0,0,0,0,0,p]));
+	facto := Factorization(f);
+	adjA := ChangeRing(A,splf);
+	appendGb := [GroebnerBasis(Ideal(I,facto[i,1])): i in [1..#facto]];
+	sys := [Scheme(adjA,appendGb[i]): i in [1..#appendGb]];
+	points := <Points(sys[i]): i in [1..#sys]>;
+	return splf, points;
+end function;
+
+dpDivisors := function(field, scheme, tupleList) 
+/*input field and list from getTuples, scheme from getEqns*/
+	nf := #tupleList;
+	ns := spaceAdj(field);
+	bcS := BaseChange(scheme, ns);
+	divs := < 
+		<Scheme(ns,[
+		ns.3-tupleList[i,j,5]*ns.1^2+tupleList[i,j,6]*ns.1*ns.2+tupleList[i,j,7]*ns.2^2, 
+		ns.4-tupleList[i,j,1]*ns.1^3+tupleList[i,j,2]*ns.1^2*ns.2+
+		tupleList[i,j,3]*ns.1*ns.2^2+tupleList[i,j,4]*ns.2^3])
+		: j in [1..#tupleList[i]]> 
+	:  i in [1..nf]>;
+	return bcS, divs;
+end function;
+	 
+bcSquareMap := function(L) 
+	/*L must be the field of definition of the del Pezzo divisors*/
+	P1113L:=ProjectiveSpace(
+		FieldOfFractions(CoordinateRing(ChangeRing(A,L))),[1,1,1,3]);
+	P1123L:=ProjectiveSpace(
+		FieldOfFractions(CoordinateRing(ChangeRing(A,L))),[1,1,2,3]);
+	squareZL := map <P1113L->P1123L | [P1113L.1,P1113L.2,P1113L.3^2,P1113L.4]>;
+	return P1113L, P1123L, squareZL;
+end function;
+
+pbDPdivs := function(divList, space, map) 
+/*input divisors, base-changed square map, and newspace from bcSquareMap*/
+	nf := #divList;
+	pb := < <Pullback(map,BaseChange(divList[i,j],space)) 
+		: j in [1..#divList[i]]> : i in [1..nf]>;
+	return pb;
+end function;
+
+S, list := getEqns(w1^2-x1^6-y1^6-z1^6);
+L, tups := getTuples(list);
+SxL, dplist := dpDivisors(L,S,tups);
+
+\end{verbatim}
+\end{appendices}
 \backmatter 
 %\nocite{*}
 
