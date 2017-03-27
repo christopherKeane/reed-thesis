@@ -52,10 +52,11 @@ getTuples := function(polyList) /*run this using the list from getEqns.*/
 	I :=ideal<CR | polyList>;
 	gb := GroebnerBasis(I);
 	f := gb[#gb];
-	splf := SplittingField(Evaluate(f,[0,0,0,0,0,0,l]));
-	facto := Factorization(f);
+	unif := Evaluate(f,[0,0,0,0,0,0,l]);
+	splf := SplittingField(unif);
+	facto := Factorization(unif);
 	adjA := ChangeRing(A,splf);
-	appendGb := [GroebnerBasis(Ideal(I,facto[i,1])): i in [1..#facto]];
+	appendGb := [GroebnerBasis(Ideal(I,Evaluate(facto[i,1],c))): i in [1..#facto]];
 	sys := [Scheme(adjA,appendGb[i]): i in [1..#appendGb]];
 	points := <Points(sys[i]): i in [1..#sys]>;
 	return splf, points;
