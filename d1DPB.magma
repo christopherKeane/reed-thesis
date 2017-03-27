@@ -15,6 +15,8 @@ CR := CoordinateRing(A);
 
 FCR := FieldOfFractions(CR);
 
+NonWProj<x,y,z>:=ProjectiveSpace(Rationals(),2);
+
 P1113<x1,y1,z1,w1> := ProjectiveSpace(FCR,[1,1,1,3]);
 P1123<x2,y2,z2,w2> := ProjectiveSpace(FCR,[1,1,2,3]);
 
@@ -36,7 +38,7 @@ end function;
 
 getEqns := function(poly) /* this poly should be of the form w1^2-Norm */
 	schemeProj := squareZ(Scheme(P1113,poly)); /* project to the deg 1 del Pezzo */
-	polyProj := Polynomial(schemeProj); /* extract the polynomial defining schemeProj */	
+	polyProj := DefiningPolynomial(schemeProj); /* extract the polynomial defining schemeProj */	
 	Q := a*x2^2+b*x2*y2+c*y2^2; 
 	C := r*x2^3+s*x2^2*y2+t*x2*y2^2+u*y2^3; /*these are the equations defining the divisors as in Thm 1.5.9 of A-V’s thesis*/
 	compPoly := Evaluate(polyProj,[x2,y2,Q,C]); /* substitute Q,C into the defining eqn */
@@ -79,6 +81,8 @@ pbDPdivs := function(divList, space, map) /*input divisors, base-changed square 
 	return pb;
 end function;
 
+f:=x^6+y^6+z^6;
+
 S, list := getEqns(w1^2-x1^6-y1^6-z1^6);
 L, tups := getTuples(list);
 spL, SxL, dplist := dpDivisors(L,S,tups);
@@ -101,16 +105,19 @@ function GramMatrixD(List) /* I got this function from Dino Festi*/
 
 m:=#List;
 M:=ScalarMatrix(Integers(),m,-2);
+k:=1;
 
 for i in [1..m] do
     for j in [1..i] do
 	Int:=List[i] meet List[j];
         if Dimension(Int) eq 1 then
 	    M[i,j]:=2*ArithmeticGenus(Int)-2;
-		print M[i,j];
+		print k, i,j;
+		k:=k+1;
 	else
 	    M[i,j]:=Degree(Int);
-		print M[i,j];
+		print k, i,j;
+		k:=k+1;
 	end if;
 	M[j,i]:=M[i,j];
     end for;
@@ -120,3 +127,15 @@ return M;
 
 end function;
 
+p:=23;
+F<alpha>:=GF(p^2);
+
+Pol<v>:=PolynomialRing(F);
+
+defL:=v^6-6*v^5+36*v^4+8*v^4-24*v^2+16;
+
+PP<X,Y,Z,W>:=ProjectiveSpace(F,[1,1,1,3]);
+PPW:=CoordinateRing(PP);
+
+Psi:=hom<L->F | Roots(defL,F)[6,1]>;
+PsiP:=hom<CRL->PPW | Psi, [X,Y,Z,W]>;

@@ -85,6 +85,8 @@
 \tableofcontents
 %\chapter*{Abstract}
 %Well, here's some math.	
+%\chapter*{Introduction}
+%The
 \mainmatter 
 \pagestyle{fancyplain} 
 
@@ -122,7 +124,7 @@ Z\arrow[bend left]{drr}{\varphi} \arrow[bend right]{ddr}{\eta} \arrow[dotted]{dr
 For schemes $X,Y$ defined over a scheme $S$, the fiber product $X\times_S Y$ exists and is unique up to unique isomorphism
 \end{theorem}
 \begin{proof}
-See \cite{hartshorne}, Ch. II, Theorem 3.3.
+See \cite[Ch. II, Theorem 3.3]{hartshorne}.
 \end{proof}
 With this definition and existence in hand, we present some uses of the fiber product.
 \begin{definition}
@@ -192,7 +194,7 @@ Since both $\calL$ and $\calM$ are locally free of rank 1, we also have
 \[
 \calL(U)\otimes_{\calO_X(U)}\calM(U)\cong\calO_X(U)\otimes_{\calO_X(U)}\calO_X(U)\cong\calO_X.
 \]
-This tells us that the set of invertible sheaves on $X$ is closed under the tensor product of sheaves. Second, it is clear that $\calO_X$ acts as an identity element. Lastly, the inverses in $\Pic(X)$ are the duals of invertible sheaves. For any $\calL$ an invertible sheaf, its dual $\check\calL$ is defined to be $\sheafhom_{\calO_X}(\calL,\calO_X)$. Then we apply \cite{hartshorne} Ex. II.5.1b, and obtain
+This tells us that the set of invertible sheaves on $X$ is closed under the tensor product of sheaves. Second, it is clear that $\calO_X$ acts as an identity element. Lastly, the inverses in $\Pic(X)$ are the duals of invertible sheaves. For any $\calL$ an invertible sheaf, its dual $\check\calL$ is defined to be $\sheafhom_{\calO_X}(\calL,\calO_X)$. Then we apply \cite[Ex. II.5.1b]{hartshorne}, and obtain
 \[
 \check\calL\otimes_{\calO_X}\calL\cong\sheafhom_{\calO_X}(\calL,\calL).
 \]
@@ -225,7 +227,7 @@ A \emph{surface} is a smooth projective variety of dimension 2. A \emph{curve} o
 \begin{definition}
 The \emph{canonical sheaf} of a surface $X$ over $k$ is written $\omega_X$ and defined as $\omega_X=\bigwedge^2\Omega_{X/k}$, where $\Omega_{X/k}$ is the sheaf of differentials on $X$ defined over $k$. The canonical sheaf is invertible, and can be thought of as the space of all 2-forms on the surface. (Similarly, $\Omega_{X/k}$ can be thought of as the space of 1-forms.) Any divisor $K$ whose linear equivalence class in $\Pic X$ corresponds to $\omega_X$ is a \emph{canonical divisor}.
 \end{definition}
-From here we discuss how curves intersect on a surface. If $C$ and $D$ are divisors corresponding to curves on a surface $X$, then $C$ and $D$ intersect \emph{transversally} at some common point $P$ if $C$ and $D$ have local equations $f,g$ at $P$ such that $f,g$ generate the maximal ideal $\mathfrak{m}_p$ of $\calO_{X,p}$. Intuitively, if two curves $C,D$ intersect at a point $P$, the intersection will be transversal if the tangent vectors of $C$ and $D$ at $P$ are different. For example, the intersection of the parabola $x=y^2$ with the line $y=0$ contains the point $(0,0)$, but this is not a transversal intersection. In order to define an intersection theory that agrees with this intuition, we would like to have a function that counts the points at which two curves meet transversally.
+From here we discuss how curves intersect on a surface. If $C$ and $D$ are divisors corresponding to curves on a surface $X$, then $C$ and $D$ intersect \emph{transversally} at some common point $P$ if $C$ and $D$ have local equations $f$ and $g$ at $P$ such that $f$ and $g$ each generate the maximal ideal $\mathfrak{m}_p$ of $\calO_{X,p}$. Intuitively, if two curves $C,D$ intersect at a point $P$, the intersection will be transversal if the tangent vectors of $C$ and $D$ at $P$ are different. For example, the intersection of the parabola $x=y^2$ with the line $y=0$ contains the point $(0,0)$, but this is not a transversal intersection. In order to define an intersection theory that agrees with this intuition, we would like to have a function that counts the points at which two curves meet transversally.
 \begin{theorem}
 There is a unique map $\Div X\times \Div X\to\ZZ$, denoted by $C.D$ for divisors $C,D$ with the properties:
 \begin{enumerate}
@@ -235,7 +237,7 @@ There is a unique map $\Div X\times \Div X\to\ZZ$, denoted by $C.D$ for divisors
 \item if $C_1\sim C_2$ then $C_1.D=C_2.D$.
 \end{enumerate}
 \end{theorem}
-\noindent If $C$ and $D$ are curves on $X$ with no common irreducible component and $P\in C\cap D$, then the \emph{intersection multiplicity} at $P$, $(C.D)_P$ is defined as the length of $\calO_{X,P}/(f,g)$ considered as a module over $\calO_{X,P}$, where $f,g$ are local representations of $C,D$. This length is the same as vector space dimension over the base field.
+\noindent If $C$ and $D$ are curves on $X$ with no common irreducible component and $P\in C\cap D$, then the \emph{intersection multiplicity} at $P$, $(C.D)_P$ is defined as the length of $\calO_{X,P}/(f,g)$ considered as a module over $\calO_{X,P}$, where $f$ and $g$ are local representations of $C$ and $D$ respectively. This length is the same as vector space dimension over the base field.
 \begin{proposition}
  If $C$ and $D$ are curves on a surface $X$, then $C.D=\sum_{P\in C\cap D} (C.D)_P$.
 \end{proposition}
@@ -244,8 +246,8 @@ For a curve $C$ on $X$, we can also talk about $C.C$, or $C^2$, the \emph{self-i
 \begin{example}[Blowing up a plane at a point]
 Let $k$ be a field, and consider the projective plane $\Proj^2$ over $k$ along with a point $P\in\Proj^2$. Let $\widetilde{X}$ denote the blow up of $\Proj^2$ at $P$, and 
 \[\pi:\widetilde{X}\to\Proj^2\] 
-be the projection. Let $E=\pi^{-1}(P)$ be the exceptional curve. We show two ways of investigating the intersection number $E^2$. The first way is not exactly revealing. Since any single point is nonsingular, we may apply \cite{hartshorne} Theorem II.8.24c, which says that the 
-\[\mathscr{N}_{E/\widetilde{X}} \cong\calO_{E}(-1).\] The sheaf $\calO_E(-1)$ consists of homogeneous polynomials regular on $E$ with total degree $-1$. By the definition of the self-intersection number above, this tells us that $E^2=1$ as desired.
+be the projection. Let $E=\pi^{-1}(P)$ be the exceptional curve. We show two ways of investigating the intersection number $E^2$. The first way is not exactly revealing. Since any single point is nonsingular, we may apply \cite[Theorem II.8.24c]{hartshorne}, which says that the 
+\[\mathscr{N}_{E/\widetilde{X}} \cong\calO_{E}(-1).\] The sheaf $\calO_E(-1)$ consists of homogeneous polynomials regular on $E$ with total degree $-1$. By the definition of the self-intersection number above, this tells us that $E^2=-1$ as desired.
 
 For a more hands-on interpretation of this intersection, we rely on the fact that $\pi$ is an isomorphism between $\widetilde{X}\setminus E$ and $X\setminus \{P\}$. So, if $\ell_1$ and $\ell_2$ are distinct lines in $\Proj^2\setminus\{P\}$, then $\ell_1.\ell_2=1$, since any two distinct lines in the projective plane intersect in one point. The preimages $\pi^{-1}\ell_1,\pi^{-1}\ell_2$ are the strict transforms of $\ell_1$ and $\ell_2$, which we will denote by $\widetilde{\ell_1},\widetilde{\ell_2}$. Since neither line intersects $P$, their strict transforms are isomorphic to the original lines, so the strict transforms intersect in a single point as well. Now, the blow up construction is designed to preserve intersections of \emph{classes} of lines, so we in fact have that any two representative lines from $\Proj^2$ should intersect in a single point in the blow up $\widetilde{X}$. So now let $\ell_1^\prime,\ell_2^\prime$ be two distinct lines in $\Proj^2$ going through $P$. Since $P$ has been blown up, the inverse images of $\ell_1^\prime, \ell_2^\prime$ look like $\widetilde{\ell_1^\prime}+E,\widetilde{\ell_2^\prime}+E$, respectively, and importantly the strict transforms $\widetilde{\ell_1^\prime},\widetilde{\ell_2^\prime}$ are disjoint in $\widetilde{X}$. The condition that the intersection pairing still must return 1 on these lines leaves the following:
 \begin{align*}
@@ -254,7 +256,8 @@ For a more hands-on interpretation of this intersection, we rely on the fact tha
 \end{align*}
 Thus, $E^2=-1$. This example importantly demonstrates that divisors of negative self-intersection arise frequently and naturally in algebraic geometry.
 \end{example}
-
+\begin{definition} Given a smooth projective surface $X$ over a field $k$, an \emph{exceptional curve} $C$ is an irreducible curve on $X_{\overline{k}}$ with $C^2=-1$ and $K_{X_{\overline{k}}}.C=-1$.
+\end{definition}
 We include statements of several standard theorems that are generally useful for performing computations on varieties.
 \begin{theorem}[A special case of Serre duality]
 For a nonsingular projective variety $X$ of dimension $n$ over a field $k$, then for $p\in\{0,1,\ldots,n\}$ we define $\Omega_{X}^p=\bigwedge^p\Omega_{X/k}$. Then for $p,q\in\{0,1\ldots,n\}$, we have isomorphisms:
@@ -268,6 +271,7 @@ If $C$ is a nonsingular curve of genus $g$ on $X$, and $K$ is the canonical divi
 \[2g-2=C.(C+K).\]
 \end{proposition}
 \noindent This formula describes concretely how curves on a surface interact with the surface's canonical divisor.
+
 The following theorem is a celebrated result of algebraic geometry, it demonstrates a strong connection between the topological and algebraic properties of a variety. To present the theorem, we need some notational conventions: for a divisor $D$ on $X$, we let $\ell(D)=\dim H^0(X,\mathcal{L}(D))$, $s(D)=\dim H^1(X,\mathcal{L}(D))$, and $p_a=\chi(\calO_X)-1$.
 \begin{remark}
 This $p_a$ is called the \emph{arithmetic genus} of $X$. There is also $p_g$, the \emph{geometric genus} of $X$, which is defined as $p_g(X)=\dim_k H^2(X,\calO_X)$.
@@ -280,7 +284,7 @@ For any divisor $D$ on $X$, we have \[\ell(D)-s(D)+\ell(K-D)=\frac{1}{2}D.(D-K)+
 \chi(D)=\sum_{i=0}^2 (-1)^i\dim H^i(X,\calL(D)).
 \]
 \subsection{Classification of surfaces}
-In this section we describe different classes of surfaces. In this section $X$ will be a smooth projective surface over a field $k$, with $\text{char}(k)\neq2,3$, and we denote the canonical divisor of $X$ by $K$.
+In this section we describe different classes of surfaces. Throughout, $X$ will be a smooth projective surface over a field $k$, with $\text{char}(k)\neq2,3$, and we denote the canonical divisor of $X$ by $K$.
 \begin{definition}
 The \emph{Kodaira dimension} $\kappa(X)$ is defined as the transcendence degree of the so-called \emph{canonical ring}:
 \[R=\bigoplus_{n\geq0}H^0(X,\mathcal{L}(nK))\]
@@ -329,7 +333,7 @@ x=[x_0:\cdots:x_n]_a.
 \begin{example}
 Setting $a=(1,1,\ldots,1)$ recovers the usual projective space, $\Proj(1,1,\ldots,1)=\Proj^n$.
 \end{example}
-Given a weight $a$, we the coordinate ring of the corresponding weighted projective space is the $(n+1)$-variable polynomial ring $k_a[x_0,\ldots,x_n]$, where each $x_i$ has degree $a_i$. This makes the main difference between projective space and weighted projective space clear: we're changing gradings on a polynomial ring. The degree of a monomial in $k_a[x_0,\ldots,x_n]$ is thus given by
+Given a weight $a$, the coordinate ring of the corresponding weighted projective space is the $(n+1)$-variable polynomial ring $k_a[x_0,\ldots,x_n]$, where each $x_i$ has degree $a_i$. This makes the main difference between projective space and weighted projective space clear: we're changing gradings on a polynomial ring. The degree of a monomial in $k_a[x_0,\ldots,x_n]$ is thus given by
 \[
 \deg\left(\prod_{i=0}^n x_i^{c_i}\right)=\sum_{i=0}^n a_ic_i,
 \]
@@ -343,7 +347,7 @@ Importantly, this tells us that for $p\in\Proj(a)$,
 \[
 f(\lambda^{a_0}p_0,\ldots,\lambda^{a_n}p_n)=\lambda^d f(p_0,\ldots,p_n)
 \]
-if and only if $f(p_0,\ldots,p_n)=0$. This tells us that evaluating these functions at points in weighted projective space is strange, but considering the zero sets of these functions still works well. Since we are defining these spaces in order to consider varieties, i.e. vanishing loci of polynomials, this is all that matters.
+when $f(p_0,\ldots,p_n)=0$. This tells us that considering the zero sets of these functions still works well. Since we are defining these spaces in order to consider varieties, i.e. vanishing loci of polynomials, this is all that matters.
 
 More scheme-theoretically, given the polynomial algebra $k_a[x_0,\ldots,x_n]$, we can define the $a$-weighted projective space to be $\text{Proj}(k_a[x_0,\ldots,x_n])$.
 \chapter{Arithmetic}
@@ -431,16 +435,16 @@ Let $A\in\Az_k$, and let $n$ be the integer such that $A\otimes_k k_s\cong M_n(k
 \[
 A\op\otimes_k k_s\cong(A\otimes_k k_s)\op\cong(M_n(k_s))\op\cong M_n(k_s).
 \]
-For the second, we refer to \cite{jacobson}, in which this is the contents of Theorem 1 on pg. 114. For the third, we note that certainly $L$ will be simple, as it is a field. So, $A\otimes_k L$ will again be simple, and furthermore will certainly contain $L$ in its center. If the center is larger than $L$, then the center of 
+For the second, we simply refer to \cite[Theorem 1 on page 114]{jacobson}. For the third, we note that certainly $L$ will be simple, as it is a field. So, $A\otimes_k L$ will again be simple, and furthermore will certainly contain $L$ in its center. If the center is larger than $L$, then the center of 
 \[
 A\otimes_k A\op\otimes_k L\cong M_r(k)\otimes_k L\cong M_r(L),
 \]
-will also be larger than $L$, but this is not the case. So, $A\otimes_k L$ is central simple over $L$
+will also be larger than $L$, but this is not the case. So, $A\otimes_k L$ is central simple over $L$.
 \end{proof}
 \begin{definition}
 For a field $k$, let $A$ and $B$ be Azumaya algebras over $k$. We say that $A$ and $B$ are \emph{similar}, denoted $A\sim B$, if there are integers $m,n\geq1$ such that $M_m(A)\cong M_n(B)$.
 \end{definition}
-\noindent From this, we can define the \emph{Brauer group} $\Br(k)$ of $k$ as $\Az_k/\sim$. The proposition essentially gives us that this forms a group under the tensor product. Multiplication is performed by taking the tensor product of representatives in the classes, and inversion is performed by sending a representative to its opposite algebra. The identity is the class corresponding to $k$. Furthermore, these groups are abelian, since the tensor product is commutative up to isomorphism, and Brauer groups are built out of isomorphism classes.
+\noindent From this, we can define the \emph{Brauer group} $\Br(k)$ of $k$ as $\Az_k/\sim$. The proposition implies us that this forms a group under the tensor product. Multiplication is performed by taking the tensor product of representatives in the classes, and inversion is performed by sending a representative to its opposite algebra. The identity is the class corresponding to $k$. Furthermore, these groups are abelian, since the tensor product is commutative up to isomorphism, and Brauer groups are built out of isomorphism classes.
 \begin{remark}\label{covariantBr}
 For a field extension $L/k$, and $A\in\Az_k$, the assignment $A\mapsto A\otimes_k L$ in fact defines a group homomorphism $\Br(k)\to \Br(L)$. This says that $\Br$ is a covariant functor from fields to abelian groups.
 \end{remark}
@@ -452,7 +456,7 @@ Given a field $k$, there is an isomorphism
 \]
 \end{theorem}
 \begin{proof}
-The details of this are beyond the scope of this thesis, but they can be found in \cite{serreLF}, X.5.
+The details of this are beyond the scope of this thesis, but they can be found in \cite[X.5]{serreLF}.
 \end{proof}
 \begin{remark} 
 The group $H^2(\Gal(k_s/k),k_s^\times)$ is often written as $H^2(k,\mathbb{G}_m)$.
@@ -462,7 +466,7 @@ Consider $k=\RR$. Then $\RR_s=\CC$, and $\Gal(\CC/\RR)=\ZZ/2\ZZ$. Using the coho
 \[
 \Br(\RR)\cong H^2(\Gal(\CC/\RR),\CC^\times).
 \]
-Now, in \cite{serreLF} VIII.4, they describe an isomorphism from Tate cohomology $H^2(G,A)\cong A^G/NA$ for any group $G$ and $G$-module $A$, where $A^G$ denotes the $G$-invariant part of $A$, and $N=\sum_{t\in G}t.$ The interpretation of this $N$ in our setting is as the standard \emph{norm} on $\CC$. We thus have
+Now, in \cite[VIII.4]{serreLF}, they describe an isomorphism from Tate cohomology $H^2(G,A)\cong A^G/NA$ for any group $G$ and $G$-module $A$, where $A^G$ denotes the $G$-invariant part of $A$, and $N=\sum_{t\in G}t.$ The interpretation of this $N$ in our setting is as the standard \emph{norm} on $\CC$. We thus have
 \[
 H^2(\Gal(\CC/\RR),\CC^\times)\cong (\CC^\times)^{\Gal(\CC/\RR)}/N\CC.
 \]
@@ -478,24 +482,24 @@ i\otimes 1&\longmapsto\begin{pmatrix}i&0\\0&-i\end{pmatrix}\\
 j\otimes 1&\longmapsto\begin{pmatrix}0&-1\\1&0\end{pmatrix}\\
 ij\otimes 1&\longmapsto\begin{pmatrix}0&-i\\-i&0\end{pmatrix}.
 \end{align*}
-This is the only nontrivial class in $\Br(\RR)$, which is exactly the statement of a result attributed to Frobenius. For this result, we readers to section 2.7 of the introduction of \cite{bahturin}.
+This is the only nontrivial class in $\Br(\RR)$, which is exactly the statement of a result attributed to Frobenius. For this result, we refer readers to \cite[Section 0.2.7]{bahturin}.
 \end{example}
 \noindent This example motivates the definition of a \emph{quaternion algebra}.
 \begin{definition}
 Let $k$ be a field of characteristic different from 2 and $a,b\in k^\times$. The \emph{quaternion algebra} associated to $a$ and $b$ is denoted $(a,b)_k$, and is the 4-dimensional $k$-algebra generated by $\{1,i,j,ij\}$ subject to the relations $i^2=a, j^2=b, ij=-ji$.
 \end{definition}
 \noindent These generalized quaternion algebras are special cases of \emph{cyclic algebras}, whose construction we now present.
-
+\begin{definition}
 Suppose that $k$ is a field and $L$ is a degree $n$ cyclic field extension of $k$. Then for $a\in k^\times$ and $\sigma\in\Gal(L/k)$ a generator, we can obtain a $k$-algebra in the following way. First, define the ``twisted" polynomial ring $L[x]_\sigma$ to be identical as an additive group to $L[x]$, but with multiplication given by
 \[
-\ell x=\sigma(\ell)x,\quad\forall\ell\in L.
+\ell x=x\sigma(\ell),\quad\forall\ell\in L.
 \]
 Then, take 
 \[
 A:=L[x]_\sigma/\langle x^n-a\rangle.
 \]
 This $A$ is called a \emph{cyclic algebra} over $k$, and is often denoted $(L/k,a)$. These cyclic algebras provide a way to determine explicit elements of the Brauer group, as we will see in the next subsection.
-
+\end{definition}
 \subsection{Brauer groups of varieties}
 Given a variety $X$ defined over a field $k$, defining an object like the Brauer group takes additional work. We have to alter our definitions in order for the Azumaya algebras to be defined over general schemes, rather than just fields.
 \begin{definition}
@@ -517,7 +521,7 @@ Consider a field $k$, a cyclic extension $L$ of $k$, and take $X$ to be a smooth
 Furthermore, if $\Pic(X_L)=(\Pic(\overline{X}))^{\Gal(L/k)}$, then $(L/k,f)$ comes from $\Br(k)$ if and only if the $D$ in the above display is principal.
 \end{proposition}
 \begin{proof}
-The proof of this relies heavily on cohomological machinery that is beyond the scope of this thesis, and so we refer readers to \cite{corn}, Proposition 2.2.3. 
+The proof of this relies heavily on cohomological machinery that is beyond the scope of this thesis, and so we refer readers to \cite[Proposition 2.2.3]{corn}. 
 \end{proof}
 \section{The Brauer-Manin obstruction to the Hasse principle}
 We saw at the beginning of this chapter an example of a variety that does not satisfy the Hasse principle. The Hasse principle relates the sets $X(k)$ and the set of local points of $X$. Our goal in this section is to define a set of points that sits between these two, and we hope that it can be used to identify objects that prevent the Hasse principle from holding.
@@ -542,7 +546,7 @@ With the definition of adeles and the Brauer group, we present the workhorse of 
 \]
 is exact.\label{sequence}
 \end{theorem}
-\noindent In the above exact sequence, the second arrow is the diagonal embedding obtained from sending $\calA\in\Br(k)$ to the sequence $(\calA\otimes_k k_v)\in\bigoplus_{v\in\Omega}\Br(k_v)$, and the third arrow is obtained from the sum of the local invariant maps, denoted $\sum_{v\in\Omega} \inv_v$.   Each of these maps $\inv_v:\Br(k_v)\hookrightarrow\QQ/\ZZ$ comes from class field theory, and is sometimes called the local Artin map, or local invariant map. We will not include the details of the construction of this map here, but refer the reader to \cite{milneCFT}. Importantly, each of the sums of invariant maps is finite. The reason for this is essentially because $\Br(\calO_{k_v})=0$, where $\calO_{k_v}$ denotes the integer ring of $k_v$. Since for an adelic point $(x_v)$ we have that all but finitely many coordinates lie in $\calO_{k,v}$, we get the desired finiteness. For more details about this finiteness, see \cite{skoQpoints} Section 5.5.2.
+\noindent In the above exact sequence, the second arrow is the diagonal embedding obtained from sending $\calA\in\Br(k)$ to the sequence $(\calA\otimes_k k_v)\in\bigoplus_{v\in\Omega}\Br(k_v)$, and the third arrow is obtained from the sum of the local invariant maps, denoted $\sum_{v\in\Omega} \inv_v$.   Each of these maps $\inv_v:\Br(k_v)\hookrightarrow\QQ/\ZZ$ comes from class field theory, and is sometimes called the local Artin map, or local invariant map. We will not include the details of the construction of this map here, but refer the reader to \cite{milneCFT}. Importantly, each of the sums of invariant maps is finite. The reason for this is essentially because $\Br(\calO_{k_v})=0$, where $\calO_{k_v}$ denotes the integer ring of $k_v$. Since for an adelic point $(x_v)$ we have that all but finitely many coordinates lie in $\calO_{k,v}$, we get the desired finiteness. For more details about this finiteness, see \cite[Section 5.5.2]{skoQpoints}.
 
 To see how varieties interact with this sequence, suppose that $X$ is a smooth, projective, geometrically integral variety over $k$. For any field extension $K/k$ and each $\calA\in\Br(X)$, we define the \emph{specialization} or \emph{evaluation} map
 \begin{align*}
@@ -599,11 +603,11 @@ Now, since we know that the composition of these two is injective, we obtain tha
 \]
 \end{proposition}
 \begin{proof}
-This is Proposition 1.3.7 in \cite{corn}.
+This is \cite[Proposition 1.3.7]{corn}.
 \end{proof}
 \noindent This proposition is incredibly useful, since it is relatively easier to compute the object on the right side in the above display. But, computing $\Pic(\overline{X})$ still requires a significant amount of work, and is rarely done explicitly. We will be computing $\Pic(\overline{X})$ for a specific $X$ by trying to find as many linearly independent divisor classes as we can.
 \section{An example of a Brauer-Manin obstruction}
-In this section we work through an example due to Iskovkikh of a surface with a Brauer-Manin obstruction, following \cite{qPoints}, section  8.2. Set $B:=\Proj^1_\QQ$, the projective line over $\QQ$ with coordinates $w,x$, and consider the rank 3 bundle over $B$ defined by
+In this section we work through Iskovkikh's example of a surface with a Brauer-Manin obstruction, following \cite[Section 8.2]{qPoints}. Set $B:=\Proj^1_\QQ$, the projective line over $\QQ$ with coordinates $w,x$, and consider the rank 3 bundle over $B$ defined by
 \[
 \mathscr{E}=\calO_B\oplus\calO_B\oplus\calO_B(2).
 \]
@@ -719,7 +723,7 @@ Given a field $k$, a \emph{K3 surface} $X$ is a 2-dimensional, complete, nonsing
 \noindent There are some comments to be made here. First, the condition $H^1(X,\calO_X)=0$ is the same as saying that the difference between the arithmetic genus and geometric genus is 0. The difference between arithmetic and geometric genera of a variety is sometimes referred to as the \emph{irregularity}. Second, the specification of completeness reflects the properties of K3s as objects with inherent analytic structure. 
 
 For every K3 defined as above, there is a corresponding compact complex surface with much of the same structure. Specifically, there is an analytic definition of a K3 surface that imposes the same conditions on the canonical sheaf and first cohomology group, but the sheaf is of holomorphic differential forms, rather than of K\"ahler differentials, and the cohomology is de Rham cohomology, rather than sheaf cohomology. It is certainly surprising how few changes need to be made in switching between the algebraic and analytic settings, and there are deep results explaining this correspondence. We refer the reader to \cite{huybrechts} or \cite{vanDeVen} for a thorough treatment of the analytic aspects of K3s.
-\section{Lattices in general} Our main reference for this section is Chapter 15 of \cite{huybrechts}.
+\section{Lattices in general} Our main reference for this section is \cite[Chapter 15]{huybrechts}.
 \begin{definition}
 A \emph{lattice} $\Lambda$ is a free $\ZZ$-module of finite rank with a symmetric, nondegenerate, bilinear form
 \[
@@ -727,7 +731,7 @@ A \emph{lattice} $\Lambda$ is a free $\ZZ$-module of finite rank with a symmetri
 \]
 A lattice is \emph{even} if for all $x\in\Lambda$, $(x)^2=(x.x)\in2\ZZ$. Otherwise, we say that $\Lambda$ is \emph{odd}. 
 \end{definition}
-\noindent Since any lattice $\Lambda$ is a free $\ZZ$-module of finite rank, we have a basis, say $\{x_1,\ldots,x_m\}$, and can form the intersection matrix $(x_i.x_j)_{i,j=1}^n$. This matrix is most commonly called the \emph{Gram} matrix. The determinant of this intersection matrix is called the \emph{discriminant} of $\Lambda$, denoted $\disc(\Lambda)$. Furthermore, from any $\Lambda$ we can extend the intersection form $(-.-)$ to $\RR$ and obtain the real vector space
+\noindent Since any lattice $\Lambda$ is a free $\ZZ$-module of finite rank, we have a basis, say $\{x_1,\ldots,x_m\}$, and can form the intersection matrix $(x_i.x_j)_{i,j=1}^n$. This matrix is most commonly called the \emph{Gram matrix}. The determinant of this intersection matrix is called the \emph{discriminant} of $\Lambda$, denoted $\disc(\Lambda)$. Furthermore, from any $\Lambda$ we can extend the intersection form $(-.-)$ to $\RR$ and obtain the real vector space
 \[
 \Lambda_\RR=\Lambda\otimes_\ZZ\RR.
 \]
@@ -792,7 +796,7 @@ As with the Picard group, both $\NS(X)$ and $\Num(X)$ are free abelian groups, b
 \begin{theorem}[N\'eron, Severi] For a surface $X$ defined over a field $k$, the groups $\NS(X),\Num(X)$ are finitely generated as abelian groups.
 \end{theorem}
 \begin{proof}
-For this proof, we refer to Theorem 3.25 of \cite{milneET}.
+For this proof, we refer to \cite[Theorem 3.25]{milneET}.
 \end{proof}
 \noindent This theorem gives us that $\NS(X)$ is in fact a \emph{lattice}, which gives us a whole class of new machinery to work with. The rank of $\NS(X)$ is called the \emph{Picard number} of $X$, and is written $\rho(X)$.
 For a complex $K3$ surface, we in fact have the following neat result.
@@ -803,9 +807,11 @@ H^2(X,\ZZ)\cong E_8(-1)\oplus E_8(-1)\oplus U\oplus U\oplus U.
 \]
 \end{proposition}
 \begin{proof}
-See \cite{huybrechts}, Proposition 1.3.5.
+See \cite[Proposition 1.3.5]{huybrechts}.
 \end{proof}
 \noindent This isomorphism is useful in the it gives us an idea of what $H^2$ looks like, but is not useful in that there is no general way to identify a 2-cocycle with an element of the lattice.
+
+Another incredibly useful property of K3 surfaces is the equivalence of several invariants coming from the divisor class group.
 \begin{proposition}
 For $X$ a K3 surface over a field $k$, we have isomorphisms:
 \[
@@ -814,7 +820,7 @@ For $X$ a K3 surface over a field $k$, we have isomorphisms:
 Furthermore, the natural intersection form on any of these is nondegenerate, even, and of signature $(1,\rho(X)-1)$.
 \end{proposition}
 \begin{proof}
-See \cite{huybrechts}, Proposition 1.2.4.
+See \cite[Proposition 1.2.4]{huybrechts}.
 \end{proof}
 
 \section{Some invariants of K3 surfaces}\label{HodgeDK3}
@@ -833,7 +839,7 @@ and since $\Omega_X^2=\omega_X\cong\calO_X$ this re-writes to
 \[
 H^2(X,\calO_X)\cong H^0(X,\calO_X)^*.
 \]
-We know that $\dim_kH^0(X,\calO_X)=1$, and then since duals of finite-dimensional vector spaces have the same dimension as the original space, we get $\dim_k( H^0(X,\calO_X)^*)=1$. Thus, $h^{2,0}(X)=1$. Serre duality also gives $h^{0,2}(X)=1, h^{1,0}(X)=h^{1,2}(X)=h^{2,1}(X)=0, h^{2,2}=1$. Computing $h^{1,1}(X)$ is less straightforward, and requires the Hirzebruch-Riemann-Roch theorem as well as Noether's formula. These two powerful results give that $h^{1,1}(X)=20$. In sum, we have the \emph{Hodge diamond} for K3 surfaces
+We know that $\dim_kH^0(X,\calO_X)=1$, and then since duals of finite-dimensional vector spaces have the same dimension as the original space, we get \[\dim_k( H^0(X,\calO_X)^*)=1.\] Thus, $h^{2,0}(X)=1$. Serre duality also gives \[h^{0,2}(X)=1, h^{1,0}(X)=h^{1,2}(X)=h^{2,1}(X)=0, h^{2,2}=1.\] Computing $h^{1,1}(X)$ is less straightforward, and requires the Hirzebruch-Riemann-Roch theorem as well as Noether's formula. These two powerful results give that $h^{1,1}(X)=20$. In sum, we have the \emph{Hodge diamond} for K3 surfaces
 \[
 \begin{matrix}
 & & h^{0,0} & & \\
@@ -851,7 +857,7 @@ h^{2,0} & &h^{1,1} & & h^{0,2}\\
 & & 1 & &
 \end{matrix}
 \]
-\section{Finding elements of the geometric Picard lattice}
+\section{Elements of the geometric Picard lattice}
 Finding explicit divisors on any variety depends on the equations defining the variety, so the methods used vary greatly from variety to variety. Because of this, we start by discussing a way to obtain  additional divisors given that we already have some to work with.
 
 Let $X$ be a K3 surface defined over a number field $k$. Fix an embedding of $k$ into $\CC$, and define $\overline{X}=X_\CC$. This $\overline{X}$ is a K3 surface over $\CC$. Because of this, we can apply the following theorem.
@@ -867,7 +873,7 @@ H^2(Y,\ZZ)\cong\Lambda_{\text{K3}}\cong E_8(-1)^{\oplus2}\oplus U^{\oplus3}.
 \end{enumerate}
 \end{theorem}
 \begin{proof}
-See \cite{festiThesis}, Theorem 1.2.36.
+See \cite[Theorem 1.2.36]{festiThesis}.
 \end{proof}
 \noindent In the above theorem, \emph{primitive embedding} means that the cokernel of the injection is torsion-free. In order to see how this theorem is useful, we need some heavy machinery coming from Hodge theory, the details of which are beyond the scope of this thesis. 
 \begin{definition}
@@ -877,32 +883,32 @@ Given two complex K3 surfaces $Y,Z$, a lattice homomorphism $\phi:H^2(Z,\ZZ)\to 
 Suppose we have an isomorphism $f: Y\to Z$ of complex K3 surfaces. Then the lattice homomorphism $f^*:H^2(Z,\ZZ)\to H^2(Y,\ZZ)$ obtained from the pullback is an effective Hodge isometry.
 \end{proposition}
 \begin{proof}
-See \cite{festiThesis} Proposition 1.2.41.
+See \cite[Proposition 1.2.41]{festiThesis}.
 \end{proof}
  The converse of this result is a major result for the theory of K3 surfaces, known as the Torelli theorem.
 \begin{theorem}
 Given complex K3 surfaces $Y,Z$ and an effective Hodge isometry $\phi:H^2(Z,\ZZ)\to H^2(Y,\ZZ)$, there is a unique isomorphism $f:Y\to Z$ such that $\phi=f^*$.
 \end{theorem}
 \begin{proof}
-See \cite{vanDeVen}, Theorem VIII.11.1 and Corollary VIII.11.4.
+See \cite[Theorem VIII.11.1 and Corollary VIII.11.4]{vanDeVen}.
 \end{proof}
 \noindent This theorem establishes a 1 to 1 correspondence between the effective Hodge isometries of $H^2(\overline{X},\ZZ)$ and the automorphisms of $\overline{X}$. Indeed, for $f$ an automorphism of $\overline{X}$, we get an isometry $\phi=f^*$ of $\Pic\overline{X}$. Thus, given a divisor class in $\Pic\overline{X}$, we will be able to obtain different classes via automorphisms of $\overline{X}$. 
 \section{A worked example}\label{computation}
 In this section we will be looking at a K3 surface that is a double cover of the projective plane branched along a smooth sextic. We should verify that any such surface over a field of characteristic different from 2 is in fact a K3. 
 
-Suppose that $k$ is a field not of characteristic 2. Let $X$ be a double cover of $\Proj^2_k$ branched along a smooth sextic curve $C\subseteq\Proj^2_k$, and let $\pi:X\to\Proj^2_k$ be the covering map. Since $\pi$ has degree 2 and $C$ has degree 6, we know that we can find an invertible sheaf $\calL\cong\calO_{\Proj^2_k}(3)$ such that $\calL^2\cong\calO_{\Proj^2_k}(C)=\calO_{\Proj^2_k}(6)$. Then, the Riemann-Hurwitz formula, which can be found in \cite{vanDeVen}, Lemma I.17.1, we compute $\omega_X$:
+Suppose that $k$ is a field not of characteristic 2. Let $X$ be a double cover of $\Proj^2_k$ branched along a smooth sextic curve $C\subseteq\Proj^2_k$, and let $\pi:X\to\Proj^2_k$ be the covering map. Since $\pi$ has degree 2 and $C$ has degree 6, we know that we can find an invertible sheaf $\calL\cong\calO_{\Proj^2_k}(3)$ such that $\calL^2\cong\calO_{\Proj^2_k}(C)=\calO_{\Proj^2_k}(6)$. Then, the Riemann-Hurwitz formula, which can be found in \cite[Lemma I.17.1]{vanDeVen}, we compute $\omega_X$:
 \[
 \omega_X\cong\pi^*(\omega_{\Proj^2_k}\otimes\calL)\cong\pi^*(\calO_{\Proj^2_k}(-3)\otimes\calO_{\Proj^2_k}(3))\cong\pi^*(\calO_{\Proj^2_k})\cong\calO_X.
 \]
-\noindent So, we have that $X$ has trivial canonical sheaf. Then, \cite{vanDeVen} Lemma I.17.2 gives
+\noindent So, we have that $X$ has trivial canonical sheaf. Then, \cite[Lemma I.17.2]{vanDeVen} gives
 \[
 \pi_*\omega_X\cong\pi_*\calO_X\cong\calL^0\oplus\calL^{-1}\cong\calO_{\Proj^2_k}\oplus\calO_{\Proj^2_k}(-3).
 \]
-Since $\pi$ is a finite morphism, $\pi_*$ is exact, so we get $H^1(X,\calO_X)\cong H^1(\Proj^2_k,\pi_*\calO_X)$. Now, since $\Proj^2_k$ is a noetherian topological space, cohomology commutes with direct sums (this is Proposition III.2.9 in \cite{hartshorne}), so 
+Since $\pi$ is a finite morphism, $\pi_*$ is exact, so we get $H^1(X,\calO_X)\cong H^1(\Proj^2_k,\pi_*\calO_X)$. Now, since $\Proj^2_k$ is a noetherian topological space, cohomology commutes with direct sums (this is \cite[Proposition III.2.9]{hartshorne}), so 
 \[
 H^1(\Proj^2_k,\pi_*\calO_X)=H^1(\Proj^2_k,\calO_{\Proj^2_k}\oplus\calO_{\Proj^2_k}(-3))\cong H^1(\Proj^2_k,\calO_{\Proj^2_k})\oplus H^1(\Proj^2_k,\calO_{\Proj^2_k}(-3)).
 \]
-Each of these first cohomology groups vanishes by \cite{hartshorne} Theorem III.5.1, so we have the desired vanishing, $H^1(X,\calO_X)=0$.
+Each of these first cohomology groups vanishes by \cite[Theorem III.5.1]{hartshorne}, so we have the desired vanishing, $H^1(X,\calO_X)=0$.
 
 Thus, as long as the base field $k$ is not of characteristic 2, we can define K3 surfaces using these double covers. Define the weighted projective space over the rationals
 \[
@@ -930,7 +936,7 @@ Let $Y$ be a del Pezzo surface of degree 1 over a field $k$, given as a smooth s
 for $Q$ a homogeneous form of degree 2 in $x$ and $y$, $C$ a homogeneous form of degree 3 in $x$ and $y$. If $\Gamma$ is a divisor on $Y_{k^s}$, then it is an exceptional curve of $Y$. Conversely, every exceptional curve on $Y$ is a divisor of this form.
 \end{theorem}
 \begin{proof}
-This is section 4.1.3 of \cite{tonyThesis}.
+See \cite[Section 4.1.3]{tonyThesis}.
 \end{proof}
 \noindent In the statement of the above theorem, an exceptional curve refers to a curve on a surface with self-intersection $-1$.
 

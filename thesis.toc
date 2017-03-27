@@ -19,7 +19,7 @@
 \contentsline {section}{\numberline {3.1}Lattices in general}{25}
 \contentsline {section}{\numberline {3.2}Lattice structure of K3 surfaces}{27}
 \contentsline {section}{\numberline {3.3}Some invariants of K3 surfaces}{28}
-\contentsline {section}{\numberline {3.4}Finding elements of the geometric Picard lattice}{29}
+\contentsline {section}{\numberline {3.4}Elements of the geometric Picard lattice}{29}
 \contentsline {section}{\numberline {3.5}A worked example}{30}
 \contentsline {chapter}{Appendix A: Magma code}{33}
 \contentsline {chapter}{References}{37}
