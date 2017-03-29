@@ -80,12 +80,12 @@ for i in [1..m] do
 	Int:=List[i] meet List[j];
         if Dimension(Int) eq 1 then
 	    M[i,j]:=2*ArithmeticGenus(Int)-2;
-		/*print k, i,j;*/
-		k:=k+1;
+		/*print k, M[i,j];
+		k:=k+1;*/
 	else
 	    M[i,j]:=Degree(Int);
-		/*print k, i,j;*/
-		k:=k+1;
+		/*print k, M[i,j];
+		k:=k+1;*/
 	end if;
 	M[j,i]:=M[i,j];
     end for;
@@ -152,3 +152,12 @@ rk:=#BG;
 SolG:=Solution(AG,[Vector(b) : b in BG]);
 MG:=Matrix(SolG);
 GramG:=MG*AG*Transpose(MG);
+
+
+
+
+
+
+
+
+

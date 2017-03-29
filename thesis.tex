@@ -66,7 +66,7 @@
 \newcommand{\GG}{\mathfrak{G}}
 
 
-\title{Arithmetic Computations on K3 Surfaces}
+\title{The Brauer-Manin Obstruction for K3 Surfaces}
 \author{Christopher Keane}
 
 \date{May 2017}
@@ -74,29 +74,55 @@
 \advisor{Mckenzie West}
 
 \department{Mathematics}
-
 \setlength{\parskip}{0pt}
 
 \begin{document}
 
-%\maketitle
-%\frontmatter 
-%\pagestyle{empty} 
+\maketitle
+\frontmatter 
+\pagestyle{empty} 
 \tableofcontents
 %\chapter*{Abstract}
-%Well, here's some math.	
-%\chapter*{Introduction}
-%The
+%In this thesis	
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+Consider the equation
+\[
+X^2+Y^2=Z^2.
+\]
+Some solutions of this are $(3,4,5), (5,12,13), (7,24,25)$. There are in fact infinitely many triples $(a,b,c)$ of integers that solve this equation which are most commonly referred to as \emph{Pythagorean triples}. One way to generate these triples is as follows: for any integers $\ell>k>0$, setting
+\[
+a=\ell^2-k^2,\hspace{0.25cm} b=2\ell k,\hspace{0.25cm} c=\ell^2+k^2
+\] 
+yields a Pythagorean triple (this is sometimes referred to as Euclid's formula). The fact that these solutions are triples of \emph{integers} is significant, and the above equation is the prototypical example of a \emph{Diophantine problem}. In general, a Diophantine problem involves the search for integer solutions to an equation or system of equations in several variables. These problems can be quite hard, and may be impossible. A natural alteration of this first example leads us to the equation
+\[
+X^n+Y^n=Z^n,
+\]
+for some positive integer $n>2$. The solvability of this equation in the integers is one of the hardest problems in mathematics. Pierre de Fermat first wrote down the assertion that this equation has no nontrivial integer solutions in 1637, but his claim was not proved until 1995 by Andrew Wiles, using techniques from algebraic geometry, number theory, and representation theory. 
+
+The relative difficulties of these two problems is quite interesting, and one is lead to the question of whether or not there is some general way that we can determine which equations are solvable and which ones are not. The question of solvability of Diophantine equations is known as Hilbert's tenth problem, and it was shown in 1970 that there does not exist an algorithm that can answer this question. Because of this undecidability, there have been many techniques developed across the history of mathematics used to think about the solvability of equations in the integers. The development of such techniques has lead to the idea of a \emph{rational point}. Given an equation $f$ defined over some field $k$, we say that a solution to $f=0$ that has coordinates in $k$ is a $k$-rational point of $f$. This is a clear generalization of the motivating problem of looking for solutions with integer coordinates. 
+
+The study of integral points as well as rational points lives in the intersection of number theory and algebraic geometry, and is commonly referred to as \emph{arithmetic geometry}. In this thesis, we provide an overview of modern arithmetic geometry as it applies to the study of rational points, with the goal of applying the techniques to a particular surface.
+
+In Chapter 1, we review the relevant aspects of algebraic geometry necessary for discussing surfaces and the study of rational points. We begin with some generalities about varieties, which are the fundamental objects of algebraic geometry. Classically, varieties were defined as sets of solutions to polynomial equations over algebraically closed fields. In discussing rational points, we need to be able to talk about varieties defined over fields that are not algebraically closed. For this reason, we highlight the idea of base extension: the equations defining our varieties will be set over non-algebraically closed fields, but we will still need the additional structure obtained from considering the variety over an algebraically closed field. We also discuss some algebraic invariants that are essential to the study of surfaces, as well as introduce the idea of a weighted projective space.
+
+Chapter 2 walks through the number-theoretic aspects of this field of study. Importantly, we introduce the Hasse principal, which says that any equation with local solutions will also have global solutions. In terms of varieties, we think of this as saying that if a variety over a global field $k$ has adelic points, then we are guaranteed the existence of a $k$-rational point. In general, this does not hold, and a lot of work has been put into identifying what controls the existence of $k$-rational points. This involves looking for a set of points on a $k$-variety $X$ that sits between the set of local points and the set of $k$-rational points. Such sets are generally referred to as obstruction sets, and we discuss one of the first to be discovered: the Brauer-Manin set. Computing this set is essential in examining failures of the Hasse principal, but it is extremely hard to compute explicitly. We explain how we can detect an obstruction coming from the Brauer-Manin set that involves computing a certain Galois cohomology group, $H^1(\Gal(k_s/k),\Pic(\overline{X}))$. 
+
+For K3 surfaces, computing the Galois cohomology group just mentioned is slightly easier, and this is the focus of Chapter 3. Algebraically, K3 surfaces are difficult objects to study, but they have a rich structure as complex manifolds that makes explicit computations much more tractable. We develop the parts of this complex structure that allow for computation of divisors as well as obtaining bounds on the rank of the Picard group. We conclude by applying the techniques built up in the preceding pages to compute $H^1(\Gal(\overline{\QQ}/\QQ),\Pic(\overline{X}))$, where $X$ is the K3 surfaces defined by the equation
+\[
+w^2=x^6+y^6+z^6
+\]
+in the projective space $\Proj_\QQ(1,1,1,3)$.
+
 \mainmatter 
 \pagestyle{fancyplain} 
-
 \chapter{Geometry of surfaces}
-In this chapter we introduce some general facts from modern algebraic geometry, and basic results of surface theory. Our goal is to develop some familiarity with the language of modern algebraic geometry and introduce the invariants most commonly used to study surfaces and their rational points. Most of the material in the first three sections of this chapter comes from \cite{hartshorne}, specifically Chapter II and Chapter V. 
+In this chapter we introduce some general facts from modern algebraic geometry, and basic results of surface theory. Our goal is to develop some familiarity with the language of modern algebraic geometry and introduce the invariants most commonly used to study surfaces and their rational points. Most of the material in the first three sections of this chapter comes from \cite{hartshorne}, specifically Chapter II and Chapter V. Importantly, we will not be reviewing the basic definitions associated with schemes, as our goal is to talk about varieties over fields, and as schemes, varieties are not basic objects.
 
 \section{Properties of varieties}
-In general, a \emph{variety} can be thought of as the set of solutions to some number of polynomial equations defined over a field. Historically, the study of such objects has roots in algebra and geometry. In order to obtain useful information about a variety, it is helpful to also consider the variety's corresponding coordinate ring equipped with the Zariski topology. This allows one to bring the vast theory of commutative algebra to bear on geometric questions. 
+A \emph{variety} can be thought of as the set of all solutions to some number of polynomial equations defined over a field, and the theory was first developed under this definition. In order to obtain useful information about a variety, it is helpful to also consider the variety's corresponding coordinate ring equipped with the Zariski topology. This allows one to bring the vast theory of commutative algebra to bear on geometric questions.
 
-With the development of category theory, mathematicians like Alexander Grothen-dieck and Jean-Pierre Serre saw fit to reformulate the theory of algebraic geometry using more abstract foundations, giving rise to the language of schemes. This shifted the fundamental object of the field from sets of solutions to equations to topological spaces equipped with sheaves. In addition to allowing people to re-prove old results more directly, the techniques developed by Grothendieck and Serre lead to the solutions of several long unsolved geometric problems. Specifically, the introduction of schemes and cohomology to the field was essential to the proofs of the Weil conjectures. Because of these successes, many mathematicians decided to follow this lead and learn the new perspective. The language of schemes is now ubiquitous in the modern study of geometry, it is the language we will be using throughout this thesis to talk about varieties. As schemes, varieties over fields are not basic objects, and so we will not be reviewing the basics of scheme theory.
+With the development of category theory, mathematicians such as Alexander Grothendieck and Jean-Pierre Serre saw fit to reformulate the theory of algebraic geometry using more abstract foundations, giving rise to the language of schemes. This shifted the fundamental object of the field from sets of solutions to equations to topological spaces equipped with sheaves. In addition to allowing people to re-prove old results more directly, the techniques developed by Grothendieck and Serre lead to the solutions of several long unsolved geometric problems. Specifically, the introduction of schemes and cohomology to the field was essential to the proofs of the Weil conjectures. Because of these successes, many mathematicians decided to follow this lead and learn the new perspective. The language of schemes is now ubiquitous in the modern study of geometry, it is the language we will be using throughout this thesis to talk about varieties. 
 \begin{definition}
 For a fixed scheme $S$, a \emph{scheme over $S$} is a scheme $X$ along with a morphism $X\to S$ called the \emph{structure morphism} of $X$. In this case, we may refer to $X$ as an $S$-scheme. If we have two $S$-schemes $X$ and $Y$, then an $S$-morphism from $X$ to $Y$ is a morphism $X\to Y$ that is compatible with the structure morphisms of $X$ and $Y$.\label{schemeOverDef}
 \end{definition}
@@ -351,11 +377,7 @@ when $f(p_0,\ldots,p_n)=0$. This tells us that considering the zero sets of thes
 
 More scheme-theoretically, given the polynomial algebra $k_a[x_0,\ldots,x_n]$, we can define the $a$-weighted projective space to be $\text{Proj}(k_a[x_0,\ldots,x_n])$.
 \chapter{Arithmetic}
-This chapter reviews the motivation and theory behind the search for rational points. The study of rational points comes from number theory, specifically from trying to solve equations over $\ZZ$ or $\QQ$. Such problems are referred to as ``Diophantine problems". The most well-known Diophantine problem is Fermat's last theorem.
-\begin{theorem}[Fermat's last theorem]
-For a positive integer $n>2$, the equation \[x^n+y^n=1\] has no nontrivial solutions $x,y\in\QQ$.
-\end{theorem}
-\noindent Fermat first wrote down this assertion in 1637, and but it was not proved until 1995 by Andrew Wiles, using techniques from algebraic geometry as well as number theory. We will not be delving into the precise methods used to prove Fermat's last theorem, but the general methods used to attack such a problem are highly relevant to this thesis.
+This chapter reviews the motivation and theory behind the search for rational points. The study of rational points comes from number theory, specifically from trying to solve equations over $\ZZ$ or $\QQ$. As mentioned in the introduction, such problems are referred to as Diophantine problems.
 \section{Hensel's lemma and local solubility}
 Given a function $F(X_1,\ldots,X_n)\in\ZZ[X_1,\ldots,X_n]$, it is in general extremely difficult to determine if there exists nontrivial $(a_1,\ldots,a_n)\in\ZZ^n$ such that $F(a_1,\ldots,a_n)=0$. It is easier to begin looking at \[F(X_1,\ldots,X_n)\equiv0\bmod p,\] where $p$ denotes a prime number. If such a solution exists, one may look at varying $p$, or by looking mod $p^k$ for some $k>1$. Following the latter path leads naturally to wondering if we can describe solutions $F(X_1,\ldots,X_n)\equiv0\bmod p^k$ for all $k\in\ZZ^+$, and where such solutions would live. Hensel's lemma is the result at the start of this investigation.
 \begin{theorem}[Hensel's lemma]
@@ -779,7 +801,7 @@ For any lattice $\Lambda$ and $m\in\ZZ$, we can ``twist" $\Lambda$ by $m$ to obt
 \]
 As a consequence of this, we get $\disc(\Lambda(m))=\disc(\Lambda)\cdot m^{\text{rk}\Lambda}$.
 \end{example}
-\section{Lattice structure of K3 surfaces}
+\subsection{Lattice structure of K3 surfaces}
 In Proposition~\ref{picDef}, we saw one algebraic invariant coming from the divisor structure of a variety. There are others, which we discuss now.
 \begin{definition}
 For a surface $X$ defined over a field $k$, the \emph{N\'eron-Severi group} of $X$ is denoted $\NS(X)$, and defined as \[\NS(X)=\Pic(X)/\Pic^0(X),\] where $\Pic^0(X)$ is the subgroup of $\Pic(X)$ consisting of those divisor classes linearly equivalent to 0.
@@ -857,11 +879,12 @@ h^{2,0} & &h^{1,1} & & h^{0,2}\\
 & & 1 & &
 \end{matrix}
 \]
+This computation tells us that the rank of the Picard lattice of a K3 surface is at most 20, as we will see in Theorem~\ref{K3lattice}.
 \section{Elements of the geometric Picard lattice}
 Finding explicit divisors on any variety depends on the equations defining the variety, so the methods used vary greatly from variety to variety. Because of this, we start by discussing a way to obtain  additional divisors given that we already have some to work with.
 
 Let $X$ be a K3 surface defined over a number field $k$. Fix an embedding of $k$ into $\CC$, and define $\overline{X}=X_\CC$. This $\overline{X}$ is a K3 surface over $\CC$. Because of this, we can apply the following theorem.
-\begin{theorem} Let $Y$ be a complex K3 surface. Then the following statements hold.
+\begin{theorem}\label{K3lattice} Let $Y$ be a complex K3 surface. Then the following statements hold.
 \begin{enumerate}
 \item The cohomology group $H^2(Y,\ZZ)$ endowed with the cup product is isomorphic to the K3 lattice $\Lambda_{\text{K3}}$:
 \[

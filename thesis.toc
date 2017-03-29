@@ -1,3 +1,4 @@
+\contentsline {chapter}{Introduction}{iii}
 \contentsline {chapter}{Chapter 1: Geometry of surfaces}{1}
 \contentsline {section}{\numberline {1.1}Properties of varieties}{1}
 \contentsline {section}{\numberline {1.2}Divisors}{3}
@@ -17,9 +18,9 @@
 \contentsline {section}{\numberline {2.6}Insufficiency of the Brauer-Manin obstruction}{24}
 \contentsline {chapter}{Chapter 3: K3 Surfaces}{25}
 \contentsline {section}{\numberline {3.1}Lattices in general}{25}
-\contentsline {section}{\numberline {3.2}Lattice structure of K3 surfaces}{27}
-\contentsline {section}{\numberline {3.3}Some invariants of K3 surfaces}{28}
-\contentsline {section}{\numberline {3.4}Elements of the geometric Picard lattice}{29}
-\contentsline {section}{\numberline {3.5}A worked example}{30}
-\contentsline {chapter}{Appendix A: Magma code}{33}
-\contentsline {chapter}{References}{37}
+\contentsline {subsection}{\numberline {3.1.1}Lattice structure of K3 surfaces}{27}
+\contentsline {section}{\numberline {3.2}Some invariants of K3 surfaces}{28}
+\contentsline {section}{\numberline {3.3}Elements of the geometric Picard lattice}{29}
+\contentsline {section}{\numberline {3.4}A worked example}{31}
+\contentsline {chapter}{Appendix A: Magma code}{35}
+\contentsline {chapter}{References}{39}
