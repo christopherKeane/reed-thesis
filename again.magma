@@ -1,0 +1,267 @@
+getCo := function(poly,m)
+	bool := exists(i){i:i in [1..#Monomials(poly)] | Monomials(poly)[i] eq m};
+	if bool then
+		return Coefficients(poly)[i];
+	else
+		return 0;
+	end if;
+end function;
+
+R<l>:=PolynomialRing(Rationals());
+
+A<r,s,t,u,a,b,c> := AffineSpace(Rationals(),7); /* Defining a space for the to-be-determined coefficients*/
+
+CR := CoordinateRing(A);
+
+FCR := FieldOfFractions(CR); /* We need to be able to divide by the coefficients */
+
+P1Aux<x1,y1,z1,w1> := ProjectiveSpace(FCR,[1,1,1,3]);
+P2Aux<x2,y2,z2,w2> := ProjectiveSpace(FCR,[1,1,2,3]);
+
+/*Define the splitting field for the del Pezzo divisors as well as the tritangents. */
+
+L<zeta12,cr2>:=NumberField([l^4-l^2+1,l^3-2]: Abs := true);
+zeta6 := zeta12^2;
+i := zeta12^3;
+
+/* We need these in order to define the schemes whose points will be the desired 7-tuples */
+
+P1:=ProjectiveSpace(Rationals(),[1,1,1,3]);
+P2:=ProjectiveSpace(Rationals(),[1,1,2,3]);
+
+/* Base projective spaces*/
+
+squareZaux := map<P1Aux->P2Aux | [x1,y1,z1^2,w1]>;
+
+/* Squaring map used in projection to the del Pezzo before coeff’s of divisors are determined. */
+
+toRing := function(polyList)
+	f2R := hom< FCR -> CR |r,s,t,u,a,b,c>;
+	newList := f2R(polyList);
+	return(newList);
+end function;
+
+/* We only need to divide by the coefficients in solving for them, so we’ll use this to put the resulting tuples back in the ring. */
+
+getEqns := function(poly) /* this poly should be of the form w1^2-sextic */
+	schemeProj := squareZaux(Scheme(P1Aux,poly)); /* project to the deg 1 del Pezzo */
+	polyProj := DefiningPolynomial(schemeProj); /* extract the polynomial defining schemeProj */	
+	Q := a*x2^2+b*x2*y2+c*y2^2; 
+	C := r*x2^3+s*x2^2*y2+t*x2*y2^2+u*y2^3; /*these are the equations defining the divisors as in Thm 1.5.9 of Tony’s thesis*/
+	compPoly := Evaluate(polyProj,[x2,y2,Q,C]); /* substitute Q,C into the defining eqn */
+	eqnList := [getCo(compPoly,Monomials(compPoly)[i]): i in [1..#Monomials(compPoly)]]; /* get eqns for coeffs */
+	newList := toRing(eqnList);
+	return schemeProj, newList;
+end function;
+
+/* This returns the system of equations that will let us determine the tuples. */
+
+getTuples := function(polyList, splf) /*run this using the list from getEqns.*/
+	I :=ideal<CR | polyList>; /* This follows the method described in Tony’s thesis for computing the tuples*/
+	gb := GroebnerBasis(I);
+	f := gb[#gb]; /* This last polynomial in the list will contain only one of the indeterminates from the affine 7-space. */
+	unif := Evaluate(f,[0,0,0,0,0,0,l]); /* Magma still sees f as multivariate, but we want Magma to see f as univariate. */
+	facto := Factorization(unif);
+	appendGb := [GroebnerBasis(Ideal(I,Evaluate(facto[i,1],c))): i in [1..#facto]];
+	sys := [Scheme(A,appendGb[i]): i in [1..#appendGb]];
+	points := <Points(sys[i], splf): i in [1..#sys]>;
+	return appendGb, points; 
+end function;
+
+dpDivisors := function(space, scheme, tupleList) /*take space to be P2 over the splitting field from getTuples, list from getTuples, scheme from getEqns*/
+	nf := #tupleList;
+	ns := space;
+
+	divs := < <Scheme(ns,[ns.3-(tupleList[i,j,5]*ns.1^2+tupleList[i,j,6]*ns.1*ns.2+tupleList[i,j,7]*ns.2^2), ns.4-(tupleList[i,j,1]*ns.1^3+tupleList[i,j,2]*ns.1^2*ns.2+tupleList[i,j,3]*ns.1*ns.2^2+tupleList[i,j,4]*ns.2^3)]): j in [1..#tupleList[i]]> :  i in [1..nf]>;
+
+	return divs;
+end function;
+
+/* This Gram matrix function is from Dino Festi. */
+function GramMatrixD(List)
+
+m:=#List;
+M:=ScalarMatrix(Integers(),m,-2);
+/*k:=1;*/
+
+for i in [1..m] do
+    for j in [1..i] do
+	Int:=List[i] meet List[j];
+        if Dimension(Int) eq 1 then
+	    M[i,j]:=2*ArithmeticGenus(Int)-2;
+		/*print k, M[i,j];
+		k:=k+1;*/
+	else
+	    M[i,j]:=Degree(Int);
+		/*print k, M[i,j];
+		k:=k+1;*/
+	end if;
+	M[j,i]:=M[i,j];
+    end for;
+end for;
+
+return M;
+
+end function;
+
+fS := x1^6+y1^6+z1^6-w1^2;
+Xsch := Scheme(P1, fS);
+
+Saux, eqnList := getEqns(fS);
+grobbases, tups := getTuples(eqnList, L);
+
+P1L := ProjectiveSpace(L,[1,1,1,3]);
+P2L := ProjectiveSpace(L,[1,1,2,3]);
+
+dplist := dpDivisors(P2L, Saux, tups);
+
+X1L := BaseChange(Xsch, P1L);
+X2L := Scheme(P2L, P2L.1^6+P2L.2^6+P2L.3^3-P2L.4^2);
+
+sqL := map<X1L->P2L | [P2L.1, P2L.2, P2L.3^2, P2L.4]>;
+
+preSkews := [dplist[1,1], dplist[1,4], dplist[3,1], dplist[4,2], dplist[2,2], dplist[5,1], dplist[6,3], dplist[7,1], dplist[2,3]]; /* These are generators for the Picard group of the del Pezzo surface, and were found by inspection. */
+
+skews := [Scheme(P2L,[DefiningPolynomials(sch)[1],DefiningPolynomials(sch)[2]]): sch in preSkews];
+
+prePbSkews := [Pullback(sqL,sch) : sch in skews];
+
+lines:=
+[
+Scheme(P1L, [P1L.1+zeta12*P1L.3,P1L.2^3+P1L.4]),
+Scheme(P1L, [P1L.1-zeta12*P1L.3,P1L.2^3+P1L.4]),
+Scheme(P1L, [P1L.1+zeta12*P1L.3,-P1L.2^3+P1L.4]),
+Scheme(P1L, [P1L.1-zeta12*P1L.3,-P1L.2^3+P1L.4]),
+Scheme(P1L, [P1L.1+zeta12^3*P1L.3,P1L.2^3+P1L.4]),
+Scheme(P1L, [P1L.1+zeta12^3*P1L.3,-P1L.2^3+P1L.4]),
+Scheme(P1L, [P1L.1+(zeta12^3-zeta12)*P1L.3,P1L.2^3+P1L.4]),
+Scheme(P1L, [P1L.1-(zeta12^3-zeta12)*P1L.3,P1L.2^3+P1L.4]),
+Scheme(P1L, [P1L.1+(zeta12^3-zeta12)*P1L.3,-P1L.2^3+P1L.4]),
+Scheme(P1L, [P1L.1-(zeta12^3-zeta12)*P1L.3,-P1L.2^3+P1L.4])
+];
+
+pbSkews := [BaseChange(sch, P1L): sch in prePbSkews];
+
+preDivs:=pbSkews cat lines;
+divs:=Flat(preDivs);
+
+CRL<xL,yL,zL,wL>:=CoordinateRing(ProjectiveSpace(L,[1,1,1,3]));
+
+var:={xL,yL,zL};
+perm:=Permutations(var);
+S3:=[hom< CRL -> CRL | [g[1],g[2],g[3],wL] > : g in perm];
+
+C6a:=[hom<CRL->CRL | zeta6^i*xL, yL, zeta6^(-i)*zL,wL >: i in [0..5]];
+C6b:=[hom<CRL->CRL | xL, zeta6^i*yL, zeta6^(-i)*zL,wL >: i in [0..5]];
+
+GG:=car<S3,C6a,C6b>;
+G:=[s[1]*s[2]*s[3] : s in GG];
+/*letting this G act on divs will produce 4114 divisors. you only need 20 of those, but i’m not sure which. setting G to be just S3 yields 114 divisors that still generate a rank 20 lattice. */
+
+preGdivs:=< [Scheme(P1L,[t(DefiningPolynomials(divs[j])[1]), t(DefiningPolynomials(divs[j])[2])]): j in [1..#divs]]: t in G>;
+
+Gdivs:=Flat(preGdivs);
+
+p:=23;
+F<alpha>:=GF(p^2);
+
+Pol<v>:=PolynomialRing(F);
+
+zeta12p:=Roots(v^12-1,F)[12,1];
+zeta6p:=zeta12p^2;
+cr2p:=Roots(v^3-2,F)[3,1];
+
+PP<X,Y,Z,W>:=ProjectiveSpace(F,[1,1,1,3]);
+PPW:=CoordinateRing(PP);
+
+X1Lp:=BaseChange(X1L,PP);
+
+Psi1:=hom< L->F | [zeta12p, cr2p]>;
+PsiP:=hom< CRL->PPW | Psi1, [X,Y,Z,W]>;
+
+GdivsP:=[Scheme(PP,[PsiP(DefiningPolynomials(sch)[1]),PsiP(DefiningPolynomials(sch)[2])]): sch in Gdivs];
+
+/*AG:=GramMatrixD(GdivsP);
+LG:=Lattice(AG);
+BG:=Basis(LG);
+rk:=#BG; rk;
+SolG:=Solution(AG,[Vector(b) : b in BG]);
+MG:=Matrix(SolG);
+GramG:=MG*AG*Transpose(MG);*/
+
+/*GALOIS GROUP TO MATRIX GROUP START
+many of these functions are from a webpage
+*/
+phi1 := hom < L->L | [-zeta12, cr2]>;
+phi2 := hom < L->L | [zeta12^3 - zeta12, cr2]>;
+sigma := hom < L->L | [zeta12, zeta12^2*cr2-cr2]>;
+
+Gal, GalDAction := GenericGroup([phi1,phi2,sigma]);
+
+AutPolyAction := function(P, a)
+  k := BaseRing(Parent(P));
+  m := Monomials(P);
+  c := Coefficients(P);
+  return &+[ k!(c[i] @ a) * m[i] : i in [1..#c] ];
+end function;
+
+AutSchemeAction := function(Y, a)
+  A := AmbientSpace(Y);
+  return Scheme(A, [ AutPolyAction(P, a) 
+                     : P in DefiningPolynomials(Y) ] );
+end function;
+
+DAction := func< a | 
+  [ Index(TupleToList(Gdivs), AutSchemeAction(sch, a)) : sch in Gdivs ] >;
+
+GdivsEq:=[DefiningPolynomials(sch) : sch in Gdivs];
+
+GdivsEqAction := func< a | 
+  [ Index(Seqlist(GdivsEq), [AutPolyAction(GdivsEq[i,1], a),
+	AutPolyAction(GdivsEq[i,2],a)]) : i in [1..#Gdivs] ] >;
+
+/*GGal := PermutationGroup<114 | [ DAction(phi1), DAction(phi2), 
+                             DAction(sigma) ] >;*/
+
+pT2:=<Scheme(P1L,[S3[2](DefiningPolynomials(divs[j])[1]),
+S3[2](DefiningPolynomials(divs[j])[2])]): j in [1..#divs]> cat 
+<Scheme(P1L,[S3[3](DefiningPolynomials(divs[j])[1]),
+S3[3](DefiningPolynomials(divs[j])[2])]): j in [1..#divs]> cat
+<Scheme(P1L,[C6a[2](DefiningPolynomials(divs[j])[1]),
+C6a[2](DefiningPolynomials(divs[j])[2])]): j in [1..#divs]> cat
+<Scheme(P1L,[S3[4](DefiningPolynomials(divs[j])[1]),
+S3[4](DefiningPolynomials(divs[j])[2])]): j in [1..#divs]>
+;
+
+T2:=Flat(pT2);
+T2p:=[Scheme(PP,[PsiP(DefiningPolynomials(sch)[1]),PsiP(DefiningPolynomials(sch)[2])]): sch in T2];
+
+AG:=GramMatrixD(T2p);
+LG:=Lattice(AG);
+BG:=Basis(LG);
+rk:=#BG; rk;
+SolG:=Solution(AG,[Vector(b) : b in BG]);
+MG:=Matrix(SolG);
+GramG:=MG*AG*Transpose(MG);
+
+T2eq:=[DefiningPolynomials(sch) : sch in T2];
+
+T2eqAction := func< a | 
+  [ Index(Seqlist(T2eq), [AutPolyAction(T2eq[i,1], a),
+	AutPolyAction(T2eq[i,2],a)]) : i in [1..#T2] ] >;
+
+T2Gal:=[AutSchemeAction(sch,phi1): sch in T2] cat                         
+ [AutSchemeAction(sch,phi2): sch in T2] cat
+ [AutSchemeAction(sch,sigma): sch in T2];
+
+T2GalEq:=[DefiningPolynomials(sch) : sch in T2Gal];
+
+T2GalEqAction := func< a | 
+  [ Index(Seqlist(T2GalEq), [AutPolyAction(T2GalEq[i,1], a),
+	AutPolyAction(T2GalEq[i,2],a)]) : i in [1..#T2Gal] ] >;
+
+T2GalEqAction(phi1); T2GalEqAction(phi1); T2GalEqAction(sigma);
+
+
+
+

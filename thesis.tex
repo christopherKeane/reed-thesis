@@ -90,7 +90,7 @@ Consider the equation
 \[
 X^2+Y^2=Z^2.
 \]
-Some solutions of this are $(3,4,5), (5,12,13), (7,24,25)$. There are in fact infinitely many triples $(a,b,c)$ of integers that solve this equation which are most commonly referred to as \emph{Pythagorean triples}. One way to generate these triples is as follows: for any integers $\ell>k>0$, setting
+Some solutions of this are $(3,4,5), (5,12,13), (7,24,25)$. Notably, none of these triples is an integer multiple of another. There are in fact infinitely many such triples $(a,b,c)$ of integers that solve this equation which are most commonly referred to as \emph{Pythagorean triples}. One way to generate these triples is as follows: for any integers $\ell>k>0$, setting
 \[
 a=\ell^2-k^2,\hspace{0.25cm} b=2\ell k,\hspace{0.25cm} c=\ell^2+k^2
 \] 
@@ -98,9 +98,9 @@ yields a Pythagorean triple (this is sometimes referred to as Euclid's formula).
 \[
 X^n+Y^n=Z^n,
 \]
-for some positive integer $n>2$. The solvability of this equation in the integers is one of the hardest problems in mathematics. Pierre de Fermat first wrote down the assertion that this equation has no nontrivial integer solutions in 1637, but his claim was not proved until 1995 by Andrew Wiles, using techniques from algebraic geometry, number theory, and representation theory. 
+for some positive integer $n>2$. The solvability of this equation in the integers is one of the hardest problems in mathematics. Pierre de Fermat first wrote down the assertion that this equation has no nontrivial integer solutions in 1637, but his claim was not proved until 1995 by Andrew Wiles in \cite{FLT}, using techniques from algebraic geometry, number theory, and representation theory. 
 
-The relative difficulties of these two problems is quite interesting, and one is lead to the question of whether or not there is some general way that we can determine which equations are solvable and which ones are not. The question of solvability of Diophantine equations is known as Hilbert's tenth problem, and it was shown in 1970 that there does not exist an algorithm that can answer this question. Because of this undecidability, there have been many techniques developed across the history of mathematics used to think about the solvability of equations in the integers. The development of such techniques has lead to the idea of a \emph{rational point}. Given an equation $f$ defined over some field $k$, we say that a solution to $f=0$ that has coordinates in $k$ is a $k$-rational point of $f$. This is a clear generalization of the motivating problem of looking for solutions with integer coordinates. 
+The relative difficulties of these two problems is quite interesting, and one is lead to the question of whether or not there is some general way that we can determine which equations are solvable and which ones are not. The question of solvability of Diophantine equations is known as Hilbert's tenth problem, and it is shown in \cite{hilbert10} that there does not exist an algorithm that can answer this question. Because of this undecidability, there have been many techniques developed across the history of mathematics used to think about the solvability of equations in the integers. The development of such techniques has lead to the idea of a \emph{rational point}. Given an equation $f$ defined over some field $k$, we say that a solution to $f=0$ that has coordinates in $k$ is a $k$-rational point of $f$. This is a clear generalization of the motivating problem of looking for solutions with integer coordinates. 
 
 The study of integral points as well as rational points lives in the intersection of number theory and algebraic geometry, and is commonly referred to as \emph{arithmetic geometry}. In this thesis, we provide an overview of modern arithmetic geometry as it applies to the study of rational points, with the goal of applying the techniques to a particular surface.
 
