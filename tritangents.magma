@@ -1,0 +1,102 @@
+getCo := function(poly,m)
+	bool := exists(i){i:i in [1..#Monomials(poly)] | Monomials(poly)[i] eq m};
+	if bool then
+		return Coefficients(poly)[i];
+	else
+		return 0;
+	end if;
+end function;
+
+/* Define a function to determine the coefficients of the lines meeting X, as described in the narration in Section 3.4. */
+
+getEqns := function(poly)
+	P<s,t> := Parent(poly);
+	R := CoefficientRing(P);
+	rk := Rank(R);
+	A := R.(rk-3);
+	B := R.(rk-2);
+	C := R.(rk-1);
+	D := R.rk;
+	eqnlist := [A^2 - getCo(poly, s^6),2*A*B - getCo(poly, s^5*t), 2*A*C + B^2 - getCo(poly,s^4*t^2), 2*A*D + 2*B*C - getCo(poly, s^3*t^3), 2*B*D + C^2 - getCo(poly,s^2*t^4), 2*C*D - getCo(poly, s*t^5), D^2 - getCo(poly, t^6)];
+	return eqnlist;
+end function;
+
+
+getSpltFld := function(S,k)
+	_, sfld := PointsOverSplittingField(S);
+		if Degree(sfld) ge 2 then
+		L := SplittingField(AbsolutePolynomial(sfld));
+		OL := Integers(L);
+		intbase := OL.2;
+		L := SplittingField(MinimalPolynomial(intbase));
+	else
+		L := k;
+	end if;
+	return L;
+end function;
+
+
+/* There are 3 cases in this function because lines may not be of the form x=ay+bz. In these other cases, they look like y=az or just z=0. */
+getLinesFromVariables := function(q,k,n)
+	k := Rationals();
+	base := PolynomialRing(k,7-n);
+	paramSpace<s,t> := PolynomialRing(base,2);
+	inputs := [[base.1*s+base.2*t,s,t],[s,base.1*t,t],[s,t,0]];
+	qnew := Evaluate(q,inputs[n] cat [0]);
+	A := AffineSpace(base);
+	S := Scheme(A,getEqns(qnew));
+	L := getSpltFld(S,k);
+	pts := Points(S,L);
+	P3<x,y,z,w> := ProjectiveSpace(L,[1,1,1,3]);
+	if n eq 1 then
+		lines := [Scheme(P3, [x - pt[1]*y - pt[2]*z, w - pt[3]*y^3 - pt[4]*y^2*z - pt[5]*y*z^2 - pt[6]*z^3]) : pt in pts];
+	elif n eq 2 then
+		lines := [Scheme(P3, [y - pt[1]*z, w - pt[2]*x^3 - pt[3]*x^2*z - pt[4]*x*z^2 - pt[5]*z^3]) : pt in pts];
+	elif n eq 3 then
+		lines := [Scheme(P3, [z, w - pt[1]*x^3 - pt[2]*x^2*y - pt[3]*x*y^2 - pt[4]*y^3]) : pt in pts];
+	end if;
+	return lines, L;
+end function;
+
+/* Define a function that takes a scheme defined by a sextic curve and returns the tritangents.*/
+
+findLines := function(q,k)
+	/* Tritangents from x = ay + bz. */
+
+	xLines, xL := getLinesFromVariables(q,k,1);
+
+	/* Repeat for y = az. */
+
+	yLines, yL := getLinesFromVariables(q,k,2);
+
+	L := Compositum(xL,yL);
+
+	/* Repeat for z=0. */
+
+	zLines, zL := getLinesFromVariables(q,k,3);
+
+	L := Compositum(zL,L);
+
+	P3L := ProjectiveSpace(L,[1,1,1,3]);
+	lines := [Scheme(P3L, DefiningEquations(l)) : l in xLines cat yLines cat zLines];
+
+	return lines, L;
+end function;
+
+P3<x,y,z,w> := ProjectiveSpace(Rationals(),[1,1,1,3]);
+
+/* In order to find the lines which lie on X, we intersect
+the surface X with the scheme given by w = 0. 
+The lines which are tritangent to this scheme in P2 given
+by the projection map forgetting w each split into 2 lines
+on X via the pullback. */
+
+findLinesOnSch := function(q)
+	F := w^2 - q;
+	X := Scheme(P3,F);
+	C := Scheme(P3,[F,w]);
+	lines, L := findLines(q,Rationals());	
+	return lines, L, #lines;
+end function;
+
+findLinesOnSch(x^6+y^6+z^6);
